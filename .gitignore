@@ -1,0 +1,17 @@
+# Files to ignore.
+Thumbs.db
+thumbs.db
+ehthumbs.db
+Ehthumbs.db
+.fscache
+*~
+*.bak
+.DS_Store
+*.pck
+*.exe
+*.x86_64
+*.x86
+
+# Directories to ignore.
+.import/
+logs/

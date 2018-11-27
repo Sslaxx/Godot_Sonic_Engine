@@ -1,0 +1,34 @@
+Use sub-dirs named by character, concept, usage etc.
+
+<Project Name> - project root.
+	Builds - executable builds are created here.
+	Docs - design notes and the like are kept in here.
+	Resources - Raw resources used by the project. NOT used directly by the project source.
+	Source - the source files for the project.
+		addons - do not use directly; used for external Godot addons that are NOT GDNative.
+		Assets - All physical assets - graphics, models, shaders, music etc.
+			Graphics - All graphical elements here.
+				2D - All 2D elements are stored here.
+				3D - Same principle with 2D elements. This should include any textures, normal/bump/etc maps, etc. any 3D models use.
+				Fonts - fonts used throughout the game.
+				Shaders - screen-based or other shaders here. Indicate use for shader in filename, e.g. 2d/3d/fragment/screenspace/etc.
+			Audio - All sound files.
+				Ambient - all looped sound effects. Filenames should include loop offset.
+				Jingles - non-looped music files to be used for stings and things like starting a new game, ending an act, game over etc.
+				Music - all looped music. Filenames should include loop offset.
+				Sound - all non-looped sound effects.
+			UI - Theme definitions for the user interface are stored here, along with any graphics/sounds that are *only* used for UI.
+			Other - any other resource that might not fit any of the other categories. NO UI ELEMENTS.
+		GDNative - do not use directly; used for external Godot addons that ARE GDNative (e.g. external libraries, other languages), in separate folders for each.
+		Scenes - all the "scenes" used in the game. Should mirror Scripts.
+			System - non-game(play) related scenes. Primarily for autoload/general-purpose singletons that contain nodes/scripts for convenience use.
+		Scripts - all the scripts used in the game. Should mirror Scenes.
+			System - non-game(play) related scripts. Primarily for autoload/general-purpose singletons that contain nodes/scripts for convenience use.
+
+Audio bus structure:
+
+Master
+	Jingles
+	Music
+	SFX - both ambient (looped) and unlooped sound effects.
+Create buses as required for effects, etc.

@@ -1,0 +1,4 @@
+Only assets listed here are (legally) safe to use commercially.
+
+Asset - filename(s) - Author(s) - License (if known/applicable)
+
