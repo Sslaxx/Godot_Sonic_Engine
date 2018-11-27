@@ -31,11 +31,11 @@ The engine\'s target audience is anyone with at least basic experience with Godo
 
 ## Overview of Gameplay
 
-As it stands, the basic gameplay will be very Sonic-esque: run through levels, collecting items, destroying enemies, completing any special stages etc.
+As it stands, the basic gameplay will be very Sonic-esque: run through levels, collecting items, destroying enemies, completing any special stages etc. Developer(s) can expand on this as they see fit, if they know how.
 
 ## Player Experience
 
-Player experience and expectations are up to the developer(s) of any game made using this code to manage.
+Player experience and expectations (including target audience) are up to the developer(s) of any game made using this code to manage.
 
 ## Gameplay Guidelines
 
@@ -55,7 +55,7 @@ The engine code isn\'t designed to *dis*allow anything, because it's bare bones 
 
 ## Level Design
 
-The basic design for levels (zones) places them in two acts, one after the other, in the same level (ala Sonic 3/K). Levels should be able to tell the engine what will happen, what music will play, and so on during normal (basic) gameplay.
+The basic design for levels (zones) places them in two acts, one after the other, in the same level (ala Sonic 3/K). Levels should be able to tell the engine what will happen, what music will play, and so on during normal (basic) gameplay. Developer(s) will need to implement scripted events, music and so on in levels in a way that suits them.
 
 ## Control Scheme
 
