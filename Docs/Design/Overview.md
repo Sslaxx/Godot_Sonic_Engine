@@ -1,11 +1,11 @@
 # Godot Sonic Engine
 ## Sonic-feeling 2D platformer engine
 ### Stuart \"Sslaxx\" Moore
-#### 27^th^ November 2018
+#### 27th November 2018
 
 ## Game Analysis
 
-This isn\'t a game; it\'s an engine on which to build games from. By design, games that are Sonic-like. It is intended to allow at the very least play as a Sonic-type character through multiple 2D levels.
+This isn\'t a game; it\'s an engine/framework on which to build games from. By design, games that are Sonic-like. It is intended to allow at the very least play as a Sonic-type game through multiple 2D levels.
 
 ## Mission Statement
 
@@ -63,7 +63,7 @@ The default control setup of the engine uses the cursor keys and a/s/d for jump/
 
 ## Game Aesthetics & User Interface
 
-The engine is basic, so should not inhibit any design techniques to be used, look & shape of the characters, environment and pathways negatively.
+The engine is basic, so should not inhibit any design techniques to be used, look & shape of the characters, environment and pathways.
 
 In-game UI should be minimal; at the least a Sonic-style HUD (score/time/items and lives displayed, nothing else) for normal play.
 
