@@ -24,6 +24,7 @@ These should include:
 - Maximum jump speed
 - Friction values
 - Player velocity, movement states etc
+- Player speed affectors for things like water, speed shoes etc
 - The state machine (used by all characters, so custom states need to be added to this as required)
 
 Default values only should be in `player_generic.gd`. Speeds/heights etc. should be in pixels per second.

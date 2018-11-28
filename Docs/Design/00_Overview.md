@@ -5,7 +5,7 @@
 
 ## Game Analysis
 
-This isn\'t a game; it\'s an engine/framework on which to build games from. By design, games that are Sonic-like. It is intended to allow at the very least play as a Sonic-type game through multiple 2D levels.
+This isn\'t a game; it\'s an engine/framework on which to build games from. By design, games that are Sonic-like. It is intended to allow at the very least play as a Sonic-type game through multiple 2D levels. Developers should document the things for their game; this is just the design docs for the framework.
 
 ## Mission Statement
 
