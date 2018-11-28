@@ -17,7 +17,7 @@ Whatever the developer(s) want.
 
 ## Platforms
 
-The engine is written in Godot, so depending on the author\'s wishes:
+The engine is written in Godot, so depending on the author\'s wishes the following may be supported:
 - Windows
 - macOS
 - Linux
