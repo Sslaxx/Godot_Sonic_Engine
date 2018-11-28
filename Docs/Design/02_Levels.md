@@ -29,9 +29,9 @@ Once a player character is instantiated - it *must* be as `/root/Level/Player` -
 It's a good idea to create the background for a level - it's backdrop and parallax - as a separate scene and instantiate that within the level; makes it easier to reuse them.
 
 Assuming a range of layers to be used from -32 to 32:
-- the level backdrop (the tiles and other parts that make up a level) should be layers -1 to -3;
-- the parallax for the backdrop (clouds and the like) -4 to -7;
 - and the backdrop proper (the overall background image) -8;
+- the parallax for the backdrop (clouds and the like) -4 to -7;
+- the level backdrop (the tiles and other parts that make up a level) should be layers -1 to -3;
 - the player, collectibles and enemies are on layer 0;
 - foreground elements are layers 1 to 7.
 

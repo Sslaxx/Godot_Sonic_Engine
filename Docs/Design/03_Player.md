@@ -39,7 +39,7 @@ Wherever possible the default collision functions should be used - `is_on_floor`
 
 ## Movement and speed
 
-Movement is controlled overall by the movement state, which is a bitmask determining how and why the character can move.
+Movement is controlled overall by the movement state, which is a bitmask determining how and why the character can move. The movement state and direction will dictate how the speed is worked out.
 
 ## Animations
 

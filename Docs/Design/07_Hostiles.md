@@ -14,6 +14,6 @@ Some enemies may have multiple components - rising spikes, or firing bullets. So
 
 ### Environmental hazards (water, spikes, pits etc)
 
-Spikes and pits can be easier to code relatively speaking - both can just react to the player's colliding with their collision shapes. Hazards like water may be more difficult. A simple way to code water is to make it lethal upon entry. But most Sonic-type games have water be a hazard over time - after a certain point the player character will drown.
+Spikes and pits can be easier to code relatively speaking - both can just react to the player's colliding with their collision shapes. Hazards like water may be more difficult. A simple way to code water is to make it lethal upon entry. But most Sonic-type games have water be a hazard over time - after a certain point the player character will drown. For spikes or pits, `Area2D` and/or `StaticBody2D` may be most useful.
 
-Some environmental hazards will have screen effects, like water, and may also affect the player's movement speed.
+Some environmental hazards will have fullscreen effects, like water, and may also affect the player's movement speed.
