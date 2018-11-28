@@ -31,7 +31,7 @@ extends Node
 func _ready ():
 	init_dice_engine ()
 	if (OS.is_debug_build ()):
-		printerr ("Dice roller ready.")
+		printerr (get_script ().resource_path, " ready.")
 	return
 
 """
