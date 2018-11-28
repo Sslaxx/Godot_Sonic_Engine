@@ -1,12 +1,16 @@
 # Generic (character-independent) states
 
+## Overview
+
+These are the basic states that are used by the code, as bitmask values. Custom states - for example, character-specific states, e.g. `STATE_KNUCKLES_GLIDING` - should be documented by whoever is developing the game.
+
 ## STATE_IDLE (0)
 
 Not really a state, per se. This is an absence of state or player input. Player character is not necessarily on the ground so any checks using this state need to take this into account.
 
 ## STATE_MOVE_LEFT (1) / STATE_MOVE_RIGHT (2)
 
-See the [player movement](Player_movement.md) document for more info.
+See the [player movement](05_Movement.md) document for more info.
 
 ## STATE_JUMPING (4)
 

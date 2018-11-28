@@ -2,7 +2,7 @@
 
 ## Overview
 
-The player is a scene which has a root node of the type `KinematicBody2D`. It should be named `Player`. As a `KinematicBody2D` it has access to a wide variety of functions like `is_on_floor` and `move_and_slide`.
+The player is a scene which has a root node of the type `KinematicBody2D` which is to be named `Player`. As a `KinematicBody2D` it has access to a wide variety of functions like `is_on_floor` and `move_and_slide`.
 
 ## Scripts and inheritance
 
@@ -28,6 +28,20 @@ These should include:
 
 Default values only should be in `player_generic.gd`. Speeds/heights etc. should be in pixels per second.
 
-## Nodes used by the player scene.
+## Nodes used by the player scene
 
 All physics bodies need a collision shape of some type; what works best depends on your project. All player characters use `AnimatedSprite` to deal with sprites and their animations; every sprite has animations common to them and these must be given the same names across different player characters. Players need a custom `Camera2D` in order to allow scrolling to work; levels can adjust this node as necessary for them to scroll correctly.
+
+## Physics
+
+Wherever possible the default collision functions should be used - `is_on_floor` and the like. Look at gotchas about these functions - for example, it sounds like `is_on_floor` and its relations can only be used if the player is moving (not particularly surprising if so as a lot of other physics-based functionality has the same restriction) - and try to find (actually working) workarounds, and to stick within limitations which cannot be worked around (or find ways to use them to your advantage if feasible).
+
+## Movement and speed
+
+Movement is controlled overall by the movement state, which is a bitmask determining how and why the character can move.
+
+## Animations
+
+Wherever possible some animations names should be the same across playable characters (or non-playable characters) for ease of scripting.
+
+The character's moving animation will change depending on how fast they're going.
