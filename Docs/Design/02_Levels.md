@@ -26,7 +26,7 @@ Once a player character is instantiated - it *must* be as `/root/Level/Player` -
 
 ## Layers of a level (Z-order)
 
-It's a good idea to create the background for a level - it's backdrop and parallax - as a separate scene and instantiate that within the level; makes it easier to reuse them. The level backdrop (the tiles and other parts that make up a level) should be layers -1 to -3; the parallax for the backdrop (clouds and the like) -4 to -7; and the backdrop proper (the overall background image) -8.
+It's a good idea to create the background for a level - it's backdrop and parallax - as a separate scene and instantiate that within the level; makes it easier to reuse them. The level backdrop (the tiles and other parts that make up a level) should be layers -1 to -3; the parallax for the backdrop (clouds and the like) -4 to -7; and the backdrop proper (the overall background image) -8. The player, collectibles and enemies are on layer 0.
 
 `hud_layer` is used for the HUD layer (which is normally 32). For debugging, `debug_hud_layer` is on layer 99.
 
