@@ -27,3 +27,5 @@ It's a good idea to create the background for a level - it's backdrop and parall
 For everything else it's a good idea to organise it via groups of some description.
 
 **Remember to set the layers/Z-order for everything as needed!**
+
+Once a player character is instantiated - it *must* be as `/root/Level/Player` - it's nodes (such as camera settings) can be adjusted as required to the level's needs.
