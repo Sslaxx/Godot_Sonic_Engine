@@ -55,7 +55,7 @@ The engine code isn\'t designed to *dis*allow anything, because it's bare bones 
 
 ## Level Design
 
-The basic design for levels (zones) places them in two acts, one after the other, in the same level (ala Sonic 3/K). Levels should be able to tell the engine what will happen, what music will play, and so on during normal (basic) gameplay. Developer(s) will need to implement scripted events, music and so on in levels in a way that suits them.
+The basic design for levels defines them as discrete acts (ala Sonic 1/2). Levels should be able to tell the engine what will happen, what music will play, and so on during normal (basic) gameplay. Developer(s) will need to implement scripted events, music and so on in levels in a way that suits them.
 
 ## Control Scheme
 

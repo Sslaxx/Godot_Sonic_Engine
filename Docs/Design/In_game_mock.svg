@@ -170,23 +170,23 @@
       <text
          id="text835-6"
          y="-31.025513"
-         x="384.0412"
+         x="360.75751"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;line-height:125%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.29337013px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
            id="tspan837-0"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
            y="-31.025513"
-           x="384.0412"
+           x="360.75751"
            sodipodi:role="line">Parallax layers over background</tspan><tspan
            id="tspan879"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
            y="-22.224409"
-           x="384.0412"
+           x="360.75751"
            sodipodi:role="line">Layers: -4 to -7</tspan><tspan
            id="tspan881"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
            y="-13.423304"
-           x="384.0412"
+           x="360.75751"
            sodipodi:role="line">Background: -8</tspan></text>
       <path
          inkscape:connector-curvature="0"
@@ -216,19 +216,19 @@
          style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.88011044;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker1490)" />
       <text
          id="text835-6-0"
-         y="264.77002"
-         x="159.59769"
+         y="262.12415"
+         x="149.0145"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;line-height:125%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.29337013px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
            id="tspan881-29"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
-           y="264.77002"
-           x="159.59769"
+           y="262.12415"
+           x="149.0145"
            sodipodi:role="line">Player, enemies, items etc.</tspan><tspan
            id="tspan1557"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
-           y="273.57114"
-           x="159.59769"
+           y="270.92526"
+           x="149.0145"
            sodipodi:role="line">Layer: 0</tspan></text>
       <path
          inkscape:connector-curvature="0"
@@ -242,19 +242,19 @@
          style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.88011044;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <text
          id="text835-6-0-0"
-         y="281.44272"
-         x="159.18124"
+         y="278.79684"
+         x="148.59805"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;line-height:125%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.29337013px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
            id="tspan1557-8"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
-           y="281.44272"
-           x="159.18124"
+           y="278.79684"
+           x="148.59805"
            sodipodi:role="line">Foreground items</tspan><tspan
            id="tspan1696"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
-           y="290.24384"
-           x="159.18124"
+           y="287.59796"
+           x="148.59805"
            sodipodi:role="line">Layers: 1 to 7</tspan></text>
       <ellipse
          ry="19.187939"
