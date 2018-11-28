@@ -1,3 +1,9 @@
+This is the license for the Godot Sonic Engine. This is the MIT "expat"
+license. In short, there's no obligation for anyone using this license to
+release their source code modifications if they don't want to, but this
+notice does have to be included as part of the license terms.
+
+--
 Copyright © 2018- Stuart Moore.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

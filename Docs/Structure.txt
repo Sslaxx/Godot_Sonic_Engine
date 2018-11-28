@@ -4,7 +4,7 @@ Use sub-dirs named by character, concept, usage etc.
 	Builds - executable builds are created here.
 	Docs - design notes and the like are kept in here.
 	Resources - Raw resources used by the project. NOT used directly by the project source.
-	Source - the source files for the project.
+	Source - the source files for the project. The project.godot file is in here.
 		addons - do not use directly; used for external Godot addons that are NOT GDNative.
 		Assets - All physical assets - graphics, models, shaders, music etc.
 			Graphics - All graphical elements here.
