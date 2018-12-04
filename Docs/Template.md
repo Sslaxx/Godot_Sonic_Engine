@@ -2,10 +2,6 @@
 
 Most of the template is covered in [the project structure document](Structure.txt). This covers the system script files `Scripts\System` `Scenes\System`. Won't cover how they work - they're fairly sufficiently documented to hopefully make it obvious. This covers the most basic stuff already in the template and what it's for. Also covers some default files.
 
-## app_space
-
-This `Node` is used for game(play) related variables (anything from scores, lives etc. up), settings (unrelated to application settings, so things like difficulty level would be kept here) and so on.
-
 ## colour_space
 
 Convenience `Node` script containing a list of colours and their RGB values.
@@ -13,6 +9,10 @@ Convenience `Node` script containing a list of colours and their RGB values.
 ## dice_engine
 
 A `Node` script allowing random numbers to be generated as if they were "rolled" by dice.
+
+## game_space
+
+This `Node` is used for game(play) related variables (anything from scores, lives etc. up), settings (unrelated to application settings, so things like difficulty level would be kept here) and so on.
 
 ## global_space
 
