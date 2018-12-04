@@ -1,6 +1,6 @@
 # PLAYER MOVEMENT - how to handle it
 
-### How it works
+## How it works
 
 Velocity and speed should be separate. Velocity (the amount of directional speed the player travels at) is determined by Speed. The direction of the speed is controlled by movement. -1 is left/up (x, y), 0 is none, 1 is down/right.
 
@@ -20,8 +20,8 @@ Movement direction is handled by:
 
 7: jumping is handled differently, so a move line should ultimately be like: `velocity = move_and_slide (velocity)[...])`
 
-### What complicates this?
+## What complicates this?
 
-Complexity is added if different characters with different abilities are playable. A flying character, for example, would need to take into account time in air (if flying) and flight speed, but this *__may__* be (relatively) simple; A character that could climb walls would need additional wall/ceiling/floor detection when wall-climbing and gliding and separate states for these.
+Complexity is added if different characters with different abilities are playable. A flying character, for example, would need to take into account time in air (if flying) and flight speed; a character that could climb walls would need additional wall/ceiling/floor detection when wall-climbing and gliding and separate states for these.
 
-There may well be corner cases/situations I'm not seeing with this idea either.
+There may well be corner cases/situations that are not immediately obvious.

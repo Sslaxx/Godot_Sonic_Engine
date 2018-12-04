@@ -43,6 +43,10 @@ Movement is controlled overall by the movement state, which is a bitmask determi
 
 ## Animations
 
-Wherever possible some animations names should be the same across playable characters (or non-playable characters) for ease of scripting.
+Wherever possible animation names should be the same across playable characters (or non-playable characters) for ease of scripting.
 
 The character's moving animation will change depending on how fast they're going.
+
+## Life and Death
+
+Death is implemented via a sprite node with a Z-index of 99 that has its animation taken from the player character's death animation (relevant to how the player character was killed). The camera is locked in position and the HUD hidden, the animation plays (from the player's position to off-screen). Then, either time over or game over happens if necessary. If game over happens the game is restarted. Otherwise, the player is reset to the last good checkpoint position (by the last checkpoint passed), control is given back, and the game resumes.

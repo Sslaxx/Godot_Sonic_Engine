@@ -16,7 +16,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="In_game_mock.svg">
+   sodipodi:docname="01_In_game_mock.svg">
   <title
      id="title53">Godot Sonic Engine in-game mockup</title>
   <defs
@@ -118,7 +118,8 @@
      id="layer1"
      transform="translate(0,41.666604)">
     <g
-       id="g1381">
+       id="g128"
+       transform="matrix(0.97319752,0,0,0.97319752,6.6104556,4.7092676)">
       <image
          width="375.51376"
          height="201.25191"
@@ -165,8 +166,9 @@
       <path
          inkscape:connector-curvature="0"
          id="path854"
-         d="M 82.716512,226.78808 C 23.293533,218.77458 17.801711,176.89395 10.499531,125.77871 9.4529651,118.45274 5.4942094,106.33821 8.1395003,98.402333 12.485553,85.364171 22.958165,74.714618 27.019755,62.529848 32.167564,47.086425 28.907783,20.600103 28.907783,6.8330912"
-         style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.88011044;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         d="M 82.716512,226.78808 C 59.313943,208.26444 29.525004,86.944957 28.907783,6.8330912"
+         style="fill:none;fill-rule:evenodd;stroke:#ff0000;stroke-width:0.88011044;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:nodetypes="cc" />
       <text
          id="text835-6"
          y="-31.025513"

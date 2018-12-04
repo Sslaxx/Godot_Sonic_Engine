@@ -18,23 +18,23 @@ A level's root node is a `Node2D`, called `Level`. The level script that control
 
 The level data is within the `Tilemap`. This is the tileset and how it's used to construct the level.
 
-`checkpoint_position` is used for restarting the player from a checkpoint if they die; it's also used to indicate the starting position of a level.
+`last_checkpoint` is a reference to the last checkpoint a player passed by and is used to reset the player's position to it if they die; it's also used to indicate the starting position of a level.
 
 For everything else it's a good idea to organise it via groups of some description (both using Node2Ds for grouping and Godot's group functions).
 
 Once a player character is instantiated - it *must* be as `/root/Level/Player` - its nodes (such as camera settings) can be adjusted as required to the level's needs.
 
-## Layers of a level (aka Z-order)
+## Layers of a level (aka Z-index)
 
 It's a good idea to create the background for a level - it's backdrop and parallax - as a separate scene and instantiate that within the level; makes it easier to reuse them.
 
 Assuming a range of layers to be used from -32 to 32:
 - and the backdrop proper (the overall background image) -8;
-- the parallax for the backdrop (clouds and the like) -4 to -7;
+- the parallax for the backdrop (clouds, buildings and the like) -4 to -7;
 - the level backdrop (the tiles and other parts that make up a level) should be layers -1 to -3;
 - the player, collectibles and enemies are on layer 0;
-- foreground elements are layers 1 to 7.
+- foreground elements are layers 1 to 8.
 
 `hud_layer` is used for the HUD layer (which is normally 32). For debugging, `debug_hud_layer` is on layer 99.
 
-**Remember to set the layers/Z-order for everything as needed!**
+**Remember to set the layers/Z-index for everything as needed!**

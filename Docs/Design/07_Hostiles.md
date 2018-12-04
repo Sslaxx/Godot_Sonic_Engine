@@ -2,7 +2,7 @@
 
 ## Overview
 
-"Hostiles" can mean the bad guys the player has to fight against during the game. It can also mean environmental hazards, such as spikes or water that may either damage or kill the player character (immediately or over a period of time) or affect their speed.
+"Hostiles" can mean the bad guys the player has to fight against during the game. It can also mean environmental hazards, such as spikes or water that may either damage or kill the player character (immediately or over a period of time) and/or affect their speed.
 
 ### Enemies (bad guys, bosses etc)
 
