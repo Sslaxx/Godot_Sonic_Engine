@@ -27,7 +27,7 @@
 """
 
 """
-   This script is set up to use "/root/global_space" in the AutoLoad section of the project settings. This sets a global space for
+   This script is set up to use global_space in the AutoLoad section of the project settings. This sets a global space for
    application-wide settings, flags, variables etc. which need to be easily passed around from scene/node to scene/node. It'd be
    better to set up other singletons to use for actual gameplay-related stuff.
 """
@@ -80,7 +80,8 @@ func add_path_to_node (Scene_Path = "", Node_to_Add_to = "/root"):
 """
    go_to_scene
    global_space.go_to_scene (path)
-   Goes to the relevant scene; the scene is a path, so "res://<filename>". You should specify the path as absolute wherever possible.
+   Goes to the relevant scene; the scene is a path, so "res://<filename>".
+   You should specify the path as absolute wherever possible.
    Note that it deletes the previous scene!
    Returns the resultant scene node.
 """
@@ -98,8 +99,8 @@ func go_to_scene (path):
 """
    do_once_only
    global_space.do_once_only (<string>)
-   Does something once only (if the <string> given isn't in the dictionary for do_once_only). After that, it gets added so it won't
-   do it again.
+   Does something once only (if the <string> given isn't in the dictionary for do_once_only). After that, it gets added so it
+   won't do it again.
    Returns true first time round (because it hadn't been done before!), false afterwards.
    Try and avoid using this overly, but shouldn't make too much of an adverse impact on performance if used carefully.
 """
@@ -111,3 +112,4 @@ func do_once_only (do_me):
 	# Not been done, so add it to the dictionary and return true.
 	do_once_dictionary [do_me] = "I_AM_DONE"
 	return (true)
+

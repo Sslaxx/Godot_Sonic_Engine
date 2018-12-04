@@ -17,7 +17,7 @@ Use sub-dirs named by character, concept, usage etc.
 				Jingles - non-looped music files to be used for stings and things like starting a new game, ending an act, game over etc.
 				Music - all looped music. Filenames should include loop offset.
 				Sound - all non-looped sound effects.
-			UI - Theme definitions for the user interface are stored here, along with any graphics/sounds that are *only* used for UI.
+			UI - Theme definitions for the user interface are stored here.
 			Other - any other resource that might not fit any of the other categories. NO UI ELEMENTS.
 		GDNative - do not use directly; used for external Godot addons that ARE GDNative (e.g. external libraries, other languages), in separate folders for each.
 		Scenes - all the "scenes" used in the game. Should mirror Scripts.
