@@ -67,4 +67,4 @@ The engine is basic, so should not inhibit any design techniques to be used, loo
 
 In-game UI should be minimal; at the least a Sonic-style HUD (score/time/items and lives displayed, nothing else) for normal play.
 
-Any UI (both in-game and menus and the like) is up to the imagination of the developer(s) and artist(s) in terms of looks, functionality and use.
+Any other UI (both in-game and menus and the like) is up to the imagination of the developer(s) and artist(s) in terms of looks, functionality and use. This engine won't have any examples.
