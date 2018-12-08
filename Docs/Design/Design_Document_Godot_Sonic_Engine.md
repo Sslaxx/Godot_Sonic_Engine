@@ -3,7 +3,7 @@
 ### Stuart \"Sslaxx\" Moore
 #### 27th November 2018
 
-# 0: OVERVIEW
+# OVERVIEW
 
 ## In general
 
@@ -43,7 +43,13 @@ In-game UI should be minimal; at the least a Sonic-style HUD (score/time/items a
 
 Any other UI (both in-game and menus and the like) is up to the imagination of the developer(s) and artist(s) in terms of looks, functionality and use. This engine won't have any examples.
 
-# 1: LEVELS AND THEIR STRUCTURE
+# THE UI AND HUD
+
+## HUD in general
+
+The root node of the HUD scene is a `CanvasLayer` called `hud_layer`. The layer for it is 32 (normally). By default the HUD displays information about score/time/lives etc. It may also display some information about items collected as need be, e.g. for shields or invincibility.
+
+# LEVELS AND THEIR STRUCTURE
 
 ## In general
 
@@ -55,7 +61,8 @@ That said, if a developer wants to organise things differently - say a "level" b
 
 The level scenes themselves do not inherit anything, but there is a `level_generic.gd` script which contains basic functionality all levels will use, which inherits from `Node2D`; this should be inherited by the script you make for the level.
 
-The scripting inheritance structure should be `your_level_script.gd` -> `level_generic.gd` -> `Node2D`.
+The scripting inheritance structure should be:
+`your_level_script.gd` -> `level_generic.gd` -> `Node2D`.
 
 The level's scripting should handle things like playing the music, custom events and the like. The `level_generic.gd` script should handle checkpoints, starting and ending a level, etc.
 
@@ -71,18 +78,18 @@ For everything else it's a good idea to organise it via groups of some descripti
 
 Once a player character is instantiated - it *must* be as `/root/Level/Player` - its nodes (such as camera settings) can be adjusted as required to the level's needs.
 
-## Layers of a level (aka Z-index)
+## Layers of a level
 
 It's a good idea to create the background for a level - it's backdrop and parallax - as a separate scene and instantiate that within the level; makes it easier to reuse them.
 
-Assuming a range of layers to be used from -32 to 32:
-- and the backdrop proper (the overall background image) -8;
+Assuming Z-index is ranged from -32 to 32:
+- the backdrop proper (the overall background image) -8;
 - the parallax for the backdrop (clouds, buildings and the like) -4 to -7;
 - the level backdrop (the tiles and other parts that make up a level) should be layers -1 to -3;
 - the player, collectibles and enemies are on layer 0;
 - foreground elements are layers 1 to 8.
 
-`hud_layer` is used for the HUD layer (which is normally 32). For debugging, `debug_hud_layer` is on layer 99.
+The `CanvasLayer` that `hud_layer` uses is normally 32. For debugging, `debug_hud_layer` is on layer 99.
 
 **Remember to set the layers/Z-index for everything as needed!**
 
@@ -95,12 +102,12 @@ A level *starts* in `STATE_CUTSCENE` for long enough for a test act card to be s
 When the end-level item is passed:
 - The camera locks in position.
 - `STATE_CUTSCENE` is enabled.
-- Once any animation the end-level item has completed ends, display the "you win this level" bit.
-- Calculate scores, bonuses here etc.
+- Once any animations for the end-level end, display the "you win this level" bit.
+- Calculate appropriate scores, bonuses here etc.
 - Anything else before...
 - ...Changing level (or whatever).
 
-# 2: THE PLAYER SCENE; NODES AND SCRIPT(S)
+# THE PLAYER SCENE; NODES AND SCRIPT(S)
 
 ## In general
 
@@ -110,7 +117,8 @@ The player is a scene which has a root node of the type `KinematicBody2D` which 
 
 Player scenes have a script which inherits from `player_generic.gd`, which in turn inherits `KinematicBody2D`.
 
-The scripting inheritance structure should be `your_player_script.gd` -> `player_generic.gd` -> `KinematicBody2D`.
+The scripting inheritance structure should be:
+`your_player_script.gd` -> `player_generic.gd` -> `KinematicBody2D`.
 
 The `player_generic.gd` script contains all the physics values and functions that will allow the character to function; it will act on the state values given. The `your_player_script.gd` should contain those values that need adjusting for a specific character, and any character-specific functions. How the functions would work is an excersize left to the developer(s). As a physics item most processing should be done within `_physics_process` (or functions called from within it); input should be (mostly) handled by `_input`.
 
@@ -153,7 +161,7 @@ The character's moving animation will change depending on how fast they're going
 
 Death is implemented via a sprite node with a Z-index of 99 that has its animation taken from the player character's death animation (relevant to how the player character was killed). The camera is locked in position and the HUD hidden, the animation plays (from the player's position to off-screen). Then, either time over or game over happens if necessary. If game over happens the game is restarted. Otherwise, the player is reset to the last good checkpoint position (by the last checkpoint passed), control is given back, and the game resumes.
 
-# 3: GENERIC (INDEPENDENT OF CHARACTER) STATES
+# GENERIC (INDEPENDENT OF CHARACTER) STATES
 
 ## In general
 
@@ -183,7 +191,7 @@ If the player is crouching down and presses the jump button, they'll start to sp
 
 No player control is available during a cutscene; if the player character is to move etc. it should be handled by the relevant scene's script (be that a level or something else).
 
-# 4: PLAYER MOVEMENT AND HOW TO HANDLE IT
+# PLAYER MOVEMENT AND HOW TO HANDLE IT
 
 ## How it works
 
@@ -211,7 +219,7 @@ Complexity is added if different characters with different abilities are playabl
 
 There may well be corner cases/situations that are not immediately obvious.
 
-# 5: COLLECTIBLES, POWER-UPS
+# COLLECTIBLES, POWER-UPS
 
 ## In general
 
@@ -225,7 +233,7 @@ Collectibles should have at least exportable variable that defines its points va
 
 Powerups (or downs) are (at least in Sonic type games) usually items that are destroyed (ala Badniks) to give either a temporary or permanent power-up (sometimes down) to the player character, or extra lives or collectibles. This means that (usually) they would be `KinematicBody2D` shapes. Temporary power-ups use a related timer node in `game_space.gd`; for example invincibility may use a timer called `Invincibility_Timer`.
 
-# 6: HOSTILES (ENVIRONMENT AND ENEMIES)
+# HOSTILES (ENVIRONMENT AND ENEMIES)
 
 ## In general
 
@@ -245,17 +253,13 @@ Spikes and pits can be easier to code relatively speaking - both can just react 
 
 Some environmental hazards will have fullscreen effects, like water, and may also affect the player's movement speed.
 
-# 7: SCORE, TIME, LIVES
+# SCORE, TIME, LIVES
 
 ## In general
 
 Sonic and similar games are pretty arcade-like in having a score and lives system. Time can also play an important part (like in Sonic games where each level has a ten minute time limit before losing a life).
 
 There are basic score, items, lives and time variables in `game_space.gd`. These should provide, hopefully, the basis of something more expansive if needed. These use timers, getters and setters to make them work.
-
-## The HUD
-
-The HUD `hud_layer` should show the information about score/time/lives etc. It may also display some information about items collected as need be, e.g. for shields or invincibility.
 
 ## Time
 
@@ -269,7 +273,7 @@ Score gives the player an indication of how well they're doing - the higher the 
 
 Basically, how many chances the player has to get through the game before it ends. Lives can be affected by many things - obvious ones being extra life bonuses or being killed by hazards/hostiles.
 
-# 8: CHECKPOINTS
+# CHECKPOINTS
 
 ## In general
 
@@ -277,6 +281,6 @@ Normally used for if the player character goes past one, then gets killed and re
 
 ## How they work
 
-The player passes by a checkpoint object, and a reference to the checkpoint is stored in a variable (`last_checkpoint`); it's up to any developer(s) if the checkpoint stores any other information. Should the player character be killed, after the death animation a function is called on *the checkpoint* that resets the player character's position to its location and resumes player control.
+The player passes by a checkpoint object (once only), and a reference to that checkpoint is stored in a variable (`last_checkpoint`); it's up to any developer(s) if the checkpoint stores any other information. Should the player character be killed, after the death animation a function is called on *the checkpoint* that resets the player character's position to its location and resumes player control.
 
-When starting a level, at the beginning there should be an invisible checkpoint `start_checkpoint`, on initialisation of the level's script it will make sure the player character is set to its position.
+At the beginning of the level there should be an invisible checkpoint `start_checkpoint`, on initialisation of the level's script it will make sure the player character is set to its position.

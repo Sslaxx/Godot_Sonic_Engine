@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Rings_Symbol.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Time_Symbol.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Score_Symbol.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Sonic_Lives_Icon.png" type="Texture" id=4]
+
+[node name="hud_layer" type="CanvasLayer" index="0"]
+
+layer = 32
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+
+[node name="Rings_Symbol" type="Sprite" parent="." index="0"]
+
+position = Vector2( 4, 4 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+centered = false
+hframes = 2
+_sections_unfolded = [ "Transform" ]
+
+[node name="Time_Symbol" type="Sprite" parent="." index="1"]
+
+position = Vector2( 4, 16 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 2 )
+centered = false
+hframes = 2
+
+[node name="Score_Symbol" type="Sprite" parent="." index="2"]
+
+position = Vector2( 4, 28 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 3 )
+centered = false
+_sections_unfolded = [ "Offset" ]
+
+[node name="Lives_Symbol" type="Sprite" parent="." index="3"]
+
+position = Vector2( 4, 210 )
+texture = ExtResource( 4 )
+centered = false
+_sections_unfolded = [ "Transform" ]
+
+
