@@ -18,7 +18,7 @@
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
    sodipodi:docname="01_In_game_mock.svg">
   <title
-     id="title53">Godot Sonic Engine in-game mockup</title>
+     id="title53">Godot Sonic Engine</title>
   <defs
      id="defs2">
     <marker
@@ -87,9 +87,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.62153846"
-     inkscape:cx="960"
-     inkscape:cy="638.57143"
+     inkscape:zoom="0.62697013"
+     inkscape:cx="961.32426"
+     inkscape:cy="637.93317"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -108,7 +108,12 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Godot Sonic Engine in-game mockup</dc:title>
+        <dc:title>Godot Sonic Engine</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Stuart Moore</dc:title>
+          </cc:Agent>
+        </dc:creator>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -119,7 +124,7 @@
      transform="translate(0,41.666604)">
     <g
        id="g128"
-       transform="matrix(0.97319752,0,0,0.97319752,6.6104556,4.7092676)">
+       transform="matrix(0.88120894,0,0,0.87804893,26.294025,16.730701)">
       <image
          width="375.51376"
          height="201.25191"

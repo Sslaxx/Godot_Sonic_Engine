@@ -28,11 +28,12 @@
 
 """
    Game(play) related functions and variables that are used throughout the entire game.
+   Also certain things (like timers) that are used globally.
 """
 
 extends Node
 
 func _ready ():
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Make it unavoidably obvious if debug mode is enabled.
-		printerr (get_script ().resource_path, " ready.")
+		printerr ("Game-space ready.")
 	return
