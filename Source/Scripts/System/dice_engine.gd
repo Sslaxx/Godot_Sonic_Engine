@@ -64,7 +64,7 @@ func randi_range (Lower = 1, Upper = 100):
 	if (Lower < Upper):
 		return ((randi () % (1+Upper-Lower))+Lower)
 	# If for some reason Upper is less than Lower (or the same value), print an error to the console and return 0.
-	printerr ("ERROR: Upper cannot be less than (or equal to) Lower; returning 0.")
+	printerr ("ERROR: Upper cannot be less than (or equal to) Lower in randi_range; returning 0.")
 	return (0)
 
 # init_dice_engine

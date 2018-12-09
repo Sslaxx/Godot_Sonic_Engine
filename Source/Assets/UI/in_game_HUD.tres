@@ -1,12 +1,12 @@
 [gd_resource type="Theme" load_steps=3 format=2]
 
-[ext_resource path="res://Assets/Graphics/Fonts/DroidSans.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Assets/Graphics/Fonts/Vipnagor.ttf" type="DynamicFontData" id=1]
 
 [sub_resource type="DynamicFont" id=1]
 
-size = 16
+size = 13
 use_mipmaps = false
-use_filter = true
+use_filter = false
 font_data = ExtResource( 1 )
 
 [resource]

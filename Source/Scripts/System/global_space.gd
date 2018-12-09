@@ -28,8 +28,9 @@
 
 """
    This script is set up to use global_space in the AutoLoad section of the project settings. This sets a global space for
-   application-wide settings, flags, variables etc. which need to be easily passed around from scene/node to scene/node. It'd be
-   better to set up other singletons to use for actual gameplay-related stuff.
+   application-wide settings, flags, variables etc. which need to be easily passed around from scene/node to scene/node.
+
+   For gameplay-related variables and functions, use game_space.tscn/gd.
 """
 
 extends Node
@@ -46,8 +47,8 @@ onready var do_once_dictionary = {
 
 func _ready ():
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Make it unavoidably obvious if debug mode is enabled.
-		OS.alert ("Debug mode is ENABLED", "DEBUG BUILD")
 		printerr ("Global script loaded.")
+		OS.alert ("Debug mode is ENABLED", "DEBUG BUILD")
 	Engine.target_fps = 60	# Make the game aim for 60fps (maximum).
 	return
 

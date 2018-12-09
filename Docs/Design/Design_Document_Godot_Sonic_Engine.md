@@ -47,7 +47,9 @@ Any other UI (both in-game and menus and the like) is up to the imagination of t
 
 ## HUD in general
 
-The root node of the HUD scene is a `CanvasLayer` called `hud_layer`. The layer for it is 32 (normally). By default the HUD displays information about score/time/lives etc. It may also display some information about items collected as need be, e.g. for shields or invincibility.
+The root node of the HUD scene is a `CanvasLayer` called `hud_layer`, with a selection of sprites and labels for score/time/lives/collectibles; some of these sprites are animated (so can flash as a warning for example; "default" for normal and "warning" for the obvious). The layer for it is 32 (normally). The HUD could also be made to display some information about items collected as need be, e.g. for shields or invincibility.
+
+`game_space.gd` has a function called `update_hud` which in turn calls the function `hud_layer_update` (should the HUD node exist in the scene tree) which updates the HUD items as necessary.
 
 # LEVELS AND THEIR STRUCTURE
 
@@ -73,6 +75,8 @@ A level's root node is a `Node2D`, called `Level`. The level script that control
 The level data is within the `Tilemap`. This is the tileset and how it's used to construct the level.
 
 `last_checkpoint` is a reference to the last checkpoint a player passed by and is used to reset the player's position to it if they die; it's also used to indicate the starting position of a level.
+
+A level should have a `Camera` node. This is normally unused - the player node's own camera node takes precedence - but can be used for cutscenes etc.
 
 For everything else it's a good idea to organise it via groups of some description (both using Node2Ds for grouping and Godot's group functions).
 
@@ -107,6 +111,26 @@ When the end-level item is passed:
 - Anything else before...
 - ...Changing level (or whatever).
 
+# SCORE, TIME, LIVES
+
+## In general
+
+Sonic and similar games are pretty arcade-like in having a score and lives system. Time can also play an important part (like in Sonic games where each level has a ten minute time limit before losing a life).
+
+There are basic score, items, lives and time variables in `game_space.gd`. These should provide, hopefully, the basis of something more expansive if needed. These use timers, getters and setters to make them work (setters will perform whatever animations are required, update the HUD etc).
+
+## Time
+
+Time is stored in a `Vector2` called `level_time` (with x representing minutes, y seconds). `game_space.gd` has an attached timer called, simply, `Timer`, set to repeat every second. Every time it does, it advances the `level_time` variable. How this affects the game beyond showing the player how long they've been in a level is up to any developer(s). Sonic games have a ten minute limit for their levels.
+
+## Score
+
+Score gives the player an indication of how well they're doing - the higher the score the better.
+
+## Lives
+
+Basically, how many chances the player has to get through the game before it ends. Lives can be affected by many things - obvious ones being extra life bonuses or being killed by hazards/hostiles.
+
 # THE PLAYER SCENE; NODES AND SCRIPT(S)
 
 ## In general
@@ -121,6 +145,10 @@ The scripting inheritance structure should be:
 `your_player_script.gd` -> `player_generic.gd` -> `KinematicBody2D`.
 
 The `player_generic.gd` script contains all the physics values and functions that will allow the character to function; it will act on the state values given. The `your_player_script.gd` should contain those values that need adjusting for a specific character, and any character-specific functions. How the functions would work is an excersize left to the developer(s). As a physics item most processing should be done within `_physics_process` (or functions called from within it); input should be (mostly) handled by `_input`.
+
+## Determining who the player character is
+
+`game_space.gd` has a global variable `player_character` which is set by the `_ready` function of `your_player_script.gd` to point to the node in question.
 
 ## Values defined by player_generic.gd/custom player character scripts
 
@@ -165,7 +193,7 @@ Death is implemented via a sprite node with a Z-index of 99 that has its animati
 
 ## In general
 
-These are the basic states that are used by the code, as bitmask values. Custom states - for example, character-specific states, e.g. `STATE_KNUCKLES_GLIDING` - should be documented by whoever is developing the game.
+These are the basic states that are used by the code, as bitmask values, to control characters. Custom states - for example, character-specific states, e.g. `STATE_KNUCKLES_GLIDING` - should be documented by whoever is developing the game.
 
 ## STATE_IDLE (0)
 
@@ -252,26 +280,6 @@ Some enemies may have multiple components - rising spikes, or firing bullets. So
 Spikes and pits can be easier to code relatively speaking - both can just react to the player's colliding with their collision shapes. Hazards like water may be more difficult. A simple way to code water is to make it lethal upon entry. But most Sonic-type games have water be a hazard over time - after a certain point the player character will drown. For spikes or pits, `Area2D` and/or `StaticBody2D` may be most useful.
 
 Some environmental hazards will have fullscreen effects, like water, and may also affect the player's movement speed.
-
-# SCORE, TIME, LIVES
-
-## In general
-
-Sonic and similar games are pretty arcade-like in having a score and lives system. Time can also play an important part (like in Sonic games where each level has a ten minute time limit before losing a life).
-
-There are basic score, items, lives and time variables in `game_space.gd`. These should provide, hopefully, the basis of something more expansive if needed. These use timers, getters and setters to make them work.
-
-## Time
-
-Time is stored in a `Vector2` called `Level_Time` (with x representing minutes, y seconds). `game_space.gd` has an attached timer called, simply, `Timer`, set to repeat every second. Every time it does, it advances the `Level_Time` variable. How this affects the game beyond showing the player how long they've been in a level is up to any developer(s). Sonic games have a ten minute limit for their levels.
-
-## Score
-
-Score gives the player an indication of how well they're doing - the higher the score the better.
-
-## Lives
-
-Basically, how many chances the player has to get through the game before it ends. Lives can be affected by many things - obvious ones being extra life bonuses or being killed by hazards/hostiles.
 
 # CHECKPOINTS
 
