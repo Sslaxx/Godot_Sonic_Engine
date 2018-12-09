@@ -41,8 +41,10 @@ var level_time = Vector2 (0, 0)	# Time passed in the level so far. x is minutes,
 var lives = DEFAULT_LIVES setget set_lives, get_lives			# Controls the lives the player has.
 var score = 0 setget set_score, get_score						# What the player's score is.
 var collectibles = 0 setget set_collectibles, get_collectibles	# The collectibles the player has.
+var collectibles_lives = 0										# Used to keep track of items for lives.
 
 onready var player_character = null		# Who is the player character? Set up by player_<character name>.gd script in its _ready.
+onready var last_checkpoint = null		# The last checkpoint passed by the player.
 
 func _ready ():
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
@@ -53,9 +55,10 @@ func _ready ():
 """
    update_hud
 
-   Updates the in-game HUD (if it's there to update).
+   Updates the in-game HUD (if it's there to update) by calling its hud_layer_update function.
 
-   This is called mainly by the setters. It's also called by timer signals.
+   This is called mainly by the setters. It's also called by timer signals. ONLY this function should be used by any function
+   that needs to update the HUD.
 """
 func update_hud ():
 	if (has_node ("/root/Level/hud_layer")):
@@ -75,6 +78,21 @@ func update_level_timer ():
 	update_hud ()
 	return
 
+"""
+   reset_game_space
+
+   As singletons are not reset by restarting an application, they have to be handled manually.
+"""
+func reset_game_space ():
+	level_time = Vector2 (0, 0)
+	lives = DEFAULT_LIVES
+	score = 0
+	collectibles = 0
+	collectibles_lives = 0
+	player_character = null
+	last_checkpoint = null
+	return
+
 ### SETTERS AND GETTERS.
 
 ## For the lives.
@@ -92,7 +110,14 @@ func get_lives ():
 
 # Handles collecting items, and what to do when a certain number is reached if anything.
 func set_collectibles (value):
+	if (value > collectibles):		# Collected something, so add what the difference is to the items-for-lives-counter.
+		collectibles_lives += (value - collectibles)
+	else:							# Lost items, so set the items-for-lives-counter to the new value.
+		collectibles_lives = value
 	collectibles = value
+	while (collectibles_lives > DEFAULT_COLLECTIBLES_PER_LIFE):	# Collected enough for at least one extra life!
+		game_space.lives += 1
+		collectibles_lives -= DEFAULT_COLLECTIBLES_PER_LIFE
 	update_hud ()
 	return
 

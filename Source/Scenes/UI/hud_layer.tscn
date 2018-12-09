@@ -83,7 +83,7 @@ tracks/0/keys = {
 "values": [ 1, 0, 1, 0 ]
 }
 
-[node name="hud_layer" type="CanvasLayer" index="0"]
+[node name="hud_layer" type="CanvasLayer"]
 
 layer = 32
 offset = Vector2( 0, 0 )
@@ -184,7 +184,7 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 theme = ExtResource( 6 )
-text = "59:59"
+text = "59:59.9"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1

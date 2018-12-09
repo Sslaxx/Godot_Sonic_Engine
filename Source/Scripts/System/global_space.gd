@@ -61,7 +61,7 @@ func _ready ():
 """
 func add_child_to_node (Scene_Instance = null, Node_to_Add_to = "/root"):
 	# Don't expect this to work properly (or at all) if you forget to create an *instance* of the scene to pass here!
-	get_node (Node_to_Add_to).add_child (Scene_Instance)
+	get_node (Node_to_Add_to).call_deferred ("add_child", Scene_Instance)
 	return
 
 """

@@ -27,13 +27,17 @@
 """
 
 """
-   Main scene's (the first scene loaded) script.
+   This is the generic level code. All levels extend from this script. It handles all the generica that's common between levels -
+   starting and ending, checkpoints, which player character to use etc.
 """
 
 extends Node2D
 
 func _ready ():
-	if (OS.is_debug_build ()):
-		printerr (get_script ().resource_path, " ready.")
-	global_space.go_to_scene ("res://Scenes/Levels/level_test.tscn")
+	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Ensure the debug HUD is added to the scene.
+		printerr ("Generic level functionality ready.")
+		global_space.add_path_to_node ("res://Scenes/UI/debug_hud_layer.tscn", "/root/Level")
+	# Add the HUD to the scene.
+	global_space.add_path_to_node ("res://Scenes/UI/hud_layer.tscn", "/root/Level")
+	game_space.get_node ("Timer").start ()	# Start the level timer.
 	return

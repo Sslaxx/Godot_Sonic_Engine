@@ -27,13 +27,21 @@
 """
 
 """
-   Main scene's (the first scene loaded) script.
+   The debugging HUD layer. Whatever information is considered useful is put on this layer.
+
+   As this gets called every frame it could potentially eat up a lot of processing power. This should only ever be instantiated
+   by the level_generic.gd script if OS.is_debug_build is true.
 """
 
-extends Node2D
+extends CanvasLayer
 
 func _ready ():
 	if (OS.is_debug_build ()):
-		printerr (get_script ().resource_path, " ready.")
-	global_space.go_to_scene ("res://Scenes/Levels/level_test.tscn")
+		printerr ("Debugging HUD layer ready on canvas layer ", layer, ".")
+	return
+
+func _process (delta):
+	var prettied_text = ""
+	prettied_text = "FPS: " + var2str (int (Engine.get_frames_per_second ()))
+	$FPS.text = prettied_text
 	return

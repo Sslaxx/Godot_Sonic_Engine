@@ -51,6 +51,10 @@ The root node of the HUD scene is a `CanvasLayer` called `hud_layer`, with a sel
 
 `game_space.gd` has a function called `update_hud` which in turn calls the function `hud_layer_update` (should the HUD node exist in the scene tree) which updates the HUD items as necessary.
 
+## The debugging HUD
+
+This HUD is called `debug_hud_layer`, used for displaying debug information during game play. It is only instantiated by `level_generic.gd` if `OS.is_debug_build` returns true.
+
 # LEVELS AND THEIR STRUCTURE
 
 ## In general
@@ -76,7 +80,7 @@ The level data is within the `Tilemap`. This is the tileset and how it's used to
 
 `last_checkpoint` is a reference to the last checkpoint a player passed by and is used to reset the player's position to it if they die; it's also used to indicate the starting position of a level.
 
-A level should have a `Camera` node. This is normally unused - the player node's own camera node takes precedence - but can be used for cutscenes etc.
+A level should have a `Camera2D` node. This is normally unused - the player scene's own `Camera2D` node takes precedence - but can be used for cutscenes etc.
 
 For everything else it's a good idea to organise it via groups of some description (both using Node2Ds for grouping and Godot's group functions).
 
@@ -89,11 +93,11 @@ It's a good idea to create the background for a level - it's backdrop and parall
 Assuming Z-index is ranged from -32 to 32:
 - the backdrop proper (the overall background image) -8;
 - the parallax for the backdrop (clouds, buildings and the like) -4 to -7;
-- the level backdrop (the tiles and other parts that make up a level) should be layers -1 to -3;
-- the player, collectibles and enemies are on layer 0;
-- foreground elements are layers 1 to 8.
+- the level backdrop (the tiles and other parts that make up a level) should be -1 to -3;
+- the level scene itself, player, collectibles and enemies are on 0;
+- foreground elements are 1 to 8.
 
-The `CanvasLayer` that `hud_layer` uses is normally 32. For debugging, `debug_hud_layer` is on layer 99.
+The `CanvasLayer` that `hud_layer` uses normally has its layer set to 32. For debugging, `debug_hud_layer` is on layer 99.
 
 **Remember to set the layers/Z-index for everything as needed!**
 
@@ -167,13 +171,15 @@ These should include:
 
 Default values only should be in `player_generic.gd`. Speeds/heights etc. should be in pixels per second.
 
-## Nodes used by the player scene
+## Camera
 
-All physics bodies need a collision shape of some type; what works best depends on your project. All player characters use `AnimatedSprite` to deal with sprites and their animations; every sprite has animations common to them and these must be given the same names across different player characters. Players need a custom `Camera2D` in order to allow scrolling to work; levels can adjust this node as necessary for them to scroll correctly.
+The player scene has a `Camera2D` node which allows the level to scroll with the player. It's `limit_` settings should be adjusted by whatever level the player is in to fit the boundaries of the level.
 
 ## Physics
 
 Wherever possible the default collision functions should be used - `is_on_floor` and the like. Look at gotchas about these functions - for example, it sounds like `is_on_floor` and its relations can only be used if the player is moving (not particularly surprising if so as a lot of other physics-based functionality has the same restriction) - and try to find (actually working) workarounds, and to stick within limitations which cannot be worked around (or find ways to use them to your advantage if feasible).
+
+All physics bodies need a collision shape of some type; what works best depends on your project. Multiple collision shapes may also be necessary.
 
 ## Movement and speed
 
@@ -181,7 +187,7 @@ Movement is controlled overall by the movement state, which is a bitmask determi
 
 ## Animations
 
-Wherever possible animation names should be the same across playable characters (or non-playable characters) for ease of scripting.
+All player characters use `AnimatedSprite` to deal with sprites and their animations; every sprite has animations common to them and these must be given the same names across different player characters.
 
 The character's moving animation will change depending on how fast they're going.
 
@@ -257,9 +263,11 @@ Most Sonic-type games have one type of collectible that counts towards an extra 
 
 Collectibles should have at least exportable variable that defines its points value. Beyond that is up to any developers. They should also not (usually) impact on physics - that is, they do not slow the player down on impact or the like. They should be `Area2D`s.
 
+Collectibles are kept check of by two variables, `collectibles` and `collectibles_lives`. The latter variable is used to keep track of how many items towards the next life bonus the player has collected. By default the player is not aware of what this variable's value is.
+
 ### Powerups
 
-Powerups (or downs) are (at least in Sonic type games) usually items that are destroyed (ala Badniks) to give either a temporary or permanent power-up (sometimes down) to the player character, or extra lives or collectibles. This means that (usually) they would be `KinematicBody2D` shapes. Temporary power-ups use a related timer node in `game_space.gd`; for example invincibility may use a timer called `Invincibility_Timer`.
+Powerups (or downs) are (at least in Sonic type games) usually items that are destroyed (ala Badniks) to give either a temporary or permanent power-up (sometimes down) to the player character, or extra lives or collectibles. This means that (usually) they would be `KinematicBody2D` shapes. Temporary power-ups should use a related timer node created in `game_space.gd`; for example invincibility may use a timer called `Invincibility_Timer`.
 
 # HOSTILES (ENVIRONMENT AND ENEMIES)
 

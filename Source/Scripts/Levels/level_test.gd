@@ -27,13 +27,13 @@
 """
 
 """
-   Main scene's (the first scene loaded) script.
+   Just the script to the test level, to make sure scripts are working as they should. Normally this type of script would handle
+   things specific to a level.
+
+   All these scripts MUST inherit from level_generic.gd, which in turn inherits from Node2D.
 """
 
-extends Node2D
+extends "res://Scripts/Levels/level_generic.gd"
 
-func _ready ():
-	if (OS.is_debug_build ()):
-		printerr (get_script ().resource_path, " ready.")
-	global_space.go_to_scene ("res://Scenes/Levels/level_test.tscn")
-	return
+func _ready():
+	pass

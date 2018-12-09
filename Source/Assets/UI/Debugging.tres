@@ -1,0 +1,15 @@
+[gd_resource type="Theme" load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Graphics/Fonts/DroidSans.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 10
+use_mipmaps = false
+use_filter = true
+font_data = ExtResource( 1 )
+
+[resource]
+
+default_font = SubResource( 1 )
+
