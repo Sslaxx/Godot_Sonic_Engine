@@ -1,17 +1,17 @@
 # Godot Sonic Engine
 ## Sonic-feeling 2D platformer engine
-### Stuart \"Sslaxx\" Moore
+### Stuart "Sslaxx" Moore
 #### 27th November 2018
 
 # OVERVIEW
 
 ## In general
 
-This isn\'t a game; it\'s an engine/framework on which to build games from using [Godot](https://godotengine.org/). By design, games that are Sonic-like. It is intended to allow at the very least play as a Sonic-type game through multiple 2D levels. Developers should document the things for their game; this is just the design docs for the framework. It's intended to function as a good, solid base for 2D platformers that are styled after the classic Megadrive Sonic games, that can be extended in any way the developer is able to, with minimal (or preferably no) external dependencies (such as those of GDNative/C\#) and can be as cross-platform as Godot supports.
+This isn't a game; it's an engine/framework on which to build games from using [Godot](https://godotengine.org/). By design, games that are Sonic-like. It is intended to allow at the very least play as a Sonic-type game through multiple 2D levels. Developers should document the things for their game; this is just the design docs for the framework. It's intended to function as a good, solid base for 2D platformers that are styled after the classic Megadrive Sonic games, that can be extended in any way the developer is able to, with minimal (or preferably no) external dependencies (such as those of GDNative/C#) and can be as cross-platform as Godot supports.
 
 ## Platform support
 
-The engine is written in Godot, so depending on the author\'s wishes the following may be supported:
+The engine is written in Godot, so depending on the author's wishes the following may be supported:
 - Windows
 - macOS
 - Linux
@@ -25,7 +25,7 @@ The basic mechanics of the game engine are designed to be reminiscent of classic
 
 This starts with **characters** and their **attributes**; the engine will include a default (Sonic), but beyond that is the call of the developer(s). **Game modes** can be arcade-style, or story, or anything else the developer(s) want (e.g., time attacks). Ditto the **scoring system**.
 
-The engine code isn\'t designed to *dis*allow anything, because it's bare bones beyond having a basic lives/time/score/collectibles system; it\'s up to the developer(s) to have sufficient knowledge and experience to implement features in a way they want, in a way that\'ll fit with everything else.
+The engine code isn't designed to *dis*allow anything, because it's bare bones beyond having a basic lives/time/score/collectibles system; it's up to the developer(s) to have sufficient knowledge and experience to implement features in a way they want, in a way that'll fit with everything else.
 
 ## Level Design
 
@@ -45,7 +45,7 @@ Any other UI (both in-game and menus and the like) is up to the imagination of t
 
 # THE UI AND HUD
 
-## HUD in general
+## The in-game HUD
 
 The root node of the HUD scene is a `CanvasLayer` called `hud_layer`, with a selection of sprites and labels for score/time/lives/collectibles; some of these sprites are animated (so can flash as a warning for example; "default" for normal and "warning" for the obvious). The layer for it is 32 (normally). The HUD could also be made to display some information about items collected as need be, e.g. for shields or invincibility.
 
