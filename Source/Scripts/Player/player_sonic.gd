@@ -27,8 +27,7 @@
 """
 
 """
-   This is the generic player code. All player characters extend from this script. It handles all the generica that's common
-   between them, primarily movement.
+   This is the code for Sonic.
 """
 
 extends "res://Scripts/Player/player_generic.gd"

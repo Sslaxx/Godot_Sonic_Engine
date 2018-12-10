@@ -36,4 +36,5 @@
 extends "res://Scripts/Levels/level_generic.gd"
 
 func _ready():
+	global_space.add_path_to_node ("res://Scenes/Player/player_sonic.tscn", "/root/Level")
 	pass
