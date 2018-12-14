@@ -92,8 +92,10 @@ func _ready ():
 	return
 
 func _input (event):
-	# First things first: find out which direction the player is moving in.
+	# Find out which direction the player is moving in.
 	moving_in = ("left" if Input.is_action_pressed ("move_left") else ("right" if Input.is_action_pressed ("move_right") else "nil"))
+	if (player_state & STATE_CUTSCENE):	# Unless there's a cutscene playing, in which case negate any and all movement.
+		moving_in = "nil"
 	# Set the movement state and direction as required.
 	match (moving_in):
 		"left":
@@ -132,7 +134,7 @@ func _physics_process (delta):
 			movement_direction = -1
 		if ((player_state & STATE_MOVE_RIGHT) && moving_in == "right"):	# Yes, to the right.
 			movement_direction = 1
-		if (moving_in == "nil"):										# No, so set idle.
+		if (moving_in == "nil" && !(player_state & STATE_CUTSCENE)):	# No, so set idle (if not in a cutscene).
 			player_state = STATE_IDLE
 			movement_direction = 0
 	if (player_speed > 0):
@@ -144,7 +146,8 @@ func _physics_process (delta):
 			change_anim ("run")
 	else:
 			change_anim ("idle")
-	printerr (player_speed, " ", movement_direction, " ", moving_in, " ", player_state)
+	velocity.x = (player_speed * movement_direction)
+	velocity = move_and_slide (velocity, floor_normal)
 	return
 
 """

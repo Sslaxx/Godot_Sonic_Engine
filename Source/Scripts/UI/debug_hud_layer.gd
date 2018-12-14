@@ -38,10 +38,29 @@ extends CanvasLayer
 func _ready ():
 	if (OS.is_debug_build ()):
 		printerr ("Debugging HUD ready on canvas layer ", layer, ".")
+	else:
+		queue_free ()	# This shouldn't be used if debugging isn't on, so delete it from the scene tree.
 	return
 
 func _process (delta):
-	var prettied_text = ""
+	if (game_space.player_character == null):	# No player character, no point in updating!
+		return
+	var prettied_text = ""	# Used for formatting the text for the labels.
+	# First up, show the frames per second.
 	prettied_text = "FPS: " + var2str (int (Engine.get_frames_per_second ()))
 	$FPS.text = prettied_text
+	# How fast is the player character moving?
+	prettied_text = "SPEED: " + var2str (int (game_space.player_character.player_speed))
+	$Speed.text = prettied_text
+	# What direction?
+	prettied_text = "DIRECTION: " + game_space.player_character.moving_in
+	$Direction.text = prettied_text
+	# What's the velocity?
+	prettied_text = "VELOCITY: " + var2str (int (game_space.player_character.velocity.x))
+	prettied_text += ", " + var2str (int (game_space.player_character.velocity.y))
+	$Velocity.text = prettied_text
+	# And where are they in the scene?
+	prettied_text = "POSITION: " + var2str (int (game_space.player_character.position.x))
+	prettied_text += ", " + var2str (int (game_space.player_character.position.y))
+	$Position.text = prettied_text
 	return
