@@ -213,7 +213,7 @@ Movement direction is handled by:
 
 5: if stopped, and the movement state is different from `movement_direction`, change `movement_direction` to reflect the movement state and start to accelerate. Unless `moving_in` is nil *and* the player is on a floor surface, in which case set `movement_direction` to 0 and movement state to `STATE_IDLE` instead.
 
-6: speed is positive only - direction is handled by `movement_direction` (i.e., it has values from -1 to 1). This *should* eliminate the need for abs checks; the only time the direction vector needs to be used should be `move_and_slide`. Ultimately, velocity on the x-axis should be set to speed ala `velocity.x = player_speed * movement_direction`
+6: speed is positive only - direction is handled by `movement_direction` (i.e., it has values from -1 to 1). Ultimately, velocity on the x-axis should be set ala `velocity.x = player_speed * movement_direction`
 
 7: jumping is handled differently, so a move line should ultimately be like: `velocity = move_and_slide (velocity)[...])`
 
