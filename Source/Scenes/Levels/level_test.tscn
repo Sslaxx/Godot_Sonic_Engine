@@ -3,7 +3,7 @@
 [ext_resource path="res://Scripts/Levels/level_test.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Levels/platform_test.tscn" type="PackedScene" id=2]
 
-[node name="Level" type="Node2D"]
+[node name="Level" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 

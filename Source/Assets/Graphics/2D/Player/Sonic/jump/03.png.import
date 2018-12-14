@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/sonic_jump_3.png-4599ed7fd071115131168a9764ea4a88.stex"
+path="res://.import/03.png-0b0109a6c05d8ddbeab70563e0072434.stex"
 
 [deps]
 
-source_file="res://Assets/Graphics/2D/Player/Sonic/jump/sonic_jump_3.png"
-dest_files=[ "res://.import/sonic_jump_3.png-4599ed7fd071115131168a9764ea4a88.stex" ]
+source_file="res://Assets/Graphics/2D/Player/Sonic/jump/03.png"
+dest_files=[ "res://.import/03.png-0b0109a6c05d8ddbeab70563e0072434.stex" ]
 
 [params]
 
@@ -25,5 +25,5 @@ process/premult_alpha=false
 process/HDR_as_SRGB=false
 stream=false
 size_limit=0
-detect_3d=false
+detect_3d=true
 svg/scale=1.0

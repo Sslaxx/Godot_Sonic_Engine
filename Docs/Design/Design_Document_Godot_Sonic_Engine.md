@@ -86,7 +86,7 @@ For everything else it's a good idea to organise it via groups of some descripti
 
 Once a player character is instantiated - it *must* be as `/root/Level/Player` - its nodes (such as camera settings) can be adjusted as required to the level's needs.
 
-## Layers of a level
+## Layers and Z-index of a level
 
 It's a good idea to create the background for a level - it's backdrop and parallax - as a separate scene and instantiate that within the level; makes it easier to reuse them.
 
