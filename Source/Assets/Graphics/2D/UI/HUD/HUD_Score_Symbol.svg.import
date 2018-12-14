@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/HUD_Rings_Symbol.png-dbb187c18b9040b61517de41dcbeb19d.stex"
+path="res://.import/HUD_Score_Symbol.svg-95d9ea479b82a88f96e946a72c3ad5d6.stex"
 
 [deps]
 
-source_file="res://Assets/Graphics/2D/UI/HUD/HUD_Rings_Symbol.png"
-dest_files=[ "res://.import/HUD_Rings_Symbol.png-dbb187c18b9040b61517de41dcbeb19d.stex" ]
+source_file="res://Assets/Graphics/2D/UI/HUD/HUD_Score_Symbol.svg"
+dest_files=[ "res://.import/HUD_Score_Symbol.svg-95d9ea479b82a88f96e946a72c3ad5d6.stex" ]
 
 [params]
 

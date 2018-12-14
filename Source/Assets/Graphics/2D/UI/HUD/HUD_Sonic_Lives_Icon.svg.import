@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/HUD_Time_Symbol.png-2694cc851a410e5053221e14ade22f58.stex"
+path="res://.import/HUD_Sonic_Lives_Icon.svg-72900cd432e7edc429645aec6de080f4.stex"
 
 [deps]
 
-source_file="res://Assets/Graphics/2D/UI/HUD/HUD_Time_Symbol.png"
-dest_files=[ "res://.import/HUD_Time_Symbol.png-2694cc851a410e5053221e14ade22f58.stex" ]
+source_file="res://Assets/Graphics/2D/UI/HUD/HUD_Sonic_Lives_Icon.svg"
+dest_files=[ "res://.import/HUD_Sonic_Lives_Icon.svg-72900cd432e7edc429645aec6de080f4.stex" ]
 
 [params]
 

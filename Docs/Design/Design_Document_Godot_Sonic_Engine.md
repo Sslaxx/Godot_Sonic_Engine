@@ -183,17 +183,45 @@ All physics bodies need a collision shape of some type; what works best depends 
 
 ## Movement and speed
 
-Movement is controlled overall by the movement state, which is a bitmask determining how and why the character can move. The movement state and direction will dictate how the speed is worked out.
+Movement is controlled overall by the movement state, which is a bitmask determining how and why the character can move. The movement state and direction will dictate how the speed is worked out. The movement state is the direction the player *is going to move in*; the movement direction variable the direction the player *is currently moving in*. All speed variables are measured by pixels per second.
 
 ## Animations
 
 All player characters use `AnimatedSprite` to deal with sprites and their animations; every sprite has animations common to them and these must be given the same names across different player characters.
 
-The character's moving animation will change depending on how fast they're going.
+The character's moving animation will change depending on how fast they're going, and what animation is playing should ultimately be controlled by player state.
 
 ## Life and Death
 
 Death is implemented via a sprite node with a Z-index of 99 that has its animation taken from the player character's death animation (relevant to how the player character was killed). The camera is locked in position and the HUD hidden, the animation plays (from the player's position to off-screen). Then, either time over or game over happens if necessary. If game over happens the game is restarted. Otherwise, the player is reset to the last good checkpoint position (by the last checkpoint passed), control is given back, and the game resumes.
+
+# PLAYER MOVEMENT AND HOW TO HANDLE IT
+
+## How it works
+
+Velocity and speed should be separate. Velocity (the amount of directional speed the player travels at) is determined by Speed. The direction of the speed is controlled by movement. -1 is left/up (x, y), 0 is none, 1 is down/right.
+
+Movement direction is handled by:
+
+1: `moving_in` - string variable holding a value about which direction has been pressed. `moving_in = ("left" if Input.is_action_pressed ("move_left") else ("right" if Input.is_action_pressed ("move_right") else "nil"))`
+
+2: relevant state is set for which direction, movement direction value `movement_direction` is set to the appropriate value (if it isn't already set to the opposite value that is). `enum MovementState` `player_state`
+
+3: so long as `moving_in` is not nil, increase acceleration `player_speed` up to the maximum `maximum_player_speed`.
+
+4: if `moving_in` is nil for any reason, decelerate using `decelerate_no_movement_rate`. If `movement_direction` is different from the movement state, decelerate using `decelerate_rate`.
+
+5: if stopped, and the movement state is different from `movement_direction`, change `movement_direction` to reflect the movement state and start to accelerate. Unless `moving_in` is nil *and* the player is on a floor surface, in which case set `movement_direction` to 0 and movement state to `STATE_IDLE` instead.
+
+6: speed is positive only - direction is handled by `movement_direction` (i.e., it has values from -1 to 1). This *should* eliminate the need for abs checks; the only time the direction vector needs to be used should be `move_and_slide`. Ultimately, velocity on the x-axis should be set to speed ala `velocity.x = player_speed * movement_direction`
+
+7: jumping is handled differently, so a move line should ultimately be like: `velocity = move_and_slide (velocity)[...])`
+
+## What complicates this?
+
+Complexity is added if different characters with different abilities are playable. A flying character, for example, would need to take into account time in air (if flying) and flight speed; a character that could climb walls would need additional wall/ceiling/floor detection when wall-climbing and gliding and separate states for these.
+
+There may well be corner cases/situations that are not immediately obvious.
 
 # GENERIC (INDEPENDENT OF CHARACTER) STATES
 
@@ -225,47 +253,19 @@ If the player is crouching down and presses the jump button, they'll start to sp
 
 No player control is available during a cutscene; if the player character is to move etc. it should be handled by the relevant scene's script (be that a level or something else).
 
-# PLAYER MOVEMENT AND HOW TO HANDLE IT
-
-## How it works
-
-Velocity and speed should be separate. Velocity (the amount of directional speed the player travels at) is determined by Speed. The direction of the speed is controlled by movement. -1 is left/up (x, y), 0 is none, 1 is down/right.
-
-Movement direction is handled by:
-
-1: `moving_in` - string variable holding a value about which direction has been pressed. `moving_in = ("left" if Input.is_action_pressed ("move_left") else ("right" if Input.is_action_pressed ("move_right") else "nil"))`
-
-2: relevant state is set for which direction, movement direction value `movement_direction` is set to the appropriate value (if it isn't already set to the opposite value that is). `enum MovementState` `player_state`
-
-3: so long as `moving_in` is not nil, increase acceleration `player_speed`.
-
-4: if `moving_in` is nil for any reason, decelerate. If `movement_direction` is different from the movement state, decelerate.
-
-5: if stopped, and the movement state is different from `movement_direction`, change `movement_direction` to reflect the movement state and start to accelerate. Unless `moving_in` is nil *and* the player is on a floor surface, in which case set `movement_direction` to 0 and movement state to `STATE_IDLE` instead.
-
-6: speed is positive only - direction is handled by `movement_direction` (i.e., it has values from -1 to 1). This *should* eliminate the need for abs checks; the only time the direction vector needs to be used should be `move_and_slide`. Ultimately, velocity on the x-axis should be set to speed ala `velocity.x = player_speed * movement_direction`
-
-7: jumping is handled differently, so a move line should ultimately be like: `velocity = move_and_slide (velocity)[...])`
-
-## What complicates this?
-
-Complexity is added if different characters with different abilities are playable. A flying character, for example, would need to take into account time in air (if flying) and flight speed; a character that could climb walls would need additional wall/ceiling/floor detection when wall-climbing and gliding and separate states for these.
-
-There may well be corner cases/situations that are not immediately obvious.
-
 # COLLECTIBLES, POWER-UPS
 
 ## In general
 
 Most Sonic-type games have one type of collectible that counts towards an extra life (typically 1 life per 100 collected). They usually don't immediately add to the score, but are often added up at the end (how many the player has). They are usually lost (but some might be re-collectible) after collision with something that harms the player; Sonic games will kill the player character if they are hit without any rings.
 
-### Collectibles
+## Collectibles
 
 Collectibles should have at least exportable variable that defines its points value. Beyond that is up to any developers. They should also not (usually) impact on physics - that is, they do not slow the player down on impact or the like. They should be `Area2D`s.
 
 Collectibles are kept check of by two variables, `collectibles` and `collectibles_lives`. The latter variable is used to keep track of how many items towards the next life bonus the player has collected. By default the player is not aware of what this variable's value is.
 
-### Powerups
+## Powerups
 
 Powerups (or downs) are (at least in Sonic type games) usually items that are destroyed (ala Badniks) to give either a temporary or permanent power-up (sometimes down) to the player character, or extra lives or collectibles. This means that (usually) they would be `KinematicBody2D` shapes. Temporary power-ups should use a related timer node created in `game_space.gd`; for example invincibility may use a timer called `Invincibility_Timer`.
 
@@ -275,15 +275,15 @@ Powerups (or downs) are (at least in Sonic type games) usually items that are de
 
 "Hostiles" can mean the bad guys the player has to fight against during the game. It can also mean environmental hazards, such as spikes or water that may either damage or kill the player character (immediately or over a period of time) and/or affect their speed.
 
-### Enemies (bad guys, bosses etc)
+## Enemies (bad guys, bosses etc)
 
 Most enemies, like the player, will be based on `KinematicBody2D`. As such, most enemies will inherit from `generic_enemy.gd`, which in turn inherits from `KinematicBody2D`.
 
 `enemy_name.gd` -> `generic_enemy.gd` -> `KinematicBody2D`
 
-Some enemies may have multiple components - rising spikes, or firing bullets. Some enemies may self-destruct, firing projectiles in different directions. Other enemies may do completely different things, or only be vulnerable at certain times or at certain spots. How these are implemented is on the developer(s) of any game. Enemies will need more things coded for them - the only values `generic_enemy.gd` will have are exported variables for score value and number of hits they can take. But things like rising spikes can be handled by discrete sub-objects using an animation. Bullets, projectiles will need to take into account angles they're being "fired" from.
+Some enemies may have multiple components - rising spikes, or firing bullets. Some enemies may self-destruct, firing projectiles in different directions. Other enemies may do completely different things, or only be vulnerable at certain times or at certain spots. How these are implemented is on the developer(s) of any game. Enemies will need more things coded for them - the only values `generic_enemy.gd` will have are exported variables for score value and number of hits they can take. But things like rising spikes can be handled by discrete sub-objects using an animation. Bullets, projectiles will need to take into account the angles they're being "fired" from.
 
-### Environmental hazards (water, spikes, pits etc)
+## Environmental hazards (water, spikes, pits etc)
 
 Spikes and pits can be easier to code relatively speaking - both can just react to the player's colliding with their collision shapes. Hazards like water may be more difficult. A simple way to code water is to make it lethal upon entry. But most Sonic-type games have water be a hazard over time - after a certain point the player character will drown. For spikes or pits, `Area2D` and/or `StaticBody2D` may be most useful.
 
@@ -297,6 +297,6 @@ Normally used for if the player character goes past one, then gets killed and re
 
 ## How they work
 
-The player passes by a checkpoint object (once only), and a reference to that checkpoint is stored in a variable (`last_checkpoint`); it's up to any developer(s) if the checkpoint stores any other information. Should the player character be killed, after the death animation a function is called on *the checkpoint* that resets the player character's position to its location and resumes player control.
+The player passes by a checkpoint object (once only), and a reference to that checkpoint is stored in a variable in `game_space` (`last_checkpoint`); it's up to any developer(s) if the checkpoint stores any other information. Should the player character be killed, after the death animation a function `return_to_checkpoint` is called on the checkpoint that resets the player character's position to its location and resumes player control.
 
 At the beginning of the level there should be an invisible checkpoint `start_checkpoint`, on initialisation of the level's script it will make sure the player character is set to its position.

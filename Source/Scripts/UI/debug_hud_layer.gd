@@ -37,7 +37,7 @@ extends CanvasLayer
 
 func _ready ():
 	if (OS.is_debug_build ()):
-		printerr ("Debugging HUD layer ready on canvas layer ", layer, ".")
+		printerr ("Debugging HUD ready on canvas layer ", layer, ".")
 	return
 
 func _process (delta):

@@ -38,7 +38,7 @@ var time_limit_near = false		# If you're getting near the time limit...
 
 func _ready ():
 	if (OS.is_debug_build ()):
-		printerr ("HUD layer ready on canvas layer ", layer, ".")
+		printerr ("HUD ready on canvas layer ", layer, ".")
 	hud_layer_update ()
 	return
 
@@ -52,7 +52,7 @@ func hud_layer_update ():
 	var prettied_text = ""
 	if (!has_node ("/root/Level")):	# Can't update the HUD for a level that doesn't exist!
 		return						# Having this here avoids problems when running this scene on its own.
-	# First things first, update the labels as needed.
+	## First things first, update the labels as needed.
 	prettied_text = var2str (int (game_space.lives))			# Set up lives.
 	$Lives_Count.text = prettied_text
 	prettied_text = var2str (int (game_space.collectibles))	# Make sure items collected is correct.
@@ -66,7 +66,7 @@ func hud_layer_update ():
 		prettied_text += "0"
 	prettied_text += var2str (int (game_space.level_time.y))	# Add the seconds.
 	$Time_Count.text = prettied_text
-	# Secondly, set animations to play if need be.
+	## Secondly, set animations to play if need be.
 	if (game_space.collectibles <= 0):	# First up, items.
 		if (!zero_collectibles):
 			zero_collectibles = true

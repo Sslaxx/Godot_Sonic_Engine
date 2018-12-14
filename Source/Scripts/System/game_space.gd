@@ -37,6 +37,10 @@ const DEFAULT_LIVES = 3						# Default number of lives the player starts with.
 const DEFAULT_TIME_LIMIT = 10				# Time limit per level; defaults to 10 minutes.
 const DEFAULT_COLLECTIBLES_PER_LIFE = 100	# How many collectibles to collect to get an extra life.
 
+## VARIABLES THAT DO NOT NEED RESETTING ON GAME RESTART.
+
+## VARIABLES THAT WILL NEED TO BE RESET ON GAME RESTART.
+
 var level_time = Vector2 (0, 0)	# Time passed in the level so far. x is minutes, y seconds.
 var lives = DEFAULT_LIVES setget set_lives, get_lives			# Controls the lives the player has.
 var score = 0 setget set_score, get_score						# What the player's score is.

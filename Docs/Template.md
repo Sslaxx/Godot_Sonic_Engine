@@ -1,6 +1,6 @@
 # The template structure
 
-Most of the template is covered in [the project structure document](Structure.txt). This covers the system script files `Scripts\System` `Scenes\System`. Won't cover how they work - they're fairly sufficiently documented to hopefully make it obvious. This covers the most basic stuff already in the template and what it's for. Also covers some default files.
+Most of the template is covered in [the project structure document](Structure.txt). Won't cover how they work - they're fairly sufficiently documented to hopefully make it obvious. This covers the most basic stuff already in the template and what it's for, including `Scripts\System` `Scenes\System`.
 
 ## colour_space
 

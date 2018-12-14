@@ -19,7 +19,7 @@
 
    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/
    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
@@ -27,16 +27,24 @@
 """
 
 """
-   Main scene's (the first scene loaded) script.
-
-   Right now this does nothing except immediately switch to another scene.
-   In future this could be a good place to have a main title screen.
+   Makes a ParallaxLayer scroll on its own. It can move x and/or y-axis independently.
+   To use:
+   1 - Attach this script to a (properly configured!) ParallaxLayer node/scene.
+   2 - Use the "Movement Factor" property in the inspector to set the speed/direction required (x direction, y direction).
 """
 
-extends Node2D
+extends ParallaxLayer
+
+export var movement_factor = Vector2 (0, 0)	# Have movement be able to be changed in the object inspector.
 
 func _ready ():
-	if (OS.is_debug_build ()):
-		printerr (get_script ().resource_path, " ready.")
-	global_space.go_to_scene ("res://Scenes/Levels/level_test.tscn")
+	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Give a bit of info about what is moving how.
+		print (name, " is moving at ", movement_factor, ".")
+	return
+
+"""
+   Make the layer move!
+"""
+func _process (delta):
+	motion_offset += (movement_factor * delta)	# Move the background, in the directions and speed required.
 	return

@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/HUD_Score_Symbol.png-7e54a4212f76941bbc5005389decb596.stex"
+path="res://.import/HUD_Time_Symbol.svg-f4e872b4cdf31dba062e0ac45401a804.stex"
 
 [deps]
 
-source_file="res://Assets/Graphics/2D/UI/HUD/HUD_Score_Symbol.png"
-dest_files=[ "res://.import/HUD_Score_Symbol.png-7e54a4212f76941bbc5005389decb596.stex" ]
+source_file="res://Assets/Graphics/2D/UI/HUD/HUD_Time_Symbol.svg"
+dest_files=[ "res://.import/HUD_Time_Symbol.svg-f4e872b4cdf31dba062e0ac45401a804.stex" ]
 
 [params]
 

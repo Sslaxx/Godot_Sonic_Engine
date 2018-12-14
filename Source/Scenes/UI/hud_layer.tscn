@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/UI/hud_layer.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Rings_Symbol.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Time_Symbol.png" type="Texture" id=3]
-[ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Score_Symbol.png" type="Texture" id=4]
-[ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Sonic_Lives_Icon.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Rings_Symbol.svg" type="Texture" id=2]
+[ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Time_Symbol.svg" type="Texture" id=3]
+[ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Score_Symbol.svg" type="Texture" id=4]
+[ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Sonic_Lives_Icon.svg" type="Texture" id=5]
 [ext_resource path="res://Assets/UI/in_game_HUD.tres" type="Theme" id=6]
 
 [sub_resource type="Animation" id=1]
@@ -83,7 +83,7 @@ tracks/0/keys = {
 "values": [ 1, 0, 1, 0 ]
 }
 
-[node name="hud_layer" type="CanvasLayer"]
+[node name="hud_layer" type="CanvasLayer" index="0"]
 
 layer = 32
 offset = Vector2( 0, 0 )
