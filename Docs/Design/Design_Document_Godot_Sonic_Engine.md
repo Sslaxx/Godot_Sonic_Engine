@@ -135,13 +135,13 @@ Score gives the player an indication of how well they're doing - the higher the 
 
 Basically, how many chances the player has to get through the game before it ends. Lives can be affected by many things - obvious ones being extra life bonuses or being killed by hazards/hostiles.
 
-# THE PLAYER SCENE; NODES AND SCRIPT(S)
+# THE PLAYER; SCENE, NODES AND SCRIPT(S)
 
-## In general
+## Scene structure and functionality
 
 The player is a scene which has a root node of the type `KinematicBody2D` which is to be named `Player`. As a `KinematicBody2D` it has access to a wide variety of functions like `is_on_floor` and `move_and_slide`.
 
-## Scripts and inheritance
+### Scripts and inheritance
 
 Player scenes have a script which inherits from `player_generic.gd`, which in turn inherits `KinematicBody2D`.
 
@@ -150,11 +150,11 @@ The scripting inheritance structure should be:
 
 The `player_generic.gd` script contains all the physics values and functions that will allow the character to function; it will act on the state values given. The `your_player_script.gd` should contain those values that need adjusting for a specific character, and any character-specific functions. How the functions would work is an excersize left to the developer(s). As a physics item most processing should be done within `_physics_process` (or functions called from within it); input should be (mostly) handled by `_input`.
 
-## Determining who the player character is
+### Determining who the player character is
 
 `game_space.gd` has a global variable `player_character` which is set by the `_ready` function of `your_player_script.gd` to point to the node in question.
 
-## Values defined by player_generic.gd/custom player character scripts
+### Values defined by player_generic.gd/custom player character scripts
 
 These should include:
 - Maximum speed
@@ -169,35 +169,35 @@ These should include:
 - Player speed affectors for things like water, speed shoes etc
 - The state machine (used by all characters, so custom states need to be added to this as required)
 
-Default values only should be in `player_generic.gd`. Speeds/heights etc. should be in pixels per second.
+Default values only should be in `player_generic.gd`. Speeds/heights etc. should normally be in pixels per second.
 
-## Camera
+### Camera
 
 The player scene has a `Camera2D` node which allows the level to scroll with the player. It's `limit_` settings should be adjusted by whatever level the player is in to fit the boundaries of the level.
 
-## Physics
+### Physics
 
 Wherever possible the default collision functions should be used - `is_on_floor` and the like. Look at gotchas about these functions - for example, it sounds like `is_on_floor` and its relations can only be used if the player is moving (not particularly surprising if so as a lot of other physics-based functionality has the same restriction) - and try to find (actually working) workarounds, and to stick within limitations which cannot be worked around (or find ways to use them to your advantage if feasible).
 
 All physics bodies need a collision shape of some type; what works best depends on your project. Multiple collision shapes may also be necessary.
 
-## Movement and speed
+### Movement and speed
 
 Movement is controlled overall by the movement state, which is a bitmask determining how and why the character can move. The movement state and direction will dictate how the speed is worked out. The movement state is the direction the player *is going to move in*; the movement direction variable the direction the player *is currently moving in*. All speed variables are measured by pixels per second.
 
-## Animations
+### Animations
 
 All player characters use `AnimatedSprite` to deal with sprites and their animations; every sprite has animations common to them and these must be given the same names across different player characters.
 
 The character's moving animation will change depending on how fast they're going, and what animation is playing should ultimately be controlled by player state.
 
-## Life and Death
+### Life and Death
 
 Death is implemented via a sprite node with a Z-index of 99 that has its animation taken from the player character's death animation (relevant to how the player character was killed). The camera is locked in position and the HUD hidden, the animation plays (from the player's position to off-screen). Then, either time over or game over happens if necessary. If game over happens the game is restarted. Otherwise, the player is reset to the last good checkpoint position (by the last checkpoint passed), control is given back, and the game resumes.
 
-# PLAYER MOVEMENT AND HOW TO HANDLE IT
+## Player movement in general
 
-## How it works
+### How it works
 
 Velocity and speed should be separate. Velocity (the amount of directional speed the player travels at) is determined by Speed. The direction of the speed is controlled by movement. -1 is left/up (x, y), 0 is none, 1 is down/right.
 
@@ -215,41 +215,51 @@ Movement direction is handled by:
 
 6: speed is positive only - direction is handled by `movement_direction` (i.e., it has values from -1 to 1). Ultimately, velocity on the x-axis should be set ala `velocity.x = player_speed * movement_direction`
 
-7: jumping is handled differently, so a move line should ultimately be like: `velocity = move_and_slide (velocity)[...])`
+7: The move line should ultimately be like: `velocity = move_and_slide (velocity, floor_normal[...])`
 
-## What complicates this?
+### What complicates this?
 
 Complexity is added if different characters with different abilities are playable. A flying character, for example, would need to take into account time in air (if flying) and flight speed; a character that could climb walls would need additional wall/ceiling/floor detection when wall-climbing and gliding and separate states for these.
 
 There may well be corner cases/situations that are not immediately obvious.
 
-# GENERIC (INDEPENDENT OF CHARACTER) STATES
+## Jumping
 
-## In general
+### How it works:
+
+1: `jump_held` is a variable that is true so long as the key for jumping is held down. The first time it is held down `STATE_JUMPING` is added to `player_state` to signify to the state machine logic that the play is jumping.
+
+2: So long as `jump_held` is true, `jump_amount` is increased by `jump_adding`, up until the maximum jump height for the character `jump_max`.
+
+3: Once jump has been released and `jump_held` is false, begin the jump. `jump_direction` is set to -1 and the player's y position is affected by `jump_speed`, until it reaches `jump_amount`. Then `jump_direction` is set to 1 and the player falls.
+
+## Generic player states
+
+### In general
 
 These are the basic states that are used by the code, as bitmask values, to control characters. Custom states - for example, character-specific states, e.g. `STATE_KNUCKLES_GLIDING` - should be documented by whoever is developing the game.
 
-## STATE_IDLE (0)
+#### STATE_IDLE (0)
 
 Not really a state, per se. This is an absence of state or player input. Player character is not necessarily on the ground so any checks using this state need to take this into account.
 
-## STATE_MOVE_LEFT (1) / STATE_MOVE_RIGHT (2)
+#### STATE_MOVE_LEFT (1) / STATE_MOVE_RIGHT (2)
 
 See the section on player movement document for more info.
 
-## STATE_JUMPING (4)
+#### STATE_JUMPING (4)
 
 The player jumping in the direction the character is moving in. Height is determined by how long the jump button is pressed; speed is determined by how fast the player is moving.
 
-## STATE_CROUCHING (8)
+#### STATE_CROUCHING (8)
 
 The player character will crouch/squat when looking down (holding down the down movement button). Normally player movement is not possible while crouching, but spinning is possible .
 
-## STATE_SPINNING (16)
+#### STATE_SPINNING (16)
 
 If the player is crouching down and presses the jump button, they'll start to spin (ala Sonic 1/2/etc). The more it's pressed, the more momentum is built up (up to a maximum) ready for release. When jump is released the player will burst forward at the speed of (maximum speed plus momentum), gradually decelerating over time, in the direction that the player is facing in or the movement button being held down (the button takes precedence).
 
-## STATE_CUTSCENE (32)
+#### STATE_CUTSCENE (32)
 
 No player control is available during a cutscene; if the player character is to move etc. it should be handled by the relevant scene's script (be that a level or something else).
 

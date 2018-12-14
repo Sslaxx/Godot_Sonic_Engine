@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Please_Wait.svg.png-cd9d96f7f64f934a852163346d57d36c.stex"
+path="res://.import/Please_Wait.svg-f64d2edc2937e675da296d55b189b232.stex"
 
 [deps]
 
-source_file="res://Assets/Graphics/2D/System/Please_Wait.svg.png"
-dest_files=[ "res://.import/Please_Wait.svg.png-cd9d96f7f64f934a852163346d57d36c.stex" ]
+source_file="res://Assets/Graphics/2D/System/Please_Wait.svg"
+dest_files=[ "res://.import/Please_Wait.svg-f64d2edc2937e675da296d55b189b232.stex" ]
 
 [params]
 
@@ -25,5 +25,5 @@ process/premult_alpha=false
 process/HDR_as_SRGB=false
 stream=false
 size_limit=0
-detect_3d=false
+detect_3d=true
 svg/scale=1.0

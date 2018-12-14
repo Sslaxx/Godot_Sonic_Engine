@@ -55,6 +55,9 @@ var player_state = MovementState.STATE_IDLE	# The current state the player chara
 var moving_in = "nil"	# Which direction the player is holding down, i.e. the direction the player is going to move in.
 var movement_direction = 0	# Which direction the player is currently moving in. -1 = left/up, 1 = right/down.
 var player_speed = 0.0	# The speed at which the player is moving at.
+var jump_amount = 0		# How much the player is (going to) jump by.
+var jump_held = false	# Is the jump button being held down?
+var jump_direction = 0	# In which direction is the jump currently going in? -1 = up, 1 = down.
 
 var velocity = Vector2 (0, 0)	# The velocity (amount the player is moving in a direction).
 
@@ -69,6 +72,9 @@ export var acceleration_rate = 2	# Standard rate of acceleration.
 export var decel_rate_moving = 6	# Decelerating rate when moving in the other direction.
 export var decel_rate = 2			# Deceleration rate (not moving).
 export var max_speed = 60			# Default maximum speed is 60 pixels per second.
+export var jump_adding = 3			# How much to add to jump for each "tick" jump is held down by.
+export var jump_max = 90			# How much the player can jump by at maximum.
+export var jump_speed = 3			# How "fast" the player jumps a frame.
 
 ## AFFECTING THE PLAYER MOVING.
 
@@ -94,10 +100,28 @@ func _ready ():
 func _input (event):
 	# Find out which direction the player is moving in.
 	moving_in = ("left" if Input.is_action_pressed ("move_left") else ("right" if Input.is_action_pressed ("move_right") else "nil"))
+#	if (Input.is_action_just_pressed ("move_jump")):	# The player is jumping (pressed the jump button).
+#		if (!player_state & STATE_JUMPING):
+#			jump_held = true
+#			player_state |= STATE_JUMPING
+#	if (Input.is_action_just_released ("move_jump" && jump_held)):	# The jump button has been released.
+#		jump_held = false
 	if (player_state & STATE_CUTSCENE):	# Unless there's a cutscene playing, in which case negate any and all movement.
 		moving_in = "nil"
-	# Set the movement state and direction as required.
-	match (moving_in):
+#		jump_held = false
+	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Debug keys and what they do.
+		if (Input.is_action_pressed ("DEBUG_gainrings")):	# Gain items!
+			game_space.collectibles += 10
+		if (Input.is_action_pressed ("DEBUG_loserings")):	# Lose items!
+			game_space.collectibles = 0
+	return
+
+func _process (delta):
+	return
+
+func _physics_process (delta):
+	$AnimatedSprite.flip_h = (true if movement_direction == -1 else (false if movement_direction == 1 else $AnimatedSprite.flip_h))
+	match (moving_in):		# Set the movement state and direction as required.
 		"left":
 			player_state |= STATE_MOVE_LEFT
 			player_state &= ~STATE_MOVE_RIGHT
@@ -106,27 +130,21 @@ func _input (event):
 			player_state &= ~STATE_MOVE_LEFT
 		"nil":
 			if (player_speed < 0.01 && (player_state & STATE_MOVE_LEFT || player_state & STATE_MOVE_RIGHT)):
-				player_state = STATE_IDLE
+				if (!player_state & STATE_CUTSCENE):	# Set idle state only if not already in a cutscene.
+					player_state = STATE_IDLE
 				movement_direction = 0
-	return
-
-func _process (delta):
-	return
-
-func _physics_process (delta):
-	$AnimatedSprite.flip_h = (true if movement_direction == -1 else (false if movement_direction == 1 else $AnimatedSprite.flip_h))
 	match (movement_direction):	# Make the player move faster (or slower) depending on what direction they're in.
 		-1:
-			if (moving_in == "left"):
+			if (moving_in == "left"):		# Facing left, moving left.
 				player_speed += acceleration_rate
-			elif (moving_in == "right"):
+			elif (moving_in == "right"):	# Facing left, moving right.
 				player_speed -= decel_rate_moving
 		1:
-			if (moving_in == "right"):
+			if (moving_in == "right"):		# Facing right, moving right.
 				player_speed += acceleration_rate
-			elif (moving_in == "left"):
+			elif (moving_in == "left"):		# Facing right, moving left.
 				player_speed -= decel_rate_moving
-	if (movement_direction != 0 && moving_in == "nil"):
+	if (movement_direction != 0 && moving_in == "nil"):	# Got a direction but no movement key held down, so decelerate.
 		player_speed -= decel_rate
 	player_speed = (0 if player_speed < 0 else (max_speed if player_speed > max_speed else player_speed))
 	if (player_speed < 0.01):	# The player has stopped, so do we need to change movement direction?
