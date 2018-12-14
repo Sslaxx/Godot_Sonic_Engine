@@ -1,6 +1,6 @@
 [gd_scene format=2]
 
-[node name="platform_test" type="StaticBody2D"]
+[node name="platform_test" type="StaticBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 1
@@ -13,6 +13,6 @@ bounce = 0.0
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="0"]
 
 build_mode = 0
-polygon = PoolVector2Array( 16, 0, 32, 16, 512, 16, 512, 32, -544, 32, -544, 0 )
+polygon = PoolVector2Array( 16, 0, 32, 16, 1312, 16, 1312, 32, -1376, 32, -1376, 0 )
 
 

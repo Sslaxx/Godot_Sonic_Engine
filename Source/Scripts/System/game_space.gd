@@ -119,7 +119,7 @@ func set_collectibles (value):
 	else:							# Lost items, so set the items-for-lives-counter to the new value.
 		collectibles_lives = value
 	collectibles = value
-	while (collectibles_lives > DEFAULT_COLLECTIBLES_PER_LIFE):	# Collected enough for at least one extra life!
+	while (collectibles_lives >= DEFAULT_COLLECTIBLES_PER_LIFE):	# Collected enough for at least one extra life!
 		game_space.lives += 1
 		collectibles_lives -= DEFAULT_COLLECTIBLES_PER_LIFE
 	update_hud ()
