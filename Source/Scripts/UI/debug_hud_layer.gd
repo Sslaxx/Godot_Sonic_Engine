@@ -65,6 +65,6 @@ func _process (delta):
 	$Position.text = prettied_text
 	# Are they jumping?
 	prettied_text = "JUMPING: "
-	prettied_text += ("True" if (game_space.player_character.player_state & game_space.player_character.MovementState.STATE_JUMPING) else "False")
+	prettied_text += ("True" if (game_space.player_character.player_movement_state & game_space.player_character.MovementState.STATE_JUMPING) else "False")
 	$Jumping.text = prettied_text
 	return

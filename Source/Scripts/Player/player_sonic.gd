@@ -28,6 +28,8 @@
 
 """
    This is the code for Sonic.
+
+   As the generic player code is (attempting to be) modelled after Sonic's gameplay, this should require very few changes.
 """
 
 extends "res://Scripts/Player/player_generic.gd"

@@ -152,7 +152,7 @@ The `player_generic.gd` script contains all the physics values and functions tha
 
 ### Determining who the player character is
 
-`game_space.gd` has a global variable `player_character` which is set by the `_ready` function of `your_player_script.gd` to point to the node in question.
+`game_space.gd` has a global variable `player_character` which is set by the `_ready` function of `your_player_script.gd` to point to the scene in question.
 
 ### Values defined by player_generic.gd/custom player character scripts
 
