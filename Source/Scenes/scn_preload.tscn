@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scripts/scnMain.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/scn_preload.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/2D/System/Please_Wait.svg" type="Texture" id=2]
 
 [node name="nodRootMain" type="Node2D" index="0"]

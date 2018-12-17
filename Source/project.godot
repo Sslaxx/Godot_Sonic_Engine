@@ -11,7 +11,7 @@ config_version=3
 [application]
 
 config/name="Godot Sonic Engine"
-run/main_scene="res://Scenes/scnMain.tscn"
+run/main_scene="res://Scenes/scn_preload.tscn"
 config/icon="res://icon.png"
 
 [autoload]

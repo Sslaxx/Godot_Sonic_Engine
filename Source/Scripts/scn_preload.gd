@@ -27,10 +27,9 @@
 """
 
 """
-   Main scene's (the first scene loaded) script.
+   Use this scene for resource preloading.
 
-   Right now this does nothing except immediately switch to another scene.
-   In future this could be a good place to have a main title screen.
+   Switches immediately to another scene on loading.
 """
 
 extends Node2D

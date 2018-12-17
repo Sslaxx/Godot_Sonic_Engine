@@ -139,6 +139,9 @@ func _physics_process (delta):
    Changes the animation playing to anim_to_change_to, if it isn't already playing.
 """
 func change_anim (anim_to_change_to):
+	if (!has_node ("AnimatedSprite"):			# Can't play animations without something to play with!
+		printerr ("Trying to play without an AnimatedSprite node for the player character!")
+		return
 	if ($AnimatedSprite.animation != anim_to_change_to):	# Animation's not already playing?
 		$AnimatedSprite.play (anim_to_change_to)			# So change the animation to the one requested.
 	return
