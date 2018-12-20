@@ -126,9 +126,9 @@
      units="px"
      borderlayer="true"
      inkscape:window-width="1920"
-     inkscape:window-height="1001"
+     inkscape:window-height="996"
      inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-y="28"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata5">
@@ -154,7 +154,7 @@
      transform="translate(0,41.666604)">
     <g
        id="g128"
-       transform="matrix(0.88120894,0,0,0.87804893,26.294025,16.730701)">
+       transform="matrix(0.88120894,0,0,0.87804893,32.379443,17.329907)">
       <image
          width="375.51376"
          height="201.25191"
@@ -178,19 +178,19 @@
       <text
          id="text835"
          y="-5.9110808"
-         x="15.219599"
+         x="1.4080784"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;line-height:125%;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.29337013px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
            y="-5.9110808"
-           x="15.219599"
+           x="1.4080784"
            id="tspan833"
            sodipodi:role="line">The HUD/UI</tspan><tspan
            id="tspan837"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
            y="2.8900237"
-           x="15.219599"
-           sodipodi:role="line">Layer 32</tspan></text>
+           x="1.4080784"
+           sodipodi:role="line">Canvas layer 32</tspan></text>
       <ellipse
          ry="10.640856"
          rx="25.273054"
@@ -214,17 +214,17 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
            y="-31.025513"
            x="360.75751"
-           sodipodi:role="line">Parallax layers over background</tspan><tspan
+           sodipodi:role="line">Parallax over background</tspan><tspan
            id="tspan879"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
            y="-22.224409"
            x="360.75751"
-           sodipodi:role="line">Layers: -4 to -7</tspan><tspan
+           sodipodi:role="line">Elements Z: -4 to -7</tspan><tspan
            id="tspan881"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
            y="-13.423304"
            x="360.75751"
-           sodipodi:role="line">Background: -8</tspan></text>
+           sodipodi:role="line">Background Z: -8</tspan></text>
       <path
          inkscape:connector-curvature="0"
          id="path883"
@@ -245,7 +245,7 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
            y="109.78489"
            x="447.99356"
-           sodipodi:role="line">Layers: -1 to -3</tspan></text>
+           sodipodi:role="line">Z: -1 to -3</tspan></text>
       <path
          inkscape:connector-curvature="0"
          id="path1422"
@@ -266,7 +266,7 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
            y="270.92526"
            x="149.0145"
-           sodipodi:role="line">Layer: 0</tspan></text>
+           sodipodi:role="line">Z: 0</tspan></text>
       <path
          inkscape:connector-curvature="0"
          id="path1559"
@@ -292,7 +292,7 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.04088354px;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.29337013px"
            y="287.59796"
            x="148.59805"
-           sodipodi:role="line">Layers: 1 to 7</tspan></text>
+           sodipodi:role="line">Z: 1 to 7</tspan></text>
       <ellipse
          ry="19.187939"
          rx="14.924468"

@@ -1,0 +1,13 @@
+TODO as of 19-Dec-2018:
+
+Both implement and (if necessary) document.
+
+* Jump (via way in design docs or more like Sonic Outbreak?)
+* Loop-the-loop
+* Boilerplate/generic badnik code
+* Death and game over (maybe time over?)
+* Level start
+* End of level
+* Checkpoints
+* Collectibles
+* Boilerplate for powerups
