@@ -71,7 +71,7 @@ onready var player_gravity = ProjectSettings.get_setting ("physics/2d/default_gr
 export var acceleration_rate = 4	# Standard rate of acceleration.
 export var decel_rate_moving = 6	# Decelerating rate when moving in the other direction.
 export var decel_rate = 4			# Deceleration rate (not moving).
-export var max_speed = 60			# Default maximum speed is 60 pixels per second.
+export var max_player_speed = 60	# Default maximum speed is 60 pixels per second.
 #export var jump_adding = 3			# How much to add to jump for each "tick" jump is held down by.
 #export var jump_max = 90			# How much the player can jump by at maximum.
 #export var jump_speed = 3			# How "fast" the player jumps a frame.
@@ -108,14 +108,24 @@ func _input (event):
 #	if (Input.is_action_just_released ("move_jump" && jump_held)):	# The jump button has been released.
 #		jump_held = false
 	# Unless there's a cutscene playing, in which case negate any and all movement.
-	if (player_movement_state & MovementState.STATE_CUTSCENE):
+	if (player_movement_state == MovementState.STATE_CUTSCENE):
 		moving_in = "nil"
 #		jump_held = false
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Debug keys and what they do.
 		if (Input.is_action_pressed ("DEBUG_gainrings")):	# Gain items!
+			printerr ("DEBUG: gain items pressed.")
 			game_space.collectibles += 10
 		if (Input.is_action_pressed ("DEBUG_loserings")):	# Lose items!
+			printerr ("DEBUG: lose items pressed.")
 			game_space.collectibles = 0
+		if (Input.is_action_pressed ("DEBUG_cutscene")):	# Switch into or out of the cutscene state.
+			printerr ("DEBUG: cutscene key pressed.")
+			if (player_movement_state != MovementState.STATE_CUTSCENE):
+				printerr ("DEBUG: entered cutscene state.")
+				player_movement_state = MovementState.STATE_CUTSCENE
+			else:
+				printerr ("DEBUG: left cutscene state.")
+				player_movement_state = MovementState.STATE_IDLE
 	return
 
 func _process (delta):
@@ -140,10 +150,61 @@ func _physics_process (delta):
 """
 func change_anim (anim_to_change_to):
 	if (!has_node ("AnimatedSprite")):			# Can't play animations without something to play with!
-		printerr ("Trying to play without an AnimatedSprite node for the player character!")
+		printerr ("Trying to play without an AnimatedSprite node for ", self, "!")
 		return
 	if ($AnimatedSprite.animation != anim_to_change_to):	# Animation's not already playing?
 		$AnimatedSprite.play (anim_to_change_to)			# So change the animation to the one requested.
+	return
+
+### ACCELERATION/DECELERATION/SPEED HELPER FUNCTIONS.
+
+"""
+   get_acceleration_mult
+
+   Work out how fast acceleration should be. Acceleration can be affected by many factors.
+   Note: this emits a *multiplier* to use to modify acceleration, and NOT acceleration itself.
+   The default multiplier will be (naturally) 1.0.
+
+   IMPORTANT: Player movement in a cutscene has to be handled directly by any scene(s) running the cutscene.
+"""
+func get_acceleration_mult ():
+	var acceleration_mult = 1.0	# Every factor gets added to/taken away from this value.
+	if (moving_in == "nil"):	# Not moving, so there's no acceleration. KEEP THIS LAST.
+		acceleration_mult = 0.0	# This MUST override any other calculations to acceleration rate.
+	return (acceleration_mult)
+
+"""
+   get_deceleration_mult
+
+   Works the same way as get_acceleration_mult does.
+
+   IMPORTANT: Player movement in a cutscene has to be handled directly by any scene(s) running the cutscene.
+"""
+func get_deceleration_mult ():
+	var deceleration_mult = 1.0	# Every factor gets added to/taken away from this value.
+	if (player_movement_state == MovementState.STATE_CUTSCENE):	# In a cutscene, so the multiplier is 4. KEEP THIS LAST.
+		deceleration_mult = 4.0	# This MUST override any other calculations to deceleration rate.
+	return (deceleration_mult)
+
+"""
+   get_max_player_speed_mult
+
+   Works out (the multiplier for) maximum player speed.
+"""
+func get_max_player_speed_mult ():
+	var max_speed_mult = 1.0	# Every factor gets added to/taken away from this value.
+	return (max_speed_mult)
+
+"""
+   speed_limiter
+
+   Makes sure the player cannot go any faster than the maximum speed (or slower than 0).
+"""
+func speed_limiter ():
+	if (player_speed < 0):	# Can't travel at negative speeds!
+		player_speed = 0
+	if (player_speed > (max_player_speed * get_max_player_speed_mult ())):	# Moving faster than maximum? Reduce speed.
+		player_speed -=  player_speed - (max_player_speed * get_max_player_speed_mult ())
 	return
 
 ### STATE MACHINE FUNCTIONS.
@@ -179,14 +240,18 @@ func movement_state_machine_ground (delta):
 	if (player_movement_state & MovementState.STATE_JUMPING):	# Finished jumping? Turn off the jump state.
 		player_movement_state &= ~MovementState.STATE_JUMPING
 	if ((player_movement_state & MovementState.STATE_MOVE_LEFT) && movement_direction == 1):
-		player_speed -= decel_rate_moving	# Wanting to move left but currently moving right, so decelerate.
+		# Wanting to move left but currently moving right, so decelerate.
+		player_speed -= (decel_rate_moving * get_deceleration_mult ())
 	if ((player_movement_state & MovementState.STATE_MOVE_RIGHT) && movement_direction == -1):
-		player_speed -= decel_rate_moving	# Wanting to move right but currently moving left, so decelerate.
+		# Wanting to move right but currently moving left, so decelerate.
+		player_speed -= (decel_rate_moving * get_deceleration_mult ())
 	if (moving_in == "nil" && movement_direction != 0):	# Still moving, but no movement input has been given.
-		player_speed -= decel_rate	# So slow down.
-	player_speed += (acceleration_rate if moving_in != "nil" else 0)	# If the player is moving, accelerate.
+		# So slow down.
+		player_speed -= (decel_rate * get_deceleration_mult ())
+	player_speed += (acceleration_rate * get_acceleration_mult ())	# If the player is moving, accelerate.
 	# Ensure the player's speed is limited appropriately.
-	player_speed = (0 if player_speed < 0 else (max_speed if player_speed > max_speed else player_speed))
+#	player_speed = (0 if player_speed < 0 else ((max_player_speed * get_max_player_speed_mult ()) if player_speed > (max_player_speed * get_max_player_speed_mult ()) else player_speed))
+	speed_limiter ()
 	# Set direction for animations to play as appropriate.
 	$AnimatedSprite.flip_h = (true if movement_direction == -1 else (false if movement_direction == 1 else $AnimatedSprite.flip_h))
 	# Change the currently playing animation based on the player's current speed...
@@ -198,9 +263,10 @@ func movement_state_machine_ground (delta):
 		if (player_speed >= jog_limit):
 			change_anim ("run")
 	else:	# ...or lack of it.
-		if (!player_movement_state & MovementState.STATE_CUTSCENE):	# If a cutscene is running, changing animation is handled differently.
-			change_anim ("idle")
+		if (!player_movement_state == MovementState.STATE_CUTSCENE):
+			# If a cutscene is running, changing animation is handled differently.
 			player_movement_state = MovementState.STATE_IDLE
+		change_anim ("idle")
 		movement_direction = 0
 	return
 
@@ -213,15 +279,18 @@ func movement_state_machine_air (delta):
 	if (!player_movement_state & MovementState.STATE_JUMPING):	# We're not jumping, so we're falling!
 		velocity.y = player_gravity + acceleration_rate			# So we're falling by the rate of gravity.
 	if ((player_movement_state & MovementState.STATE_MOVE_LEFT) && movement_direction == 1):
-		player_speed -= decel_rate_moving	# Wanting to move left but currently moving right, so decelerate.
+		# Wanting to move left but currently moving right, so decelerate.
+		player_speed -= (decel_rate_moving * get_deceleration_mult ())
 	if ((player_movement_state & MovementState.STATE_MOVE_RIGHT) && movement_direction == -1):
-		player_speed -= decel_rate_moving	# Wanting to move right but currently moving left, so decelerate.
+		# Wanting to move right but currently moving left, so decelerate.
+		player_speed -= (decel_rate_moving * get_deceleration_mult ())
 	if (moving_in == "nil" && movement_direction != 0):	# Still moving, but no movement input has been given.
-		player_speed -= decel_rate	# So slow down.
-	player_speed += (acceleration_rate if moving_in != "nil" else 0)	# If the player is moving, accelerate.
+		player_speed -= (decel_rate * get_deceleration_mult ())	# So slow down.
+	player_speed += (acceleration_rate * get_acceleration_mult ())	# If the player is moving, accelerate.
 	# Set direction for animations to play as appropriate.
 	$AnimatedSprite.flip_h = (true if movement_direction == -1 else (false if movement_direction == 1 else $AnimatedSprite.flip_h))
-	player_speed = (0 if player_speed < 0 else (max_speed if player_speed > max_speed else player_speed))
+#	player_speed = (0 if player_speed < 0 else ((max_player_speed * get_max_player_speed_mult ()) if player_speed > (max_player_speed * get_max_player_speed_mult ()) else player_speed))
+	speed_limiter ()
 	# Change the currently playing animation based on the player's current speed...
 	if (player_speed > 0 && !(player_movement_state & MovementState.STATE_JUMPING)):	# Not jumping, so animations can change.
 		if (player_speed < walk_limit):

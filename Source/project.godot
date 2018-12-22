@@ -85,6 +85,8 @@ DEBUG_gainrings=[ Object(InputEventKey,"resource_local_to_scene":false,"resource
  ]
 DEBUG_timeover=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":54,"unicode":0,"echo":false,"script":null)
  ]
+DEBUG_cutscene=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":55,"unicode":0,"echo":false,"script":null)
+ ]
 
 [rendering]
 
