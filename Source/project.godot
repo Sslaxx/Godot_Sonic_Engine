@@ -18,7 +18,6 @@ config/icon="res://icon.png"
 
 global_space="*res://Scenes/System/global_space.tscn"
 game_space="*res://Scenes/System/game_space.tscn"
-colour_space="*res://Scenes/System/colour_space.tscn"
 dice_engine="*res://Scenes/System/dice_engine.tscn"
 sound_player="*res://Scenes/System/sound_player.tscn"
 music_player="*res://Scenes/System/music_player.tscn"

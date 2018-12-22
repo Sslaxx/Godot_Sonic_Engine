@@ -75,11 +75,13 @@ func update_hud ():
    Updates the current time in the level.
 """
 func update_level_timer ():
-	level_time.y += 1			# Add one second to the timer.
-	if (level_time.y > 59):		# Is it over a minute?
-		level_time.y = 0		# If so, reset the seconds timer.
-		level_time.x += 1		# And increase the minutes timer.
-	update_hud ()
+	# Only update the timer if a cutscene is not playing.
+	if (!(player_character.player_movement_state == player_character.MovementState.STATE_CUTSCENE)):
+		level_time.y += 1			# Add one second to the timer.
+		if (level_time.y > 59):		# Is it over a minute?
+			level_time.y = 0		# If so, reset the seconds timer.
+			level_time.x += 1		# And increase the minutes timer.
+		update_hud ()
 	return
 
 """
