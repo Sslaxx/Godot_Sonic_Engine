@@ -1,6 +1,6 @@
 """
-   Dice Engine
-   Stuart "Sslaxx" Moore, 2016.
+   This file is part of:
+   DICE ENGINE
 
    Copyright (c) 2018- Stuart Moore.
 
@@ -67,8 +67,10 @@ func randi_range (Lower = 1, Upper = 100):
 	printerr ("ERROR: Upper cannot be less than (or equal to) Lower in randi_range; returning 0.")
 	return (0)
 
-# init_dice_engine
-# Just a front for the randomize function.
+"""
+   init_dice_engine
+   Just a front for the randomize function.
+"""
 func init_dice_engine ():
 	randomize ()
-	return
+	return (randi (32))	# 17664 workaround, ugh.
