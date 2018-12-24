@@ -70,4 +70,6 @@ func _process (delta):
 	prettied_text = "ON FLOOR: "
 	prettied_text += ("True" if game_space.player_character.is_on_floor () else "False")
 	$On_Floor.text = prettied_text
+	prettied_text = "ANIMATION: " + game_space.player_character.get_node ("AnimatedSprite").animation
+	$Animation.text = prettied_text
 	return

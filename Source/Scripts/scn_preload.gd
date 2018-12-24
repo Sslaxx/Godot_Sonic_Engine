@@ -27,7 +27,7 @@
 """
 
 """
-   Use this scene for resource preloading.
+   Use this scene for resource (pre)loading.
 
    Switches immediately to another scene on loading.
 """

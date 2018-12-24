@@ -133,10 +133,10 @@ func _physics_process (delta):
 	else:
 		movement_state_machine_air (delta)		# And being in the air.
 	velocity.x = (player_speed * movement_direction)	# Work out velocity from speed * direction.
-	if (is_on_floor ()):
-		velocity.y = player_gravity							# Make sure gravity applies.
+	if (is_on_floor ()):								# Make sure gravity applies.
+		velocity.y = player_gravity
 	else:
-		velocity.y += player_gravity * delta
+		velocity.y += (player_gravity * delta)
 	return
 
 """

@@ -79,9 +79,9 @@ DEBUG_resetpos=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_
  ]
 DEBUG_extralife=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":51,"unicode":0,"echo":false,"script":null)
  ]
-DEBUG_loserings=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":52,"unicode":0,"echo":false,"script":null)
+DEBUG_gainrings=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":52,"unicode":0,"echo":false,"script":null)
  ]
-DEBUG_gainrings=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":53,"unicode":0,"echo":false,"script":null)
+DEBUG_loserings=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":53,"unicode":0,"echo":false,"script":null)
  ]
 DEBUG_timeover=[ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":54,"unicode":0,"echo":false,"script":null)
  ]
