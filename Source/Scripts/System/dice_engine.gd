@@ -29,7 +29,7 @@
 extends Node
 
 func _ready ():
-	init_dice_engine ()
+	init_dice_engine ()	# Make sure the dice engine is ready.
 	if (OS.is_debug_build ()):
 		printerr (get_script ().resource_path, " ready.")
 	return
@@ -73,4 +73,4 @@ func randi_range (Lower = 1, Upper = 100):
 """
 func init_dice_engine ():
 	randomize ()
-	return (randi (32))	# 17664 workaround, ugh.
+	return (randi () % 16384576)	# 17664 workaround, ugh.
