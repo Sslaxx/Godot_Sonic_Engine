@@ -55,14 +55,14 @@ func hud_layer_update ():
 	## First things first, update the labels as needed.
 	prettied_text = var2str (int (game_space.lives))			# Set up lives.
 	$Lives_Count.text = prettied_text
-	prettied_text = var2str (int (game_space.collectibles))	# Make sure items collected is correct.
+	prettied_text = var2str (int (game_space.collectibles))		# Make sure items collected is correct.
 	$Rings_Count.text = prettied_text
 	prettied_text = var2str (int (game_space.score))			# Ditto the score.
 	$Score_Count.text = prettied_text
 	# Time is just a little more complicated, to make it look pretty.
-	prettied_text = var2str (int (game_space.level_time.x))	# Show the minutes.
+	prettied_text = var2str (int (game_space.level_time.x))		# Show the minutes.
 	prettied_text += ":"
-	if (game_space.level_time.y < 10):	# If less than ten seconds, add a '0'.
+	if (game_space.level_time.y < 10):							# If less than ten seconds, add a '0'.
 		prettied_text += "0"
 	prettied_text += var2str (int (game_space.level_time.y))	# Add the seconds.
 	$Time_Count.text = prettied_text

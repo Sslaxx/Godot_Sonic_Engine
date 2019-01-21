@@ -35,7 +35,6 @@ var ring_taken = false
 func _ready ():
 	self.connect ("body_entered", self, "got_ring")
 	$"AudioStreamPlayer".connect ("finished", self, "ring_got")
-	$"Sprite".play ()
 	return
 
 """
