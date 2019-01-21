@@ -39,7 +39,7 @@ const DEFAULT_COLLECTIBLES_PER_LIFE = 100	# How many collectibles to collect to 
 
 ## VARIABLES THAT DO NOT NEED RESETTING ON GAME RESTART.
 
-## VARIABLES THAT WILL NEED TO BE RESET ON GAME RESTART.
+## VARIABLES THAT NEED TO BE RESET ON GAME RESTART.
 
 var level_time = Vector2 (0, 0)	# Time passed in the level so far. x is minutes, y seconds.
 var lives = DEFAULT_LIVES setget set_lives, get_lives			# Controls the lives the player has.
@@ -47,7 +47,8 @@ var score = 0 setget set_score, get_score						# What the player's score is.
 var collectibles = 0 setget set_collectibles, get_collectibles	# The collectibles the player has.
 var collectibles_lives = 0										# Used to keep track of items for lives.
 
-onready var player_character = null		# Who is the player character? Set up by player_<character name>.gd script in its _ready.
+# Who is the player character? Set up by player_<character name>.gd script in its _ready.
+onready var player_character = null
 onready var last_checkpoint = null		# The last checkpoint passed by the player.
 
 func _ready ():
@@ -70,21 +71,6 @@ func update_hud ():
 	return
 
 """
-   update_level_timer
-
-   Updates the current time in the level.
-"""
-func update_level_timer ():
-	# Only update the timer if a cutscene is not playing.
-	if (!(player_character.player_movement_state == player_character.MovementState.STATE_CUTSCENE)):
-		level_time.y += 1			# Add one second to the timer.
-		if (level_time.y > 59):		# Is it over a minute?
-			level_time.y = 0		# If so, reset the seconds timer.
-			level_time.x += 1		# And increase the minutes timer.
-		update_hud ()
-	return
-
-"""
    reset_game_space
 
    As singletons are not reset by restarting an application, they have to be handled manually.
@@ -100,11 +86,18 @@ func reset_game_space ():
 	return
 
 ### SETTERS AND GETTERS.
+### Note: only setters update the HUD.
 
 ## For the lives.
 
 # Should handle most death, dying and extra life notifications as required.
 func set_lives (value):
+	if (value > lives):				# Got an extra life!
+		printerr ("TODO: Extra life!")
+	elif (value < lives):			# Lost a life.
+		printerr ("TODO: Death!")
+	else:
+		printerr ("NOTE: Shouldn't see this! Trying to set the value of lives to what it already is.")
 	lives = value
 	update_hud ()
 	return
@@ -116,10 +109,13 @@ func get_lives ():
 
 # Handles collecting items, and what to do when a certain number is reached if anything.
 func set_collectibles (value):
-	if (value > collectibles):		# Collected something, so add what the difference is to the items-for-lives-counter.
+	if (value > collectibles):			# Collected something, so add what the difference is to the items-for-lives-counter.
 		collectibles_lives += (value - collectibles)
-	else:							# Lost items, so set the items-for-lives-counter to the new value.
+	elif (value != collectibles):		# Lost items, so set the items-for-lives-counter to the new value.
 		collectibles_lives = value
+		sound_player.play_sound ("Lose_Rings")
+	else:
+		printerr ("NOTE: Shouldn't see this; attempting to change the value of collectibles to what it already is!")
 	collectibles = value
 	while (collectibles_lives >= DEFAULT_COLLECTIBLES_PER_LIFE):	# Collected enough for at least one extra life!
 		game_space.lives += 1
@@ -139,3 +135,20 @@ func set_score (value):
 
 func get_score ():
 	return (score)
+
+### TIMERS.
+
+"""
+   update_level_timer
+
+   Updates the current time in the level.
+"""
+func update_level_timer ():
+	# Only update the timer if a cutscene is not playing.
+	if (!(player_character.player_movement_state == player_character.MovementState.STATE_CUTSCENE)):
+		level_time.y += 1			# Add one second to the timer.
+		if (level_time.y > 59):		# Is it over a minute?
+			level_time.y = 0		# If so, reset the seconds timer.
+			level_time.x += 1		# And increase the minutes timer.
+		update_hud ()
+	return

@@ -30,7 +30,7 @@ extends Node
 
 func _ready ():
 	init_dice_engine ()	# Make sure the dice engine is ready.
-	if (OS.is_debug_build ()):
+	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
 		printerr (get_script ().resource_path, " ready.")
 	return
 

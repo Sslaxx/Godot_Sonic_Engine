@@ -3,14 +3,11 @@
 [ext_resource path="res://Scripts/scn_preload.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/2D/System/Please_Wait.svg" type="Texture" id=2]
 
-[node name="scn_preload" type="Node2D" index="0"]
-
+[node name="scn_preload" type="Node2D"]
 z_as_relative = false
 script = ExtResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="." index="0"]
-
+[node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 centered = false
-
 

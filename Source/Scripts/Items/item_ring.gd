@@ -19,30 +19,41 @@
 
    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/
    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
-"""
-   This is the code for Sonic.
+### Rings (aka collectibles).
 
-   As the generic player code is (attempting to be) modelled after Sonic's gameplay, this should require very few changes, and
-   most of those should be to the exported vars.
-"""
+extends Area2D
 
-extends "res://Scripts/Player/player_generic.gd"
+var ring_taken = false
 
 func _ready ():
-	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Ensure the debug HUD is added to the scene.
-		printerr ("Sonic - ", self, " - ready.")
-		position = Vector2 (42, -1973)
+	self.connect ("body_entered", self, "got_ring")
+	$"AudioStreamPlayer".connect ("finished", self, "ring_got")
+	$"Sprite".play ()
 	return
 
-func _input (event):
+"""
+   This is called whenever some PhysicsBody2D item enters the area that the ring is in.
+
+   If the body that enters the area is a player character, the item is collected.
+"""
+func got_ring (body):
+	if (!ring_taken && body is preload ("res://Scripts/Player/player_generic.gd")):
+		ring_taken = true				# The player has picked up the ring! So make sure this ring is set as taken.
+		visible = false					# And then as invisible, because of playing the sound.
+		game_space.collectibles += 1	# Increase the player's rings count.
+		$"AudioStreamPlayer".play ()	# And play the collected sound effect.
 	return
 
-func _physics_process (delta):
+# This doesn't really do much except remove the ring from the scene tree once the sound has finished playing.
+func ring_got ():
+	if (OS.is_debug_build()):	# FOR DEBUGGING ONLY.
+		printerr ("Ring collected at ", position, ".")	# Report where the ring taken had been.
+	queue_free ()
 	return

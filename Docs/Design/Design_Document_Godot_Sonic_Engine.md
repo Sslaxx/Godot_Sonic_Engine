@@ -2,6 +2,7 @@
 ## Sonic-feeling 2D platformer engine
 ### Stuart "Sslaxx" Moore
 #### 27th November 2018
+##### Updated 16th January 2019
 
 # OVERVIEW
 
@@ -245,7 +246,7 @@ Not really a state, per se. This is an absence of state or player input. Player 
 
 #### STATE_MOVE_LEFT (1) / STATE_MOVE_RIGHT (2)
 
-See the section on player movement document for more info.
+See the section on player movement for more info.
 
 #### STATE_JUMPING (4)
 
@@ -273,7 +274,7 @@ Most Sonic-type games have one type of collectible that counts towards an extra 
 
 Collectibles should have at least exportable variable that defines its points value. Beyond that is up to any developers. They should also not (usually) impact on physics - that is, they do not slow the player down on impact or the like. They should be `Area2D`s.
 
-Collectibles are kept check of by two variables, `collectibles` and `collectibles_lives`. The latter variable is used to keep track of how many items towards the next life bonus the player has collected. By default the player is not aware of what this variable's value is.
+Collectibles are kept check of by two variables, `collectibles` and `collectibles_lives`. The latter variable is used to keep track of how many items towards the next life bonus the player has collected. By default the player is not aware of what `collectibles_lives`'s value is.
 
 ## Powerups
 

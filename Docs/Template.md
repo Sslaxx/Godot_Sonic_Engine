@@ -2,13 +2,9 @@
 
 Most of the template is covered in [the project structure document](Structure.txt). Won't cover how they work - they're fairly sufficiently documented to hopefully make it obvious. This covers the most basic stuff already in the template and what it's for, including `Scripts\System` `Scenes\System`.
 
-## colour_space
-
-Convenience `Node` script containing a list of colours and their RGB values.
-
 ## dice_engine
 
-A `Node` script allowing random numbers to be generated as if they were "rolled" by dice.
+A `Node` script allowing random numbers to be generated as if they were "rolled" by dice, and allows the total to be added to or subtracted from.
 
 ## game_space
 
@@ -22,7 +18,7 @@ A `Node` script, for non-game(play) related settings (resolution, detail, volume
 
 These are all using `AudioStreamPlayer`. Jingles are non-looped (usually short) pieces of music. Music is obvious, and sounds are looped sounds (ambient) or non-looped. They're set up to use the respective audio buses. Should cover most basic cases between them.
 
-## Assets/Graphics/Fonts/Roboto-Regular.ttf
+## Assets/Fonts/Roboto-Regular.ttf
 
 Just used as a default font for the UI theme.
 

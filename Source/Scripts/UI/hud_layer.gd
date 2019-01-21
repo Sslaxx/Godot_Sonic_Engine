@@ -37,7 +37,7 @@ var zero_collectibles = false	# For games that warn of no rings/collectibles.
 var time_limit_near = false		# If you're getting near the time limit...
 
 func _ready ():
-	if (OS.is_debug_build ()):
+	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
 		printerr ("HUD ready on canvas layer ", layer, ".")
 	hud_layer_update ()
 	return
