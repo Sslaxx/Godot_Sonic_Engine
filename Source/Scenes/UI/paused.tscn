@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/UI/in_game_HUD.tres" type="Theme" id=1]
+[ext_resource path="res://Scripts/UI/paused.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Graphics/2D/UI/Paused.svg" type="Texture" id=3]
+
+[sub_resource type="StyleBoxTexture" id=1]
+
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 128, 64 )
+
+[node name="paused" type="Popup"]
+pause_mode = 2
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -64.0
+margin_top = -32.0
+margin_right = 64.0
+margin_bottom = 32.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Panel" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -64.0
+margin_top = -32.0
+margin_right = 64.0
+margin_bottom = 32.0
+custom_styles/panel = SubResource( 1 )
+

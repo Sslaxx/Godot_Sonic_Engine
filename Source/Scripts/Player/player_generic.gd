@@ -76,7 +76,7 @@ var floor_normal = Vector2 (0, -1)	# Vector to use for floor detection.
 
 onready var player_gravity_vector = ProjectSettings.get_setting ("physics/2d/default_gravity_vector")	# Gravity's direction.
 
-var floor_snap = Vector2 (0, 0)		# Adjusting the "snap" to the floor. (0, 0) for the air, (0, 32) otherwise.
+var floor_snap = Vector2 (0, 0)		# Adjusting the "snap" to the floor. (0, 0) for in-air, (0, 32) otherwise.
 
 """
    Variables that control animation - like when to play walk/jog/run animations.
@@ -137,20 +137,22 @@ func _physics_process (delta):
 	# Move the player character.
 	velocity = move_and_slide_with_snap (velocity, floor_snap, floor_normal, false, 4, 0.785398, false)
 	# Do state machine checks here.
-	movement_state_machine (delta)	# For movement.
-	movement_state_machine_speed (delta)
+	movement_state_machine (delta)				# For movement.
+	movement_state_machine_speed (delta)		# Speed.
 	if (is_on_floor ()):
-		movement_state_machine_ground (delta)	# And being on the ground.
+		movement_state_machine_ground (delta)	# Being on the ground.
 	else:
-		movement_state_machine_air (delta)		# And being in the air.
+		movement_state_machine_air (delta)		# Being in the air.
 	velocity.x = (player_speed * movement_direction)	# Work out velocity from speed * direction.
 	if (is_on_floor ()):								# Make sure gravity applies.
-		velocity.y = 0
+		velocity.y = (0 if velocity.y > 0.0 else velocity.y)
 		floor_snap = Vector2 (0, 32)
 	else:
 		velocity.y += (player_gravity/15)
 		floor_snap = Vector2 (0, 0)
 	return
+
+### ANIMATION.
 
 """
    change_anim

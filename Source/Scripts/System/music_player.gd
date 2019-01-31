@@ -50,14 +50,13 @@ func _ready ():
 ## TODO: This could make use of typed GDScript in 3.1, in theory, as path_to_music is a string.
 func play_music (path_to_music = "", play_from = 0.0):
 	var play_me = null		# This will be used to set the stream data.
-	var file = File.new ()	# Used to see if the file exists.
-	if (!file.file_exists (path_to_music)):	# The file specified to play does not exist.
+	if (!ResourceLoader.exists (path_to_music)):	# The file specified to play does not exist.
 		printerr ("ERROR: ", path_to_music, " does not exist.")
 		return (false)
 	play_me = load (path_to_music)
-	stream = play_me	# Everything's OK, so set the stream as needed?
+	stream = play_me		# Everything's OK, so set the stream as needed?
 	if (stream == null):	# Except it's not actually a music file, so error out.
-		printerr ("ERROR: ", path_to_music, " is not a valid music file!")
+		printerr ("ERROR: music_player has an empty stream! ", path_to_music, " is not a valid music file!")
 		return (false)
 	if (AudioServer.is_bus_mute (bus_index)):	# Unmute Music if it's muted...
 		AudioServer.set_bus_mute (bus_index, false)

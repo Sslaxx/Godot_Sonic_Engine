@@ -26,10 +26,15 @@
    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
+"""
+   A selection of functions to let random numbers made via a dice-like manner be made.
+"""
+
 extends Node
 
-func _ready ():
-	init_dice_engine ()	# Make sure the dice engine is ready.
+func _ready () -> void:
+	# Why printerr for the next line? 17664 workaround, ugh.
+	printerr (init_dice_engine ())	# Initialise the dice engine for the first time.
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
 		printerr (get_script ().resource_path, " ready.")
 	return
@@ -42,10 +47,10 @@ func _ready ():
    Defaults to 1d6+0-0 (1, 6, 0, 0).
    Returns the total given.
 """
-func roll_dice (DiceNumber = 1, DiceSides = 6, AddTo = 0, SubFrom = 0):
-	var Total = 0	# The total of the dice rolled.
-	var Count = 0	# Used to count the number of dice rolled.
-	var DiceRolled = 0	# Total of the dice rolled so far.
+func roll_dice (DiceNumber: int = 1, DiceSides: int = 6, AddTo: int = 0, SubFrom: int = 0) -> int:
+	var Total: int = 0	# The total of the dice rolled.
+	var Count: int = 0	# Used to count the number of dice rolled.
+	var DiceRolled: int = 0	# Total of the dice rolled so far.
 	for Count in range (0, DiceNumber):	# Roll the dice.
 		DiceRolled = randi_range (1, DiceSides)
 		Total = Total + DiceRolled
@@ -60,7 +65,7 @@ func roll_dice (DiceNumber = 1, DiceSides = 6, AddTo = 0, SubFrom = 0):
    Defaults to Lower = 1, Upper = 100. (1, 100)
 """
 # FIXME: Remove if/when Godot proper implements this function!
-func randi_range (Lower = 1, Upper = 100):
+func randi_range (Lower: int = 1, Upper: int = 100) -> int:
 	if (Lower < Upper):
 		return ((randi () % (1+Upper-Lower))+Lower)
 	# If for some reason Upper is less than Lower (or the same value), print an error to the console and return 0.
@@ -71,6 +76,6 @@ func randi_range (Lower = 1, Upper = 100):
    init_dice_engine
    Just a front for the randomize function.
 """
-func init_dice_engine ():
+func init_dice_engine () -> int:
 	randomize ()
 	return (randi () % 16384576)	# 17664 workaround, ugh.

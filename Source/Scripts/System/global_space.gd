@@ -113,4 +113,3 @@ func do_once_only (do_me):
 	# Not been done, so add it to the dictionary and return true.
 	do_once_dictionary [do_me] = "I_AM_DONE"
 	return (true)
-

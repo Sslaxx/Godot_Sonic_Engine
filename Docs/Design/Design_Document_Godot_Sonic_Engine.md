@@ -2,13 +2,13 @@
 ## Sonic-feeling 2D platformer engine
 ### Stuart "Sslaxx" Moore
 #### 27th November 2018
-##### Updated 16th January 2019
+##### Updated 29th January 2019
 
 # OVERVIEW
 
 ## In general
 
-This isn't a game; it's an engine/framework on which to build games from using [Godot](https://godotengine.org/). By design, games that are Sonic-like. It is intended to allow at the very least play as a Sonic-type game through multiple 2D levels. Developers should document the things for their game; this is just the design docs for the framework. It's intended to function as a good, solid base for 2D platformers that are styled after the classic Megadrive Sonic games, that can be extended in any way the developer is able to, with minimal (or preferably no) external dependencies (such as those of GDNative/C#) and can be as cross-platform as Godot supports.
+This isn't a game *per se*; it's an engine/framework on which to build games from using [Godot](https://godotengine.org/). By design, games that are Sonic-like. It is intended to allow at the very least play as a Sonic-type game through multiple 2D levels. Developers should document the things for their game; this is just the design docs for the framework. It's intended to function as a good, solid base for 2D platformers that are styled after the classic Megadrive Sonic games, that can be extended in any way the developer is able to, with minimal (or preferably no) external dependencies (such as those of GDNative/C#) and can be as cross-platform as Godot supports.
 
 ## Platform support
 
@@ -151,6 +151,8 @@ The scripting inheritance structure should be:
 
 The `player_generic.gd` script contains all the physics values and functions that will allow the character to function; it will act on the state values given. The `your_player_script.gd` should contain those values that need adjusting for a specific character, and any character-specific functions. How the functions would work is an excersize left to the developer(s). As a physics item most processing should be done within `_physics_process` (or functions called from within it); input should be (mostly) handled by `_input`.
 
+Some variables in `player_generic.gd` are set as export, so the scene of any script inheriting from this script will have these values exposed. Adjust these as necessary.
+
 ### Determining who the player character is
 
 `game_space.gd` has a global variable `player_character` which is set by the `_ready` function of `your_player_script.gd` to point to the scene in question.
@@ -174,11 +176,11 @@ Default values only should be in `player_generic.gd`. Speeds/heights etc. should
 
 ### Camera
 
-The player scene has a `Camera2D` node which allows the level to scroll with the player. It's `limit_` settings should be adjusted by whatever level the player is in to fit the boundaries of the level.
+The player scene has a `Camera2D` node which allows the level to scroll with the player. Its `limit_` settings should be adjusted by whatever level the player is in to fit the boundaries of the level.
 
 ### Physics
 
-Wherever possible the default collision functions should be used - `is_on_floor` and the like. Look at gotchas about these functions - for example, it sounds like `is_on_floor` and its relations can only be used if the player is moving (not particularly surprising if so as a lot of other physics-based functionality has the same restriction) - and try to find (actually working) workarounds, and to stick within limitations which cannot be worked around (or find ways to use them to your advantage if feasible).
+Wherever possible the default collision functions should be used - `is_on_floor` and the like. Look at gotchas about these functions and try to find (actually working) workarounds, and to stick within limitations which cannot be worked around (or find ways to use them to your advantage if feasible).
 
 All physics bodies need a collision shape of some type; what works best depends on your project. Multiple collision shapes may also be necessary.
 

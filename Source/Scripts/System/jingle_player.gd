@@ -62,13 +62,12 @@ func _ready ():
 ## TODO: This could make use of typed GDScript, in theory, as path_to_jingle is a string.
 func play_jingle (path_to_jingle = "", music_unmute = true):
 	var play_me = null			# This will hold the stream for the jingle.
-	var file = File.new ()		# Used to detect if a file exists or not.
 	unmute_music = music_unmute	# Make sure music will be muted/unmuted after this jingle is done.
-	if (!file.file_exists (path_to_jingle)):	# The file doesn't exist, so say so.
+	if (!ResourceLoader.exists (path_to_jingle)):	# The file doesn't exist, so say so.
 		printerr ("ERROR: ", path_to_jingle, " does not exist!")
 		return (false)
 	play_me = load (path_to_jingle)
-	stream = play_me	# Set the stream.
+	stream = play_me		# Set the stream.
 	if (stream == null):	# If the stream is null, this means the sound file is invalid, so report an error.
 		printerr ("ERROR: jingle_player has an empty stream! ", path_to_jingle, " is not a valid sound file.")
 		return (false)
