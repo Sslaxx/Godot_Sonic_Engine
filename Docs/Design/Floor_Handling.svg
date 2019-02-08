@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1920"
+   height="1080"
+   viewBox="0 0 507.99999 285.75001"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="Floor_Handling.svg"
+   inkscape:export-filename="/home/stuart/Data/Projects/Code/Godot/Projects/Sonic_Outbreak/Docs/Design/Floor_Handling.svg.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs2">
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-2"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path842-7"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:#0000ff;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-3-0"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path842-6-9"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#ff0000;fill-opacity:1;fill-rule:evenodd;stroke:#ff0000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-5-3"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path842-3-6"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#00ff00;fill-opacity:1;fill-rule:evenodd;stroke:#00ff00;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.74477807"
+     inkscape:cx="965.71429"
+     inkscape:cy="538.57143"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="996"
+     inkscape:window-x="0"
+     inkscape:window-y="28"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-11.249983)">
+    <image
+       y="30.538868"
+       x="191.08192"
+       id="image18"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAoCAYAAAACJPERAAAE2klEQVRYha2XUWhbVRjHfxnbyxik inW1uIIJy4OQlu22cIepeagvhc52UNybBTuZIg7K+qJNQZjxqTCoFExdx/q4kbE2i3QvedhWaSBN JYtIyUimm8TNCbuBgWBlx4d7z+29yUluqv7hQu/puef3/c/5vnNOfHgoHNgUAPQFdxsLZQCKlX6f 1/cqKT8KBzYFfUG6tY6WH1fzBhTKe4a7OodPPROqTt1aB9XYIgQ0nMEEj0H5BzU8TEIUOasMxm7s DeaEKG+ZLwFtt4ec1hvXmJ+6wrnVrxvAYMEv56lVZvEzxoR+gensr62hUj0MCwA/Y64AapVZlqcM BkbGOfFh1AZLqA3OG3DjGhuZ5xwaOq+E7qtveMia7yFrvhor1FiBSt58gPzGIwDmRz+FQtkF/Oqt GsFj5lJw6j1y6SRz+uvK5WqZAPWuJ/QLLL9WbHDoBH/+vb/pOrcFrS8XCbMHtTR4pjHLZZ/ijZca GPubwhyghsEu5xmdrBLRQ6xnS6xeGlS7t+q5JdQJk3I66tY6bOD0J28DoGtdsHCH1aVuqn1BBs90 2C5HJ6sUZ1pAe4M5IYQiOkcQMoCIHnJ1MQO4w+oS3L1klVOhDP1Ko2b29r+5JXiwtZupjoylUHYF 0v2BphwooocoVvqhUDbXstLfEJztNExC1B58wV/sUJ/f/or1R0CzwVWCrPtK5rQqNDpZZXVJ7dB2 WuSs7/6fKd8vL9Z8fsZ2NwUw6xTczoHVzUGy+ceugWQQET3E6GQVgPVsSQltWjJhEsKGgiuYCf0C 2okjDIyMA/C3NglANv+YCN+RSyfJvPIZX868q+R41mmtMusCO4HfzFzko/iU8ttDQ+cBOHl6jptX p72h4VPPBIUyTqDUOb2IduIIAAMj4+TSSduxVC6dJL/xqP0Nv96dSufYAv2Aa4olDGgJbICGA5tC JoxzPevlZ4yXiXGSfTZcwsjuMM2TlsvmeeKHSQhVEDKxaqzwBpt2+22eeo7Z9jVDzkKNFfyMMT91 hfzGI5Z/X2Hj29uAtZYXK55OG85TFSxMQtQqs7bbjcxzF1CWDAD6AU8DylPGBlowp37KvEMunWQ5 OwsB092AJ2YPUOfFKkxCzE9dAXZvEFLOrCW74wnd09UxFk+JiB5C17oY7LhqNgY0Jl61dqvsDjd5 4ZlMLZ3WA5PX08AIgJ1QVPIsO5bAXPe1vXhprluZbWEYhjAMQ8TiKQGIMAnRw7Cw7lKih2ERi6fE rcy28kIm5Zm9Eug8yiJ6iB6G7feDx4/Qw7BduwuLaVqBPaGWK5d0rYv34x8D5pXV+b/CvRJ9verD u21oveQ5GtFDyq2yrzdE8nqahcV00zE8E8mZPLrWha51kc0/Zj1bcrmUU1u4V+Lo0RD376sPcGiz ZE6enhPShX3tnPmtoY5rrHDwuLn5b28t/qufkU0ls9ar7X+RLIf68nG+38psCzkzzdT25gDmeqna CvdKLLA7/a3Wc68SUTpdrgzDEFE6BSBi8ZSI0imcs/GfiRIYi6fEHIfFz2A/cxy24bKPDBKQj612 M0zE4ikieogfh6IAjPMEgA7DYH9+iT+GzpPkMNM8IUongHmdsWQdBAC+tqBROsVg3Ly2352ZtAeT YKcm6OQ2T5VgCW/bqSKQhk6WE1XQrj7/AH6ciCPTqSexAAAAAElFTkSuQmCC "
+       preserveAspectRatio="none"
+       height="173.56711"
+       width="125.83617" />
+    <path
+       style="fill:none;stroke:#0000ff;stroke-width:2.05927086;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-2)"
+       d="m 311.68934,152.33002 v 76.4872"
+       id="path831"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:2.05927086;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-3-0)"
+       d="m 196.31066,152.33002 v 76.4872"
+       id="path831-7"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#00ff00;stroke-width:2.05927086;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-5-3)"
+       d="m 254.00001,152.33002 v 76.4872"
+       id="path831-5"
+       inkscape:connector-curvature="0" />
+    <g
+       id="g2473"
+       transform="matrix(0.7783071,0,0,0.7783071,132.81883,-13.107044)">
+      <text
+         id="text2409"
+         y="331.7738"
+         x="-131.51918"
+         style="font-style:normal;font-weight:normal;font-size:16.93333244px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="fill:#ff0000;fill-opacity:1;stroke-width:0.26458332"
+           y="331.7738"
+           x="-131.51918"
+           id="tspan2407"
+           sodipodi:role="line">FloorEdgeLeft: Floor edge detection (left)</tspan></text>
+      <text
+         id="text2409-6"
+         y="381.04657"
+         x="-131.51918"
+         style="font-style:normal;font-weight:normal;font-size:16.93333244px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="fill:#0000ff;fill-opacity:1;stroke-width:0.26458332"
+           y="381.04657"
+           x="-131.51918"
+           id="tspan2407-2"
+           sodipodi:role="line">FloorEdgeRight: Floor edge detection (right)</tspan></text>
+      <text
+         id="text2409-9"
+         y="356.41019"
+         x="-131.51918"
+         style="font-style:normal;font-weight:normal;font-size:16.93333244px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="fill:#00ff00;fill-opacity:1;stroke-width:0.26458332"
+           y="356.41019"
+           x="-131.51918"
+           id="tspan2407-1"
+           sodipodi:role="line">PlayerPivot: used to angle player character to the angle of the floor</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:16.93333435px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335"
+       x="347.08047"
+       y="41.522408"
+       id="text2647"><tspan
+         sodipodi:role="line"
+         id="tspan2645"
+         x="347.08047"
+         y="41.522408"
+         style="stroke-width:0.26458335">Raycasts only</tspan><tspan
+         sodipodi:role="line"
+         x="347.08047"
+         y="62.689075"
+         style="stroke-width:0.26458335"
+         id="tspan2649">enabled when the</tspan><tspan
+         sodipodi:role="line"
+         x="347.08047"
+         y="83.855743"
+         style="stroke-width:0.26458335"
+         id="tspan2651">player is on the</tspan><tspan
+         sodipodi:role="line"
+         x="347.08047"
+         y="105.02241"
+         style="stroke-width:0.26458335"
+         id="tspan2653">floor.</tspan></text>
+  </g>
+</svg>
