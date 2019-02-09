@@ -26,33 +26,35 @@
    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 
-### Rings (aka collectibles).
+### The checkpoint script.
+# If the player dies, they are either reset to the start position, or the last checkpoint they passed by. This makes it happen.
 
 extends Area2D
 
-var ring_taken:bool = false
+var taken:bool = false
 
 func _ready () -> void:
-	self.connect ("body_entered", self, "got_ring")
-	$"AudioStreamPlayer".connect ("finished", self, "ring_got")
+	$"Sprite/AnimationPlayer".play ("spin_red")
+	self.connect ("body_entered", self, "enter_checkpoint_body")
+	return
+
+func enter_checkpoint_body (body) -> void:
+	if (!taken && body is preload ("res://Scripts/Player/player_generic.gd")):
+		# The player has passed the checkpoint, change the animation and set checkpoint_pos vector to the checkpoint's position.
+		taken = true	# A checkpoint can only be activated once.
+		if (OS.is_debug_build()):	# FOR DEBUGGING ONLY.
+			print ("Checkpoint at ", position, " crossed.")
+		$"Sprite/AnimationPlayer".play_backwards ("spin_green")
+		game_space.last_checkpoint = self
+		$"AudioStreamPlayer2D".play ()	# Play the checkpoint jingle.
 	return
 
 """
-   This is called whenever some PhysicsBody2D item enters the area that the ring is in.
+   return_to_checkpoint
 
-   If the body that enters the area is a player character, the item is collected.
+   As it says, returns the player character to this checkpoint. Also resets their state to idle.
 """
-func got_ring (body) -> void:
-	if (!ring_taken && body is preload ("res://Scripts/Player/player_generic.gd")):
-		ring_taken = true				# The player has picked up the ring! So make sure this ring is set as taken.
-		visible = false					# And then as invisible, because of playing the sound.
-		game_space.collectibles += 1	# Increase the player's rings count.
-		$"AudioStreamPlayer".play ()	# And play the collected sound effect.
-	return
-
-# This doesn't really do much except remove the ring from the scene tree once the sound has finished playing.
-func ring_got () -> void:
-	if (OS.is_debug_build()):	# FOR DEBUGGING ONLY.
-		printerr ("Ring collected at ", position, ".")	# Report where the ring taken had been.
-	queue_free ()
+func return_to_checkpoint () -> void:
+	game_space.player_character.position = position
+	game_space.player_character.player_movement_state = game_space.player_character.MovementState.STATE_IDLE
 	return

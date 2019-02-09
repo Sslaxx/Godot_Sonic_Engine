@@ -312,4 +312,4 @@ Normally used for if the player character goes past one, then gets killed and re
 
 The player passes by a checkpoint object (once only), and a reference to that checkpoint is stored in a variable in `game_space` (`last_checkpoint`); it's up to any developer(s) if the checkpoint stores any other information. Should the player character be killed, after the death animation a function `return_to_checkpoint` is called on the checkpoint that resets the player character's position to its location and resumes player control.
 
-At the beginning of the level there should be an invisible checkpoint `start_checkpoint`, on initialisation of the level's script it will make sure the player character is set to its position.
+At the beginning of the level there should be an invisible checkpoint `Startpoint`, on initialisation of the level's script it will make sure the player character is set to its position.

@@ -123,6 +123,12 @@ func _input (event):
 		if (Input.is_action_pressed ("DEBUG_loserings")):	# Lose items!
 			printerr ("DEBUG: lose items pressed.")
 			game_space.collectibles = 0
+		if (Input.is_action_pressed ("DEBUG_resetpos")):	# Reset player position to last good checkpoint.
+			if (game_space.last_checkpoint != null):
+				printerr ("DEBUG: Resetting player position to last known good checkpoint ", game_space.last_checkpoint.position, ".")
+				moving_in = "nil"
+				player_speed = 0.0
+				game_space.last_checkpoint.return_to_checkpoint ()
 		if (Input.is_action_pressed ("DEBUG_cutscene")):	# Switch into or out of the cutscene state.
 			printerr ("DEBUG: cutscene key pressed.")
 			if (player_movement_state != MovementState.STATE_CUTSCENE):
@@ -145,7 +151,8 @@ func _physics_process (delta):
 		movement_state_machine_air (delta)		# Being in the air.
 	velocity.x = (player_speed * movement_direction)	# Work out velocity from speed * direction.
 	if (is_on_floor ()):								# Make sure gravity applies.
-		velocity.y = (0 if velocity.y > 0.0 else (0 if velocity.y > -32 else velocity.y))
+		velocity.y = (0 if (velocity.y != 0 && moving_in == "nil" && player_speed < 0.1) else velocity.y)
+		velocity.y = (0 if velocity.y > 0.0 else (0 if velocity.y > -24 else velocity.y))
 		floor_snap = Vector2 (0, 32)
 	else:
 		velocity.y += (player_gravity/15)

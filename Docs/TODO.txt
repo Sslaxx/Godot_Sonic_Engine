@@ -2,12 +2,11 @@ TODO as of 31-Jan-2019:
 
 Both implement and (if necessary) document.
 
-* Jump (via way in design docs or more like Sonic Outbreak?) - MOSTLY DONE. Air friction still required.
+* Jump (via way in design docs or more like Sonic Outbreak?) - MOSTLY DONE. Refined control still required.
 * Loop-the-loop
 * Boilerplate/generic badnik code
 * Death and game over (maybe time over?)
 * Level start
 * End of level
-* Checkpoints
 * Boilerplate for powerups
 * Angling player characters to slopes.
