@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Signpost_Up.ogg-8842ef7f10bec3d4e3027c013ab682b7.oggstr"
+
+[deps]
+
+source_file="res://Assets/Audio/Sound/Signpost_Up.ogg"
+dest_files=[ "res://.import/Signpost_Up.ogg-8842ef7f10bec3d4e3027c013ab682b7.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

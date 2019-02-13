@@ -102,29 +102,6 @@ func _ready ():
 	return
 
 func _input (event):
-	# Find out which direction the player is moving in.
-	moving_in = ("left" if Input.is_action_pressed ("move_left") else ("right" if Input.is_action_pressed ("move_right") else "nil"))
-	if (!(player_movement_state & MovementState.STATE_JUMPING) && is_on_floor () && Input.is_action_pressed ("move_jump")):
-		# The player is jumping (pressed the jump button).
-		player_movement_state |= MovementState.STATE_JUMPING
-		rotation = 0.0
-		floor_snap = Vector2 (0, 0)
-		velocity.y = 0	# Avoid "super jumps".
-		velocity.y += max_jump_height
-		change_anim ("jump")
-		sound_player.play_sound ("Jump")
-		if (is_on_wall ()):		# Stop strangeness if trying to jump while running into a wall.
-			player_speed = player_speed / 100
-#		if (!player_movement_state & MovementState.STATE_JUMPING):
-#			jump_held = true
-#			player_movement_state |= MovementState.STATE_JUMPING
-#			velocity.y -= jump_adding
-	# Unless there's a cutscene playing, in which case negate any and all movement.
-	if (player_movement_state == MovementState.STATE_CUTSCENE):
-		moving_in = "nil"
-#		jump_held = false
-#	if (Input.is_action_just_pressed ("pause_game")):
-#		global_space.add_path_to_node ("res://Scenes/UI/paused.tscn", "/root/Level")
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Debug keys and what they do.
 		if (Input.is_action_pressed ("DEBUG_gainrings")):	# Gain items!
 			printerr ("DEBUG: gain items pressed.")
@@ -146,6 +123,29 @@ func _input (event):
 			else:
 				printerr ("DEBUG: left cutscene state.")
 				player_movement_state = MovementState.STATE_IDLE
+	# Find out which direction the player is moving in.
+	moving_in = ("left" if Input.is_action_pressed ("move_left") else ("right" if Input.is_action_pressed ("move_right") else "nil"))
+	if (player_movement_state == MovementState.STATE_CUTSCENE):	# Prevent movement in a cutscene.
+		moving_in = "nil"
+		return
+	if (!(player_movement_state & MovementState.STATE_JUMPING) && is_on_floor () && Input.is_action_pressed ("move_jump") && player_movement_state != MovementState.STATE_CUTSCENE):
+		# The player is jumping (pressed the jump button).
+		player_movement_state |= MovementState.STATE_JUMPING
+		rotation = 0.0
+		floor_snap = Vector2 (0, 0)
+		velocity.y = 0	# Avoid "super jumps".
+		velocity.y += max_jump_height
+		change_anim ("jump")
+		sound_player.play_sound ("Jump")
+		if (is_on_wall ()):		# Stop strangeness if trying to jump while running into a wall.
+			player_speed = player_speed / 100
+#		if (!player_movement_state & MovementState.STATE_JUMPING):
+#			jump_held = true
+#			player_movement_state |= MovementState.STATE_JUMPING
+#			velocity.y -= jump_adding
+	# Unless there's a cutscene playing, in which case negate any and all movement.
+#	if (Input.is_action_just_pressed ("pause_game")):
+#		global_space.add_path_to_node ("res://Scenes/UI/paused.tscn", "/root/Level")
 	return
 
 func _physics_process (delta):
@@ -250,6 +250,8 @@ func speed_limiter ():
    The basic movement state logic goes in here. Sets movement direction based on movement state.
 """
 func movement_state_machine (delta):
+	if (player_movement_state == MovementState.STATE_CUTSCENE):
+		return
 	match (moving_in):		# Set the movement state and direction as required.
 		"left":
 			player_movement_state |= MovementState.STATE_MOVE_LEFT
