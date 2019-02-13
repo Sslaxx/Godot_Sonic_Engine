@@ -1,18 +1,17 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/UI/hud_layer.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Rings_Symbol.svg" type="Texture" id=2]
 [ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Time_Symbol.svg" type="Texture" id=3]
 [ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Score_Symbol.svg" type="Texture" id=4]
 [ext_resource path="res://Assets/Graphics/2D/UI/HUD/HUD_Sonic_Lives_Icon.svg" type="Texture" id=5]
-[ext_resource path="res://Assets/UI/in_game_HUD.tres" type="Theme" id=6]
+[ext_resource path="res://Assets/Graphics/2D/UI/HUD/Multiplier_Symbol.svg" type="Texture" id=6]
+[ext_resource path="res://Assets/UI/in_game_HUD.tres" type="Theme" id=7]
 
 [sub_resource type="Animation" id=1]
 
 resource_name = "default"
-length = 1.0
 loop = true
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -29,7 +28,6 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=2]
 
 resource_name = "warning"
-length = 1.0
 loop = true
 step = 0.25
 tracks/0/type = "value"
@@ -48,9 +46,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=3]
 
 resource_name = "default"
-length = 1.0
 loop = true
-step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -67,7 +63,6 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=4]
 
 resource_name = "warning"
-length = 1.0
 loop = true
 step = 0.25
 tracks/0/type = "value"
@@ -83,17 +78,11 @@ tracks/0/keys = {
 "values": [ 1, 0, 1, 0 ]
 }
 
-[node name="hud_layer" type="CanvasLayer" index="0"]
-
+[node name="hud_layer" type="CanvasLayer"]
 layer = 32
-offset = Vector2( 0, 0 )
-rotation = 0.0
-scale = Vector2( 1, 1 )
-transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 script = ExtResource( 1 )
 
-[node name="Rings_Symbol" type="Sprite" parent="." index="0"]
-
+[node name="Rings_Symbol" type="Sprite" parent="."]
 editor/display_folded = true
 position = Vector2( 4, 4 )
 scale = Vector2( 0.25, 0.25 )
@@ -101,19 +90,11 @@ texture = ExtResource( 2 )
 centered = false
 hframes = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Rings_Symbol" index="0"]
-
-root_node = NodePath("..")
-autoplay = ""
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-playback_speed = 1.0
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Rings_Symbol"]
 anims/default = SubResource( 1 )
 anims/warning = SubResource( 2 )
-blend_times = [  ]
 
-[node name="Time_Symbol" type="Sprite" parent="." index="1"]
-
+[node name="Time_Symbol" type="Sprite" parent="."]
 editor/display_folded = true
 position = Vector2( 4, 16 )
 scale = Vector2( 0.25, 0.25 )
@@ -121,116 +102,55 @@ texture = ExtResource( 3 )
 centered = false
 hframes = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Time_Symbol" index="0"]
-
-root_node = NodePath("..")
-autoplay = ""
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-playback_speed = 1.0
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Time_Symbol"]
 anims/default = SubResource( 3 )
 anims/warning = SubResource( 4 )
-blend_times = [  ]
 
-[node name="Score_Symbol" type="Sprite" parent="." index="2"]
-
+[node name="Score_Symbol" type="Sprite" parent="."]
 position = Vector2( 4, 28 )
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 4 )
 centered = false
 
-[node name="Lives_Symbol" type="Sprite" parent="." index="3"]
-
+[node name="Lives_Symbol" type="Sprite" parent="."]
 position = Vector2( 4, 206 )
 texture = ExtResource( 5 )
 centered = false
 
-[node name="Rings_Count" type="Label" parent="." index="4"]
+[node name="Multiplier_Symbol" type="Sprite" parent="."]
+position = Vector2( 24, 213 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 6 )
 
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Rings_Count" type="Label" parent="."]
 margin_left = 48.0
 margin_top = 1.0
 margin_right = 86.0
 margin_bottom = 18.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-theme = ExtResource( 6 )
+theme = ExtResource( 7 )
 text = "999"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="Time_Count" type="Label" parent="." index="5"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Time_Count" type="Label" parent="."]
 margin_left = 48.0
 margin_top = 13.0
 margin_right = 95.0
 margin_bottom = 30.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-theme = ExtResource( 6 )
+theme = ExtResource( 7 )
 text = "59:59.9"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="Score_Count" type="Label" parent="." index="6"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Score_Count" type="Label" parent="."]
 margin_left = 48.0
 margin_top = 25.0
 margin_right = 125.0
 margin_bottom = 42.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-theme = ExtResource( 6 )
+theme = ExtResource( 7 )
 text = "9999999"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="Lives_Count" type="Label" parent="." index="7"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Lives_Count" type="Label" parent="."]
 margin_left = 28.0
 margin_top = 207.0
 margin_right = 66.0
 margin_bottom = 224.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-theme = ExtResource( 6 )
+theme = ExtResource( 7 )
 text = "999"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
 

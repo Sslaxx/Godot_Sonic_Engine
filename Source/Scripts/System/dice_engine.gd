@@ -27,7 +27,7 @@
 """
 
 """
-   A selection of functions to let random numbers made via a dice-like manner be made.
+   A selection of functions to let random numbers via a dice-like manner be made.
 """
 
 extends Node

@@ -30,7 +30,7 @@
 
 extends Area2D
 
-var ring_taken:bool = false
+var ring_taken: bool = false
 
 func _ready () -> void:
 	self.connect ("body_entered", self, "got_ring")
@@ -50,9 +50,9 @@ func got_ring (body) -> void:
 		$"AudioStreamPlayer".play ()	# And play the collected sound effect.
 	return
 
-# This doesn't really do much except remove the ring from the scene tree once the sound has finished playing.
+# This doesn't do anything except remove the ring from the scene tree once the sound has finished playing.
 func ring_got () -> void:
 	if (OS.is_debug_build()):	# FOR DEBUGGING ONLY.
 		printerr ("Ring collected at ", position, ".")	# Report where the ring taken had been.
-	queue_free ()
+	queue_free ()										# Remove the ring from the scene tree.
 	return

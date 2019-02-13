@@ -184,6 +184,8 @@ Wherever possible the default collision functions should be used - `is_on_floor`
 
 All physics bodies need a collision shape of some type; what works best depends on your project. Multiple collision shapes may also be necessary.
 
+Player rotation is handled by a `Raycast2D` called `PlayerPivot`. The player character is angled to the angle of the floor surface they're on if they are moving above a certain value.
+
 ### Movement and speed
 
 Movement is controlled overall by the movement state, which is a bitmask determining how and why the character can move. The movement state and direction will dictate how the speed is worked out. The movement state is the direction the player *is going to move in*; the movement direction variable the direction the player *is currently moving in*. All speed variables are measured by pixels per second.

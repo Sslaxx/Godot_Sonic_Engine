@@ -36,7 +36,7 @@ extends CanvasLayer
 var zero_collectibles:bool = false	# For games that warn of no rings/collectibles.
 var time_limit_near:bool = false		# If you're getting near the time limit...
 
-func _ready ():
+func _ready () -> void:
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
 		printerr ("HUD ready on canvas layer ", layer, ".")
 	hud_layer_update ()
@@ -54,31 +54,31 @@ func hud_layer_update () -> void:
 		return						# Having this here avoids problems when running this scene on its own.
 	## First things first, update the labels as needed.
 	prettied_text = var2str (int (game_space.lives))			# Set up lives.
-	$Lives_Count.text = prettied_text
+	$"Lives_Count".text = prettied_text
 	prettied_text = var2str (int (game_space.collectibles))		# Make sure items collected is correct.
-	$Rings_Count.text = prettied_text
+	$"Rings_Count".text = prettied_text
 	prettied_text = var2str (int (game_space.score))			# Ditto the score.
-	$Score_Count.text = prettied_text
+	$"Score_Count".text = prettied_text
 	# Time is just a little more complicated, to make it look pretty.
 	prettied_text = var2str (int (game_space.level_time.x))		# Show the minutes.
 	prettied_text += ":"
 	if (game_space.level_time.y < 10):							# If less than ten seconds, add a '0'.
 		prettied_text += "0"
 	prettied_text += var2str (int (game_space.level_time.y))	# Add the seconds.
-	$Time_Count.text = prettied_text
+	$"Time_Count".text = prettied_text
 	## Secondly, set animations to play if need be.
 	if (game_space.collectibles <= 0):	# First up, items.
 		if (!zero_collectibles):
 			zero_collectibles = true
-			$Rings_Symbol/AnimationPlayer.play ("warning")
+			$"Rings_Symbol/AnimationPlayer".play ("warning")
 	else:
 		zero_collectibles = false
-		$Rings_Symbol/AnimationPlayer.play ("default")
+		$"Rings_Symbol/AnimationPlayer".play ("default")
 	if (game_space.level_time.x >= (game_space.DEFAULT_TIME_LIMIT - 1) && game_space.level_time.y > 49):
 		if (!time_limit_near):
 			time_limit_near = true
-			$Time_Symbol/AnimationPlayer.play ("warning")
+			$"Time_Symbol/AnimationPlayer".play ("warning")
 	else:
 		time_limit_near = false
-		$Time_Symbol/AnimationPlayer.play ("default")
+		$"Time_Symbol/AnimationPlayer".play ("default")
 	return

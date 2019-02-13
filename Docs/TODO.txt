@@ -9,4 +9,4 @@ Both implement and (if necessary) document.
 * Level start
 * End of level
 * Boilerplate for powerups
-* Angling player characters to slopes.
+* Angling player characters to slopes - MOSTLY DONE. Sanity checking and method need to be refined.

@@ -54,7 +54,7 @@ onready var last_checkpoint = null		# The last checkpoint passed by the player.
 func _ready ():
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
 		printerr ("Game-space ready.")
-	$Timer.connect ("timeout", self, "update_level_timer")
+	$"Timer".connect ("timeout", self, "update_level_timer")
 	return
 
 """
@@ -92,6 +92,8 @@ func reset_game_space ():
 
 # Should handle most death, dying and extra life notifications as required.
 func set_lives (value):
+	if (value > 99):				# Can only have 99 lives maximum...
+		value = 99
 	if (value > lives):				# Got an extra life!
 		printerr ("TODO: Extra life!")
 	elif (value < lives):			# Lost a life.

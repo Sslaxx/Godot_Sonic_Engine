@@ -8,8 +8,8 @@ layer = 99
 script = ExtResource( 1 )
 
 [node name="FPS" type="Label" parent="."]
-margin_left = 321.0
-margin_right = 368.0
+margin_left = 313.0
+margin_right = 360.0
 margin_bottom = 13.0
 theme = ExtResource( 2 )
 text = "FPS: XXXXX"
@@ -17,9 +17,9 @@ align = 2
 valign = 1
 
 [node name="Speed" type="Label" parent="."]
-margin_left = 309.0
+margin_left = 301.0
 margin_top = 11.0
-margin_right = 368.0
+margin_right = 360.0
 margin_bottom = 24.0
 theme = ExtResource( 2 )
 text = "SPEED: XXXXX"
@@ -27,9 +27,9 @@ align = 2
 valign = 1
 
 [node name="Direction" type="Label" parent="."]
-margin_left = 288.0
+margin_left = 280.0
 margin_top = 22.0
-margin_right = 368.0
+margin_right = 360.0
 margin_bottom = 35.0
 theme = ExtResource( 2 )
 text = "DIRECTION: XXXXX"
@@ -37,9 +37,9 @@ align = 2
 valign = 1
 
 [node name="Velocity" type="Label" parent="."]
-margin_left = 284.0
+margin_left = 276.0
 margin_top = 33.0
-margin_right = 368.0
+margin_right = 360.0
 margin_bottom = 46.0
 theme = ExtResource( 2 )
 text = "VELOCITY: XXX, YYY"
@@ -47,9 +47,9 @@ align = 2
 valign = 1
 
 [node name="Position" type="Label" parent="."]
-margin_left = 273.0
+margin_left = 265.0
 margin_top = 46.0
-margin_right = 368.0
+margin_right = 360.0
 margin_bottom = 59.0
 theme = ExtResource( 2 )
 text = "POSITION: XXXX, YYYY"
@@ -57,9 +57,9 @@ align = 2
 valign = 1
 
 [node name="Jumping" type="Label" parent="."]
-margin_left = 273.0
+margin_left = 265.0
 margin_top = 59.0
-margin_right = 368.0
+margin_right = 336.0
 margin_bottom = 72.0
 theme = ExtResource( 2 )
 text = "JUMPING: False"
@@ -67,9 +67,9 @@ align = 2
 valign = 1
 
 [node name="On_Floor" type="Label" parent="."]
-margin_left = 273.0
+margin_left = 265.0
 margin_top = 72.0
-margin_right = 368.0
+margin_right = 341.0
 margin_bottom = 85.0
 theme = ExtResource( 2 )
 text = "ON FLOOR: False"
@@ -77,9 +77,9 @@ align = 2
 valign = 1
 
 [node name="Animation" type="Label" parent="."]
-margin_left = 269.0
+margin_left = 261.0
 margin_top = 83.0
-margin_right = 368.0
+margin_right = 360.0
 margin_bottom = 96.0
 theme = ExtResource( 2 )
 text = "ANIMATION: xxxxxxxx"
@@ -87,12 +87,22 @@ align = 2
 valign = 1
 
 [node name="Floor_Snap" type="Label" parent="."]
-margin_left = 259.0
+margin_left = 251.0
 margin_top = 94.0
-margin_right = 368.0
+margin_right = 360.0
 margin_bottom = 107.0
 theme = ExtResource( 2 )
 text = "FLOOR SNAP: XXXX, YYYY"
+align = 2
+valign = 1
+
+[node name="Rotation" type="Label" parent="."]
+margin_left = 251.0
+margin_top = 107.0
+margin_right = 320.0
+margin_bottom = 120.0
+theme = ExtResource( 2 )
+text = "ROTATION: XXX"
 align = 2
 valign = 1
 

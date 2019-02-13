@@ -109,7 +109,8 @@ func _input (event):
 		player_movement_state |= MovementState.STATE_JUMPING
 		rotation = 0.0
 		floor_snap = Vector2 (0, 0)
-		velocity.y -= 240
+		velocity.y = 0	# Avoid "super jumps".
+		velocity.y += max_jump_height
 		change_anim ("jump")
 		sound_player.play_sound ("Jump")
 		if (is_on_wall ()):		# Stop strangeness if trying to jump while running into a wall.
@@ -181,8 +182,8 @@ func change_anim (anim_to_change_to):
 	if (!has_node ("AnimatedSprite")):						# Can't play animations without something to play with!
 		printerr ("ERROR: Trying to play an animation when ", self, " has no AnimatedSprite node!")
 		return (false)
-	if ($AnimatedSprite.animation != anim_to_change_to):	# Animation's not already playing?
-		$AnimatedSprite.play (anim_to_change_to)			# Then change the animation to the one requested.
+	if ($"AnimatedSprite".animation != anim_to_change_to):	# Animation's not already playing?
+		$"AnimatedSprite".play (anim_to_change_to)			# Then change the animation to the one requested.
 		return (true)
 	return (false)											# The animation's already playing.
 
@@ -198,11 +199,12 @@ func change_anim (anim_to_change_to):
    IMPORTANT: Player movement in a cutscene has to be handled directly by any scene(s) running the cutscene.
 """
 func get_acceleration_mult ():
-	var acceleration_mult = 1.0		# Every factor gets added to/taken away from this value.
-	if (!is_on_floor ()):			# If not on the floor, emulate "air friction".
+	var acceleration_mult = 1.0			# Every factor gets added to/taken away from this value.
+	if (!is_on_floor ()):				# If not on the floor, emulate "air friction".
 		acceleration_mult -= 0.75
-	if (moving_in == "nil" || acceleration_mult < 0):		# If not moving, or acceleration_mult is not sane, zero it.
-		acceleration_mult = 0.0		# This MUST override any other calculations to acceleration rate.
+	acceleration_mult = (0.01 if acceleration_mult < 0.0 else acceleration_mult)	# Ensure acceleration of some kind.
+	if (moving_in == "nil"):			# If not moving, zero it.
+		acceleration_mult = 0.0			# This MUST override any other calculations to acceleration rate.
 	return (acceleration_mult)
 
 """
@@ -214,7 +216,7 @@ func get_acceleration_mult ():
 """
 func get_deceleration_mult ():
 	var deceleration_mult = 1.0	# Every factor gets added to/taken away from this value.
-	deceleration_mult = (0 if deceleration_mult < 0 else deceleration_mult)		# Keep deceleration rate sane.
+	deceleration_mult = (0.01 if deceleration_mult < 0.0 else deceleration_mult)		# Keep deceleration rate sane.
 	if (player_movement_state == MovementState.STATE_CUTSCENE):	# In a cutscene, so the multiplier is 4. KEEP THIS LAST.
 		deceleration_mult = 4.0	# This MUST override any other calculations to deceleration rate.
 	return (deceleration_mult)
@@ -287,15 +289,15 @@ func movement_state_machine_speed (delta):
 """
    movement_state_machine_rotation
 
-   Makes sure rotation is enabled where necessary, and as accurate as possible.
+   Makes sure rotation is enabled when required, and as accurate as possible.
 """
 func movement_state_machine_rotation (delta):
-	if (is_on_floor () && $"PlayerPivot".enabled == false):
+	if (is_on_floor () && $"PlayerPivot".enabled == false):	# On the ground, so enable the pivot.
 		$"PlayerPivot".enabled = true
 		$"FloorEdgeLeft".enabled = true
 		$"FloorEdgeRight".enabled = true
 		rotation = 0.0
-	elif (!is_on_floor() && $"PlayerPivot".enabled):
+	elif (!is_on_floor () && $"PlayerPivot".enabled):		# In the air, so disable the pivot.
 		$"PlayerPivot".enabled = false
 		$"FloorEdgeLeft".enabled = false
 		$"FloorEdgeRight".enabled = false
@@ -341,13 +343,9 @@ func movement_state_machine_ground (delta):
    Does state machine checks while the player is in the air, either jumping or falling.
 """
 func movement_state_machine_air (delta):
-	if ($PlayerPivot.enabled):	# If in the air and the pivot/floor edge detectors are enabled, disable them.
-		rotation = 0.0			# Avoid the player character being at odd angles when in the air and returning to the ground.
 	if (is_on_wall ()):		# Against a wall? Not on the ground? Then negate running speed.
 		player_speed = 0
 	# Change the currently playing animation based on the player's current speed...
-	if (velocity.y < max_jump_height && player_movement_state & MovementState.STATE_JUMPING):	# Jumping sanity checking.
-		velocity.y = max_jump_height
 	if (player_speed > 0 && !(player_movement_state & MovementState.STATE_JUMPING)):
 		# Not jumping, so animations can change.
 		if (player_speed < walk_limit):

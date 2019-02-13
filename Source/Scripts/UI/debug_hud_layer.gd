@@ -43,36 +43,38 @@ func _ready () -> void:
 	return
 
 func _process (delta:float) -> void:
+	var prettied_text:String = ""	# Used for formatting the text for the labels.
 	if (game_space.player_character == null):	# No player character, no point in updating!
 		return
-	var prettied_text:String = ""	# Used for formatting the text for the labels.
 	# First up, show the frames per second.
 	prettied_text = "FPS: " + var2str (int (Engine.get_frames_per_second ()))
-	$FPS.text = prettied_text
+	$"FPS".text = prettied_text
 	# How fast is the player character moving?
 	prettied_text = "SPEED: " + var2str (int (game_space.player_character.player_speed))
-	$Speed.text = prettied_text
+	$"Speed".text = prettied_text
 	# What direction?
 	prettied_text = "DIRECTION: " + game_space.player_character.moving_in
-	$Direction.text = prettied_text
+	$"Direction".text = prettied_text
 	# What's the velocity?
 	prettied_text = "VELOCITY: " + var2str (int (game_space.player_character.velocity.x))
 	prettied_text += ", " + var2str (int (game_space.player_character.velocity.y))
-	$Velocity.text = prettied_text
+	$"Velocity".text = prettied_text
 	# And where are they in the scene?
 	prettied_text = "POSITION: " + var2str (int (game_space.player_character.position.x))
 	prettied_text += ", " + var2str (int (game_space.player_character.position.y))
-	$Position.text = prettied_text
+	$"Position".text = prettied_text
 	# Are they jumping?
 	prettied_text = "JUMPING: "
 	prettied_text += ("True" if (game_space.player_character.player_movement_state & game_space.player_character.MovementState.STATE_JUMPING) else "False")
-	$Jumping.text = prettied_text
+	$"Jumping".text = prettied_text
 	prettied_text = "ON FLOOR: "
 	prettied_text += ("True" if game_space.player_character.is_on_floor () else "False")
-	$On_Floor.text = prettied_text
+	$"On_Floor".text = prettied_text
 	prettied_text = "ANIMATION: " + game_space.player_character.get_node ("AnimatedSprite").animation
-	$Animation.text = prettied_text
+	$"Animation".text = prettied_text
 	prettied_text = "FLOOR SNAP: " + var2str (int (game_space.player_character.floor_snap.x))
 	prettied_text += ", " + var2str (int (game_space.player_character.floor_snap.y))
 	$"Floor_Snap".text = prettied_text
+	prettied_text = "ROTATION: " + var2str (int (rad2deg (game_space.player_character.rotation)))
+	$"Rotation".text = prettied_text
 	return
