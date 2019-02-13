@@ -78,6 +78,13 @@ onready var player_gravity_vector = ProjectSettings.get_setting ("physics/2d/def
 
 var floor_snap = Vector2 (0, 0)		# Adjusting the "snap" to the floor. (0, 0) for in-air, (0, 32) otherwise.
 
+var max_floor_angle = deg2rad (45)			# For floor sanity checking.
+
+export var max_jump_height = -240			# Default max jumping height.
+
+var ground_angle = 0				# Controlling the angle the player is in relation to the floor.
+var ground_normal = Vector2 (0, 0)
+
 """
    Variables that control animation - like when to play walk/jog/run animations.
 """
@@ -100,6 +107,7 @@ func _input (event):
 	if (!(player_movement_state & MovementState.STATE_JUMPING) && is_on_floor () && Input.is_action_pressed ("move_jump")):
 		# The player is jumping (pressed the jump button).
 		player_movement_state |= MovementState.STATE_JUMPING
+		rotation = 0.0
 		floor_snap = Vector2 (0, 0)
 		velocity.y -= 240
 		change_anim ("jump")
@@ -141,7 +149,7 @@ func _input (event):
 
 func _physics_process (delta):
 	# Move the player character.
-	velocity = move_and_slide_with_snap (velocity, floor_snap, floor_normal, false, 4, 0.785398, false)
+	velocity = move_and_slide_with_snap (velocity, floor_snap, floor_normal, false, 4, max_floor_angle, false)
 	# Do state machine checks here.
 	movement_state_machine (delta)				# For movement.
 	movement_state_machine_speed (delta)		# Speed.
@@ -149,10 +157,11 @@ func _physics_process (delta):
 		movement_state_machine_ground (delta)	# Being on the ground.
 	else:
 		movement_state_machine_air (delta)		# Being in the air.
+	movement_state_machine_rotation (delta)		# Deal with rotation.
 	velocity.x = (player_speed * movement_direction)	# Work out velocity from speed * direction.
 	if (is_on_floor ()):								# Make sure gravity applies.
 		velocity.y = (0 if (velocity.y != 0 && moving_in == "nil" && player_speed < 0.1) else velocity.y)
-		velocity.y = (0 if velocity.y > 0.0 else (0 if velocity.y > -24 else velocity.y))
+		velocity.y = (0 if velocity.y > 0.0 else (0 if velocity.y > -32 else velocity.y))
 		floor_snap = Vector2 (0, 32)
 	else:
 		velocity.y += (player_gravity/15)
@@ -191,7 +200,7 @@ func change_anim (anim_to_change_to):
 func get_acceleration_mult ():
 	var acceleration_mult = 1.0		# Every factor gets added to/taken away from this value.
 	if (!is_on_floor ()):			# If not on the floor, emulate "air friction".
-		acceleration_mult -= 0.85
+		acceleration_mult -= 0.75
 	if (moving_in == "nil" || acceleration_mult < 0):		# If not moving, or acceleration_mult is not sane, zero it.
 		acceleration_mult = 0.0		# This MUST override any other calculations to acceleration rate.
 	return (acceleration_mult)
@@ -276,6 +285,32 @@ func movement_state_machine_speed (delta):
 	return
 
 """
+   movement_state_machine_rotation
+
+   Makes sure rotation is enabled where necessary, and as accurate as possible.
+"""
+func movement_state_machine_rotation (delta):
+	if (is_on_floor () && $"PlayerPivot".enabled == false):
+		$"PlayerPivot".enabled = true
+		$"FloorEdgeLeft".enabled = true
+		$"FloorEdgeRight".enabled = true
+		rotation = 0.0
+	elif (!is_on_floor() && $"PlayerPivot".enabled):
+		$"PlayerPivot".enabled = false
+		$"FloorEdgeLeft".enabled = false
+		$"FloorEdgeRight".enabled = false
+		rotation = 0.0
+		return
+	if (player_speed > (walk_limit/10)):
+		ground_normal = $"PlayerPivot".get_collision_normal ()
+		ground_angle = (floor_normal.angle_to (ground_normal))
+		rotation = (0.0 if player_speed < 0.05 else ground_angle)
+		rotation = (rotation if $"PlayerPivot".is_colliding () else 0.0)
+	else:
+		rotation = 0
+	return
+
+"""
    movement_state_machine_ground
 
    Sets movement direction according to player input, and does that based upon the current movement state. Also changes
@@ -284,10 +319,6 @@ func movement_state_machine_speed (delta):
 func movement_state_machine_ground (delta):
 	if (player_movement_state & MovementState.STATE_JUMPING):	# Finished jumping? Turn off the jump state.
 		player_movement_state &= ~MovementState.STATE_JUMPING
-	if (!$PlayerPivot.enabled):	# If on the ground and the pivot/floor edge detectors are not enabled, enable them.
-		$PlayerPivot.enabled = true
-		$FloorEdgeLeft.enabled = true
-		$FloorEdgeRight.enabled = true
 	# Change the currently playing animation based on the player's current speed...
 	if (player_speed > 0):
 		if (player_speed < walk_limit):	# ...walking...
@@ -311,12 +342,12 @@ func movement_state_machine_ground (delta):
 """
 func movement_state_machine_air (delta):
 	if ($PlayerPivot.enabled):	# If in the air and the pivot/floor edge detectors are enabled, disable them.
-		$PlayerPivot.enabled = false
-		$FloorEdgeLeft.enabled = false
-		$FloorEdgeRight.enabled = false
+		rotation = 0.0			# Avoid the player character being at odd angles when in the air and returning to the ground.
 	if (is_on_wall ()):		# Against a wall? Not on the ground? Then negate running speed.
 		player_speed = 0
 	# Change the currently playing animation based on the player's current speed...
+	if (velocity.y < max_jump_height && player_movement_state & MovementState.STATE_JUMPING):	# Jumping sanity checking.
+		velocity.y = max_jump_height
 	if (player_speed > 0 && !(player_movement_state & MovementState.STATE_JUMPING)):
 		# Not jumping, so animations can change.
 		if (player_speed < walk_limit):

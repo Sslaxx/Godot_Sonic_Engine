@@ -2,7 +2,7 @@
    This file is part of:
    GODOT SONIC ENGINE
 
-   Copyright (c) 2018- Stuart Moore.
+   Copyright (c) 2019- Stuart Moore.
 
    Licenced under the terms of the MIT "expat" license.
 
@@ -31,16 +31,21 @@
 
 extends Area2D
 
-var taken:bool = false
+var taken: bool = false
 
 func _ready () -> void:
 	$"Sprite/AnimationPlayer".play ("spin_red")
 	self.connect ("body_entered", self, "enter_checkpoint_body")
 	return
 
+"""
+   enter_checkpoint_body
+
+   The checkpoint has been passed by, so set positions and play animations as required.
+"""
 func enter_checkpoint_body (body) -> void:
 	if (!taken && body is preload ("res://Scripts/Player/player_generic.gd")):
-		# The player has passed the checkpoint, change the animation and set checkpoint_pos vector to the checkpoint's position.
+		# The player has passed the checkpoint, change the animation and set the last_checkpoint variable to this checkpoint.
 		taken = true	# A checkpoint can only be activated once.
 		if (OS.is_debug_build()):	# FOR DEBUGGING ONLY.
 			print ("Checkpoint at ", position, " crossed.")
@@ -52,9 +57,10 @@ func enter_checkpoint_body (body) -> void:
 """
    return_to_checkpoint
 
-   As it says, returns the player character to this checkpoint. Also resets their state to idle.
+   As it says, returns the player character to this checkpoint. Also resets their rotation and their state to idle.
 """
 func return_to_checkpoint () -> void:
 	game_space.player_character.position = position
+	game_space.player_character.rotation = 0
 	game_space.player_character.player_movement_state = game_space.player_character.MovementState.STATE_IDLE
 	return

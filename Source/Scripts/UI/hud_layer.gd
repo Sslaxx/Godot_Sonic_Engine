@@ -33,8 +33,8 @@
 
 extends CanvasLayer
 
-var zero_collectibles = false	# For games that warn of no rings/collectibles.
-var time_limit_near = false		# If you're getting near the time limit...
+var zero_collectibles:bool = false	# For games that warn of no rings/collectibles.
+var time_limit_near:bool = false		# If you're getting near the time limit...
 
 func _ready ():
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
@@ -48,8 +48,8 @@ func _ready ():
    Does all the heavy lifting. Updates the HUD (when called) to update all needed info. Should only ever be called when things
    actually change!
 """
-func hud_layer_update ():
-	var prettied_text = ""
+func hud_layer_update () -> void:
+	var prettied_text:String = ""
 	if (!has_node ("/root/Level")):	# Can't update the HUD for a level that doesn't exist!
 		return						# Having this here avoids problems when running this scene on its own.
 	## First things first, update the labels as needed.

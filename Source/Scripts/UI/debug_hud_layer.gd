@@ -35,17 +35,17 @@
 
 extends CanvasLayer
 
-func _ready ():
+func _ready () -> void:
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
 		printerr ("Debugging HUD ready on canvas layer ", layer, ".")
 	else:
 		queue_free ()	# This shouldn't be used if debugging isn't on, so delete it from the scene tree.
 	return
 
-func _process (delta):
+func _process (delta:float) -> void:
 	if (game_space.player_character == null):	# No player character, no point in updating!
 		return
-	var prettied_text = ""	# Used for formatting the text for the labels.
+	var prettied_text:String = ""	# Used for formatting the text for the labels.
 	# First up, show the frames per second.
 	prettied_text = "FPS: " + var2str (int (Engine.get_frames_per_second ()))
 	$FPS.text = prettied_text
