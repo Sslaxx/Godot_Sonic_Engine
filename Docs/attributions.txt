@@ -1,4 +1,4 @@
-Only assets listed here are (legally) safe to use commercially.
+If an asset is NOT listed here, it's from an existing commercial game and cannot be used for-profit. Even if it IS listed here, it's only safe to use commercially if it says so for licensing terms.
 
 Asset - filename(s) - Author(s) - License (if known/applicable)
-
+Violet Valley Zone - violet_valley_zone_by_danielmania123_dd0bchd.png - DanielMania123/retrobunyip - credit creators; non-commercial

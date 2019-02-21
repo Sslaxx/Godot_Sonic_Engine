@@ -30,7 +30,7 @@
 
 extends Area2D
 
-var ring_taken: bool = false
+var ring_taken:bool = false
 
 func _ready () -> void:
 	self.connect ("body_entered", self, "got_ring")

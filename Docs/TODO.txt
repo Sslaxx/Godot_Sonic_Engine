@@ -1,12 +1,13 @@
-TODO as of 31-Jan-2019:
+TODO as of 14-Feb-2019:
 
 Both implement and (if necessary) document.
 
 * Jump (via way in design docs or more like Sonic Outbreak?) - MOSTLY DONE. Refined control still required.
 * Loop-the-loop
+* Moving platforms
 * Boilerplate/generic badnik code
 * Death and game over (maybe time over?)
 * Level start
-* End of level
+* End of level - STARTED.
 * Boilerplate for powerups
 * Angling player characters to slopes - MOSTLY DONE. Sanity checking and method need to be refined.

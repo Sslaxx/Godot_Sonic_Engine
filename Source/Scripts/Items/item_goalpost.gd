@@ -37,12 +37,18 @@ extends Area2D
 var goaled:bool = false
 
 # Called when the node enters the scene tree for the first time.
-func _ready ():
+func _ready () -> void:
 	self.connect ("body_entered", self, "hit_goalpost")
 	$"AnimationPlayer".connect ("animation_finished", self, "goalpost_raised")
 	return
 
-func hit_goalpost (body):
+"""
+   hit_goalpost
+
+   Called when something passes by the goalpost. If it's the player, then it'll trigger the end-of-level sequence.
+   This handles the end-of-level animation, everything else should be handled by goalpost_raised.
+"""
+func hit_goalpost (body) -> void:
 	if (body is preload ("res://Scripts/Player/player_generic.gd") && !goaled):	# Player has passed the goalpost.
 		goaled = true
 		$"AnimationPlayer".play ("goal")
@@ -52,6 +58,11 @@ func hit_goalpost (body):
 			printerr ("Goal post passed!")
 	return
 
-func goalpost_raised (xxx):
-	print ("TODO: End of level stuff here!")
+"""
+   goalpost_raised
+
+   Once the end-of-level animation has been played, start with everything else.
+"""
+func goalpost_raised (xxx) -> void:
+	printerr ("TODO: End of level stuff here!")
 	return

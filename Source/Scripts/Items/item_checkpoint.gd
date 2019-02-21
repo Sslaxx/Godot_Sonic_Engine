@@ -31,7 +31,7 @@
 
 extends Area2D
 
-var taken: bool = false
+var taken:bool = false
 
 func _ready () -> void:
 	$"Sprite/AnimationPlayer".play ("spin_red")
@@ -63,4 +63,5 @@ func return_to_checkpoint () -> void:
 	game_space.player_character.position = position
 	game_space.player_character.rotation = 0
 	game_space.player_character.player_movement_state = game_space.player_character.MovementState.STATE_IDLE
+	game_space.player_character.visible = true
 	return
