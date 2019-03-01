@@ -53,7 +53,6 @@ func hit_goalpost (body) -> void:
 		goaled = true
 		$"AnimationPlayer".play ("goal")
 		$"AudioStreamPlayer".play ()
-		game_space.player_character.player_movement_state = game_space.player_character.MovementState.STATE_CUTSCENE
 		if (OS.is_debug_build ()):
 			printerr ("Goal post passed!")
 	return
@@ -65,4 +64,5 @@ func hit_goalpost (body) -> void:
 """
 func goalpost_raised (xxx) -> void:
 	printerr ("TODO: End of level stuff here!")
+	game_space.player_character.player_movement_state = game_space.player_character.MovementState.STATE_CUTSCENE
 	return

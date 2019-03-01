@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/HUD_Sonic_Lives_Icon.svg-72900cd432e7edc429645aec6de080f4.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

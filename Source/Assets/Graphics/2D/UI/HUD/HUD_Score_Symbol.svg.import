@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/HUD_Score_Symbol.svg-95d9ea479b82a88f96e946a72c3ad5d6.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

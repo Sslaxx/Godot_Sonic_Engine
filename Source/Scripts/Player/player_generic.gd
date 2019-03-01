@@ -250,13 +250,14 @@ func speed_limiter ():
    The basic movement state logic goes in here. Sets movement direction based on movement state.
 """
 func movement_state_machine (delta):
-	match (moving_in):		# Set the movement state and direction as required.
-		"left":
-			player_movement_state |= MovementState.STATE_MOVE_LEFT
-			player_movement_state &= ~MovementState.STATE_MOVE_RIGHT
-		"right":
-			player_movement_state |= MovementState.STATE_MOVE_RIGHT
-			player_movement_state &= ~MovementState.STATE_MOVE_LEFT
+	if (player_movement_state != MovementState.STATE_CUTSCENE):
+		match (moving_in):		# Set the movement state and direction as required.
+			"left":
+				player_movement_state |= MovementState.STATE_MOVE_LEFT
+				player_movement_state &= ~MovementState.STATE_MOVE_RIGHT
+			"right":
+				player_movement_state |= MovementState.STATE_MOVE_RIGHT
+				player_movement_state &= ~MovementState.STATE_MOVE_LEFT
 	if (player_movement_state & MovementState.STATE_MOVE_LEFT):	# All the left-moving logic goes in here.
 		if (moving_in == "left"):			# Player is moving left.
 			movement_direction = (-1 if player_speed < 0.01 else movement_direction)

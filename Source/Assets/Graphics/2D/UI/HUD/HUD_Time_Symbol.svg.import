@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/HUD_Time_Symbol.svg-f4e872b4cdf31dba062e0ac45401a804.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 

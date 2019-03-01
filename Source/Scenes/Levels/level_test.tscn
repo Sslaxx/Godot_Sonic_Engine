@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/Levels/level_test.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Levels/platform_test.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Assets/Graphics/2D/Levels/Test/loop_test.tres" type="TileSet" id=3]
+[ext_resource path="res://Assets/Graphics/2D/Levels/Test/TEST_Tileset.tres" type="TileSet" id=3]
 [ext_resource path="res://Scenes/Items/item_ring.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Items/item_checkpoint.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Items/item_goalpost.tscn" type="PackedScene" id=6]
@@ -17,13 +17,16 @@ position = Vector2( 1248, 256 )
 position = Vector2( 1360, 32 )
 tile_set = ExtResource( 3 )
 format = 1
-tile_data = PoolIntArray( 16, 0, 0, 18, 1, 0, 131090, 2, 0 )
+tile_data = PoolIntArray( 16, 0, 0, 18, 1, 0, 327656, 1, 0, 327657, 2, 0, 327658, 2, 0, 327659, 3, 0, 327660, 2, 0, 327661, 2, 0, 327662, 3, 0, 327663, 2, 0, 327664, 2, 0, 327665, 3, 0, 327666, 2, 0, 327667, 2, 0, 327668, 3, 0, 327669, 2, 0, 327670, 2, 0, 327671, 3, 0, 327672, 2, 0, 327673, 2, 0, 327674, 3, 0, 327675, 2, 0, 327676, 2, 0, 327677, 3, 0, 262157, 1, 0, 262158, 2, 0, 262159, 2, 0, 262160, 2, 0, 262161, 3, 0, 262162, 4, 0 )
 
 [node name="Ring" parent="." instance=ExtResource( 4 )]
 position = Vector2( -48, 240 )
 
 [node name="Checkpoint" parent="." instance=ExtResource( 5 )]
 position = Vector2( 384, 242 )
+
+[node name="Startpoint" parent="." instance=ExtResource( 5 )]
+position = Vector2( -160, 277 )
 
 [node name="GoalPost" parent="." instance=ExtResource( 6 )]
 position = Vector2( 2480, 240 )
