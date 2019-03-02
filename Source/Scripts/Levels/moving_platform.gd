@@ -27,24 +27,26 @@
 """
 
 """
-   Makes a ParallaxLayer scroll on its own. It can move x and/or y-axis independently.
-   To use:
-   1 - Attach this script to a (properly configured!) ParallaxLayer node/scene.
-   2 - Use the "Movement Factor" property in the inspector to set the speed/direction required (x direction, y direction).
+   Taken from the Godot demo suite, this implements a moving platform that allows both x and y movement.
+   Motion is a range, remember. So (0, 100) moves -50<-0->+50 in the y-axis.
+   Cycle determines how fast it moves; higher values are faster.
 """
 
-extends ParallaxLayer
+extends Node2D
 
-export var movement_factor = Vector2.ZERO	# Have movement be able to be changed in the object inspector.
+export var motion = Vector2.ZERO	# The range of movement that the platform moves around with.
+export var cycle: float = 1.0		# Controls the speed of movement.
+var accum: float = 0.0
 
 func _ready () -> void:
-	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Give a bit of info about what is moving how.
-		print (name, " is moving at ", movement_factor, ".")
+	printerr ("Moving platform at ", position, " ready.")
 	return
 
-"""
-   Make the layer move!
-"""
-func _process (delta: float) -> void:
-	motion_offset += (movement_factor * delta)	# Move the background, in the directions and speed required.
+func _physics_process (delta: float) -> void:
+	accum += delta * (1.0 / cycle) * PI * 2.0
+	accum = fmod (accum, PI * 2.0)
+	var d: float = sin (accum)
+	var xf = Transform2D ()
+	xf [2] = motion * d
+	$platform.transform = xf
 	return

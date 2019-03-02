@@ -56,7 +56,7 @@ var moving_in = "nil"		# Which direction the player is holding down, i.e. the di
 var movement_direction = 0	# Which direction the player is currently moving in. -1 = left/up, 1 = right/down.
 var player_speed = 0.0		# The speed at which the player is moving at.
 
-var velocity = Vector2 (0, 0)	# The velocity (amount the player is moving in a direction).
+var velocity = Vector2.ZERO	# The velocity (amount the player is moving in a direction).
 
 ## HOW MUCH TO MOVE THE PLAYER.
 
@@ -72,18 +72,18 @@ export var max_player_speed = 60	# Default maximum speed is 60 pixels per second
 
 ## AFFECTING THE PLAYER MOVING.
 
-var floor_normal = Vector2 (0, -1)	# Vector to use for floor detection.
+var floor_normal = Vector2.UP	# Vector to use for floor detection.
 
 onready var player_gravity_vector = ProjectSettings.get_setting ("physics/2d/default_gravity_vector")	# Gravity's direction.
 
-var floor_snap = Vector2 (0, 0)		# Adjusting the "snap" to the floor. (0, 0) for in-air, (0, 32) otherwise.
+var floor_snap = Vector2.ZERO		# Adjusting the "snap" to the floor. (0, 0) for in-air, (0, 32) otherwise.
 
 var max_floor_angle = deg2rad (45)			# For floor sanity checking.
 
 export var max_jump_height = -240			# Default max jumping height.
 
 var ground_angle = 0				# Controlling the angle the player is in relation to the floor.
-var ground_normal = Vector2 (0, 0)
+var ground_normal = Vector2.ZERO
 
 """
    Variables that control animation - like when to play walk/jog/run animations.
@@ -132,7 +132,7 @@ func _input (event):
 		# The player is jumping (pressed the jump button).
 		player_movement_state |= MovementState.STATE_JUMPING
 		rotation = 0.0
-		floor_snap = Vector2 (0, 0)
+		floor_snap = Vector2.ZERO
 		velocity.y = 0	# Avoid "super jumps".
 		velocity.y += max_jump_height
 		change_anim ("jump")
@@ -166,7 +166,7 @@ func _physics_process (delta):
 		floor_snap = Vector2 (0, 32)
 	else:
 		velocity.y += (player_gravity/15)
-		floor_snap = Vector2 (0, 0)
+		floor_snap = Vector2.ZERO
 	return
 
 ### ANIMATION.

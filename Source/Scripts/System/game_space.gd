@@ -41,7 +41,7 @@ const DEFAULT_COLLECTIBLES_PER_LIFE = 100	# How many collectibles to collect to 
 
 ## VARIABLES THAT NEED TO BE RESET ON GAME RESTART.
 
-var level_time = Vector2 (0, 0)	# Time passed in the level so far. x is minutes, y seconds.
+var level_time = Vector2.ZERO	# Time passed in the level so far. x is minutes, y seconds.
 var lives = DEFAULT_LIVES setget set_lives, get_lives			# Controls the lives the player has.
 var score = 0 setget set_score, get_score						# What the player's score is.
 var collectibles = 0 setget set_collectibles, get_collectibles	# The collectibles the player has.
@@ -76,7 +76,7 @@ func update_hud ():
    As singletons are not reset by restarting an application, they have to be handled manually.
 """
 func reset_game_space ():
-	level_time = Vector2 (0, 0)
+	level_time = Vector2.ZERO
 	lives = DEFAULT_LIVES
 	score = 0
 	collectibles = 0
