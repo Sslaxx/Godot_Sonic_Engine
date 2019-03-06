@@ -2,7 +2,7 @@
    This file is part of:
    GODOT SONIC ENGINE
 
-   Copyright (c) 2018- Stuart Moore.
+   Copyright (c) 2019- Stuart Moore.
 
    Licenced under the terms of the MIT "expat" license.
 
@@ -162,7 +162,7 @@ func _physics_process (delta):
 	velocity.x = (player_speed * movement_direction)	# Work out velocity from speed * direction.
 	if (is_on_floor ()):								# Make sure gravity applies.
 		velocity.y = (0 if (velocity.y != 0 && moving_in == "nil" && player_speed < 0.1) else velocity.y)
-		velocity.y = (0 if velocity.y > 0.0 else (0 if velocity.y > -32 else velocity.y))
+		velocity.y = (0 if velocity.y > 0.0 else (0 if velocity.y > -32.0 else velocity.y))
 		floor_snap = Vector2 (0, 32)
 	else:
 		velocity.y += (player_gravity/15)
@@ -203,7 +203,7 @@ func get_acceleration_mult ():
 	if (!is_on_floor ()):				# If not on the floor, emulate "air friction".
 		acceleration_mult -= 0.75
 	acceleration_mult = (0.01 if acceleration_mult < 0.0 else acceleration_mult)	# Ensure acceleration of some kind.
-	if (moving_in == "nil"):			# If not moving, zero it.
+	if (moving_in == "nil" || player_movement_state == MovementState.STATE_CUTSCENE):			# If not (supposed to be) moving, zero it.
 		acceleration_mult = 0.0			# This MUST override any other calculations to acceleration rate.
 	return (acceleration_mult)
 
@@ -218,7 +218,7 @@ func get_deceleration_mult ():
 	var deceleration_mult = 1.0	# Every factor gets added to/taken away from this value.
 	deceleration_mult = (0.01 if deceleration_mult < 0.0 else deceleration_mult)		# Keep deceleration rate sane.
 	if (player_movement_state == MovementState.STATE_CUTSCENE):	# In a cutscene, so the multiplier is 4. KEEP THIS LAST.
-		deceleration_mult = 4.0	# This MUST override any other calculations to deceleration rate.
+		deceleration_mult = 40.0	# This MUST override any other calculations to deceleration rate.
 	return (deceleration_mult)
 
 """

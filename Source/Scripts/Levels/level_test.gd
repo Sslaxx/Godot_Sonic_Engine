@@ -2,7 +2,7 @@
    This file is part of:
    GODOT SONIC ENGINE
 
-   Copyright (c) 2018- Stuart Moore.
+   Copyright (c) 2019- Stuart Moore.
 
    Licenced under the terms of the MIT "expat" license.
 
@@ -35,7 +35,7 @@
 
 extends "res://Scripts/Levels/level_generic.gd"
 
-func _ready():
+func _ready () -> void:
 	if (OS.is_debug_build ()):
 		global_space.add_path_to_node ("res://Scenes/Player/player_sonic.tscn", "/root/Level")
 	return

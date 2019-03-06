@@ -2,7 +2,7 @@
    This file is part of:
    DICE ENGINE
 
-   Copyright (c) 2018- Stuart Moore.
+   Copyright (c) 2019- Stuart Moore.
 
    Licenced under the terms of the MIT "expat" license.
 

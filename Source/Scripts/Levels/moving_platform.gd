@@ -2,7 +2,11 @@
    This file is part of:
    GODOT SONIC ENGINE
 
-   Copyright (c) 2018- Stuart Moore.
+   Copyright (c) 2019- Stuart Moore.
+
+   Originally from the Godot 2D platformer demo.
+   Copyright (c) 2007-2019 Juan Linietsky, Ariel Manzur.
+   Copyright (c) 2014-2019 Godot Engine contributors.
 
    Licenced under the terms of the MIT "expat" license.
 
@@ -39,7 +43,8 @@ export var cycle: float = 1.0		# Controls the speed of movement.
 var accum: float = 0.0
 
 func _ready () -> void:
-	printerr ("Moving platform at ", position, " ready.")
+	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
+		printerr ("Moving platform at ", position, " ready.")
 	return
 
 func _physics_process (delta: float) -> void:
