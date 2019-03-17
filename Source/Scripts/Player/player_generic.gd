@@ -85,6 +85,8 @@ export var max_jump_height = -240			# Default max jumping height.
 var ground_angle = 0				# Controlling the angle the player is in relation to the floor.
 var ground_normal = Vector2.ZERO
 
+var on_loop = false							# Is the player on a loop or not?
+
 """
    Variables that control animation - like when to play walk/jog/run animations.
 """

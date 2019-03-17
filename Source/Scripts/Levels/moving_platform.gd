@@ -44,7 +44,7 @@ var accum: float = 0.0
 
 func _ready () -> void:
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
-		printerr ("Moving platform at ", position, " ready.")
+		printerr ("Moving platform at ", position, " ready. Moving in ", motion, " range and at ", cycle, " speed.")
 	return
 
 func _physics_process (delta: float) -> void:

@@ -228,6 +228,12 @@ Complexity is added if different characters with different abilities are playabl
 
 There may well be corner cases/situations that are not immediately obvious.
 
+## Looping the loop
+
+### In general
+
+Loops are split into four pieces, one for each quarter of the loop. At each side of the loop there are switches (`Area2D`s) that set a state on the loop telling it what collision layers on the bottom half to enable or disable. There is an `Area2D` at the top that will invert the direction of the loop (left-to-right, right-to-left) as required.
+
 ## Jumping
 
 ### How it works:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Levels/level_test.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/2D/Levels/Test/TEST_Tileset.tres" type="TileSet" id=2]
@@ -6,15 +6,18 @@
 [ext_resource path="res://Scenes/Items/item_checkpoint.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Items/item_goalpost.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Levels/moving_platform.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Levels/level_test_loop_ltr.tscn" type="PackedScene" id=7]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2( 1360, 32 )
+z_index = -1
+z_as_relative = false
 tile_set = ExtResource( 2 )
 format = 1
-tile_data = PoolIntArray( -196592, 29, 0, 196616, 21, 0, 196620, 22, 0, 327656, 1, 0, 327657, 2, 0, 327658, 2, 0, 327659, 3, 0, 327660, 2, 0, 327661, 2, 0, 327662, 3, 0, 327663, 2, 0, 327664, 2, 0, 327665, 3, 0, 327666, 2, 0, 327667, 2, 0, 327668, 3, 0, 327669, 2, 0, 327670, 2, 0, 327671, 3, 0, 327672, 2, 0, 327673, 2, 0, 327674, 3, 0, 327675, 2, 0, 327676, 2, 0, 327677, 3, 0, 327678, 22, 0, 262148, 21, 0, 262159, 2, 0, 262160, 2, 0, 262161, 3, 0, 262162, 4, 0, 262163, 2, 0, 262164, 3, 0, 262165, 2, 0, 262166, 2, 0, 393214, 7, 0, 393215, 7, 0, 327680, 8, 0, 327682, 3, 0, 327683, 2, 0 )
+tile_data = PoolIntArray( 196616, 21, 0, 196620, 22, 0, 327656, 1, 0, 327657, 2, 0, 327658, 2, 0, 327659, 3, 0, 327660, 2, 0, 327661, 2, 0, 327662, 3, 0, 327663, 2, 0, 327664, 2, 0, 327665, 3, 0, 327666, 2, 0, 327667, 2, 0, 327668, 3, 0, 327669, 2, 0, 327670, 2, 0, 327671, 3, 0, 327672, 2, 0, 327673, 2, 0, 327674, 3, 0, 327675, 2, 0, 327676, 2, 0, 327677, 3, 0, 327678, 22, 0, 262148, 21, 0, 262159, 2, 0, 262160, 2, 0, 262161, 3, 0, 262162, 4, 0, 262163, 2, 0, 262164, 3, 0, 262165, 2, 0, 262166, 2, 0, 393214, 7, 0, 393215, 7, 0, 327680, 8, 0, 327682, 3, 0, 327683, 2, 0 )
 
 [node name="Ring" parent="." instance=ExtResource( 3 )]
 position = Vector2( -48, 272 )
@@ -32,4 +35,7 @@ position = Vector2( 2480, 256 )
 position = Vector2( -16, 160 )
 motion = Vector2( 0, 70 )
 cycle = 10.0
+
+[node name="Loop" parent="." instance=ExtResource( 7 )]
+position = Vector2( 16, -176 )
 

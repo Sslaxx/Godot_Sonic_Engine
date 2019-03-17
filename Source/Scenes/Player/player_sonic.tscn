@@ -89,6 +89,8 @@ max_player_speed = 400
 walk_limit = 134
 jog_limit = 268
 run_limit = 392
+z_index = 0
+z_as_relative = false
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )

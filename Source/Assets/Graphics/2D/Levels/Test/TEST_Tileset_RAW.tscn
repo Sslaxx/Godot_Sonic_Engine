@@ -341,18 +341,3 @@ region_rect = Rect2( 670, 259, 256, 93 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite29/StaticBody2D"]
 polygon = PoolVector2Array( 0, 0, 16, 0, 128, 32, 208, 64, 256, 64, 256, 80, 0, 80 )
 
-[node name="Sprite30" type="Sprite" parent="."]
-position = Vector2( 1104, -128 )
-texture = ExtResource( 1 )
-centered = false
-region_enabled = true
-region_rect = Rect2( 972, 402, 352, 390 )
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Sprite30"]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite30/StaticBody2D"]
-polygon = PoolVector2Array( 208, 320, 256, 304, 304, 256, 320, 208, 320, 192, 304, 144, 288, 112, 240, 80, 160, 80, 112, 96, 80, 144, 64, 192, 64, 272, 32, 272, 32, 32, 352, 32, 352, 320 )
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Sprite30/StaticBody2D"]
-polygon = PoolVector2Array( 0, 320, 352, 320, 352, 384, 0, 384 )
-
