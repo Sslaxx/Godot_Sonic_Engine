@@ -29,8 +29,7 @@
 """
    This script is set up to use global_space in the AutoLoad section of the project settings. This sets a global space for
    application-wide settings, flags, variables etc. which need to be easily passed around from scene/node to scene/node.
-
-   For gameplay-related variables and functions, use game_space.tscn/gd.
+   It'd be better to set up other singletons to use for actual gameplay-related stuff.
 """
 
 extends Node
@@ -47,8 +46,8 @@ onready var do_once_dictionary = {
 
 func _ready ():
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Make it unavoidably obvious if debug mode is enabled.
-		printerr ("Global script loaded.")
 		OS.alert ("Debug mode is ENABLED", "DEBUG BUILD")
+		printerr ("Global script loaded.")
 	Engine.target_fps = 60	# Make the game aim for 60fps (maximum).
 	return
 
@@ -70,12 +69,15 @@ func add_child_to_node (Scene_Instance = null, Node_to_Add_to = "/root"):
    Adds an instance of the scene specified by Scene_Path to the desired node (Node_to_Add_to).
    You should specify the path as absolute wherever possible.
    It doesn't do any error checking by and of itself, so do be careful!
-   Returns the instance created.
+   Returns the instance created, or null if the path provided is not valid.
 """
 func add_path_to_node (Scene_Path = "", Node_to_Add_to = "/root"):
 	var s = ResourceLoader.load (Scene_Path)	# Load and...
+	if (s == null):								# ...check that the path/scene is valid, then...
+		printerr (Scene_Path, " is not a valid or existing scene!")
+		return (null)
 	s = s.instance ()							# ...create an instance of the scene specified by the path.
-	global_space.add_child_to_node (s, Node_to_Add_to)		# Then add it to the specified node.
+	add_child_to_node (s, Node_to_Add_to)		# Then add it to the specified node.
 	return (s)									# Return the instance created.
 
 """
@@ -84,10 +86,13 @@ func add_path_to_node (Scene_Path = "", Node_to_Add_to = "/root"):
    Goes to the relevant scene; the scene is a path, so "res://<filename>".
    You should specify the path as absolute wherever possible.
    Note that it deletes the previous scene!
-   Returns the resultant scene node.
+   Returns the resultant scene node, or null if the path provided is not valid.
 """
 func go_to_scene (path):
 	var s = ResourceLoader.load (path)						# Load and...
+	if (s == null):											# ...check that the path/scene is valid, then...
+		printerr (path, " is not a valid or existing scene!")
+		return (null)
 	new_scene = s.instance ()								# ...create an instance of the scene to go to.
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
 		print ("Changing from ", current_scene, " to ", new_scene, ".")

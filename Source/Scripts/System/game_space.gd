@@ -54,7 +54,7 @@ onready var last_checkpoint = null		# The last checkpoint passed by the player.
 func _ready ():
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
 		printerr ("Game-space ready.")
-	$"Timer".connect ("timeout", self, "update_level_timer")
+	$"Level_Timer".connect ("timeout", self, "update_level_timer")
 	return
 
 """

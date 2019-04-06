@@ -44,5 +44,6 @@ func _ready () -> void:
 		$"Startpoint".visible = false
 		$"Startpoint".taken = true
 		game_space.last_checkpoint = get_node ("Startpoint")
-	game_space.get_node ("Timer").start ()	# Start the level timer.
+	game_space.level_time = Vector2.ZERO
+	game_space.get_node ("Level_Timer").start ()	# Start the level timer.
 	return
