@@ -92,6 +92,7 @@ func _ready ():
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Ensure the debug HUD is added to the scene.
 		printerr ("Generic player functionality ready.")
 	game_space.player_character = $"."	# Make sure the game knows which character to deal with!
+	sound_player.add_sound_to_library ("res://Assets/Audio/Sound/player_jump.ogg", "player_jump")
 	change_anim ("idle")				# Ensure some kind of animation is playing when instanced.
 	return
 
@@ -130,7 +131,7 @@ func _input (_event):
 		velocity.y = 0	# Avoid "super jumps".
 		velocity.y += max_jump_height
 		change_anim ("jump")
-		sound_player.play_sound ("Jump")
+		sound_player.play_sound ("player_jump")
 		if (is_on_wall ()):		# Stop strangeness if trying to jump while running into a wall.
 			player_speed = player_speed / 100
 #		if (!player_movement_state & MovementState.STATE_JUMPING):
