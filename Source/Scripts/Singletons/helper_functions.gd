@@ -4,8 +4,7 @@
 
 extends Node
 
-# The following are used by change_scene.
-onready var root = get_tree ().get_root ()	# What the root of the scene tree is.
+onready var root := get_tree ().get_root ()	# What the root of the scene tree is.
 
 var _whocares = null	# Used for functions which return a value which we don't need to be concerned with.
 
@@ -17,8 +16,6 @@ onready var do_once_dictionary = {
 onready var cli_args = Array (OS.get_cmdline_args ())	# An array of any command-line arguments passed.
 
 func _ready () -> void:
-	if (OS.is_debug_build ()):	# Make sure it's unavoidable to know if debug mode is enabled.
-		OS.alert ("Debug mode enabled!")
 	print_debug (get_script ().resource_path, " ready. Node ", self, " (", self.name, ").")
 	return
 
@@ -63,14 +60,14 @@ func add_path_to_node (scene_path = "", node_to_add_to = "/root"):
 # Goes to the relevant scene; the scene is a path, so "res://<filename>".
 # You should specify the path as absolute wherever possible.
 # Note that it deletes the previous scene!
-# Returns true if the scene is changed, or false if the path provided is not valid.
-func change_scene (scene_path) -> bool:
+# Returns the error codes given for change_scene_to (0 for OK, non-zero otherwise).
+func change_scene (scene_path) -> int:
 	var new_scene = ResourceLoader.load (scene_path)				# Load and...
+	print (scene_path, ": ", new_scene)
 	if (new_scene == null):											# ...check that the path/scene is valid, then...
 		printerr ("change_scene cannot use ", scene_path, "; it is not a valid or existing scene!")
-		return (false)
-	_whocares = get_tree ().change_scene_to (new_scene)				# ...change to the new scene.
-	return (true)
+		return (ERR_FILE_NOT_FOUND)
+	return (get_tree ().change_scene_to (new_scene))				# ...change to the new scene (or not...).
 
 ### do_once_only
 # helper_functions.do_once_only (do_me)

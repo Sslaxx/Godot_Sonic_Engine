@@ -1,26 +1,24 @@
 # The template structure
 
-Most of the template is covered in [the project structure document](Structure.txt). Won't cover how they work - they're fairly sufficiently documented to hopefully make it obvious. This covers the most basic stuff already in the template and what it's for, including `Scripts\System` `Scenes\System`.
+Most of the template is covered in [the project structure document](Structure.txt). Won't cover how they work - they're fairly sufficiently documented to hopefully make it obvious. This covers the most basic stuff already in the template and what it's for, including `Scripts\Singletons` `Scenes\Singletons`.
 
-## dice_engine
+## random_helpers
 
-A `Node` script allowing random numbers to be generated as if they were "rolled" by dice, and allows the total to be added to or subtracted from.
+A `Node` script allowing random numbers to be generated as if they were "rolled" by dice, and allows the total to be added to or subtracted from. May contain other random-related functions too.
 
-## game_space
+## helper_functions
 
-This `Node` is used for game(play) related variables (anything from scores, lives etc. up), settings (unrelated to application settings, so things like difficulty level would be kept here) and so on.
+A `Node` script, for non-game(play) related settings (resolution, detail, volume etc). Contains convenience functions for adding, creating and switching to nodes/scenes and a function to run code only once.
 
-## global_space
+## *_player (jingle/music/sound)
 
-A `Node` script, for non-game(play) related settings (resolution, detail, volume etc). Contains convenience functions for creating and switching to scenes and a function to run code only once.
+These are all sound players using `AudioStreamPlayer`. Jingles are non-looped (usually short) pieces of music. Music is obvious, and sounds are looped sounds (ambient) or non-looped. They're set up to use the respective audio buses. Should cover most basic use cases between them. `sound_player` should be used just for non-looped effects; looped sounds should be handled directly.
 
-## jingle_player/music_player/sound_player
+These are all non-positional; use the appropriate stream players in a scene as required.
 
-These are all using `AudioStreamPlayer`. Jingles are non-looped (usually short) pieces of music. Music is obvious, and sounds are looped sounds (ambient) or non-looped. They're set up to use the respective audio buses. Should cover most basic cases between them.
+## Assets/Fonts/OpenSans-Regular.ttf
 
-## Assets/Fonts/Roboto-Regular.ttf
-
-Just used as a default font for the UI theme.
+Used as a default font for the UI theme.
 
 ## Assets/UI/Default.tres
 

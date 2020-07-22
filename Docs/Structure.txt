@@ -15,7 +15,7 @@ Use sub-dirs named by character, concept, usage etc.
 			Common - non-audio, non-font assets used by multiple things.
 			Fonts - fonts used throughout the game.
 			Graphics - All graphical elements here. This includes 3D models, their textures, materials and maps etc.
-			Other - any other resource that might not fit any of the other categories. NO UI ELEMENTS.
+			Other - any other resource that might not fit any of the other categories.
 			UI - Theme definitions for the user interface are stored here.
 		GDNative - do not use directly; used for external Godot addons that ARE GDNative (e.g. external libraries, bindings for other languages), in separate folders for each.
 		Scenes - all the "scenes" used in the game. Should mirror Scripts.

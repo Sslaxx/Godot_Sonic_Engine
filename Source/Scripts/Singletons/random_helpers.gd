@@ -6,20 +6,20 @@ extends Node
 onready var RNG := RandomNumberGenerator.new ()	# Used by all random generator functions.
 
 func _ready () -> void:
-	print_debug (get_script ().resource_path, " ready.")
+	print_debug (get_script ().resource_path, " ready. Node ", self, " (", self.name, ").")
 	init_rng ()	# Initialise the random number seed.
 	return
 
 ### init_rng
 # Just a front for the randomize function. This usually is only called by _ready.
-func init_rng () -> int:
-	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Always use a fixed seed for random numbers.
-		RNG.seed = -4433615802243044103
+func init_rng () -> void:
+	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Always use a fixed seed for debugging.
+		RNG.seed = -6398989897141750821
 		print_debug ("DEBUG: RNG initialised to a fixed seed; seed is ", RNG.seed, ".")
 	else:						# Not running in debug mode, random numbers can be "truly" random.
 		RNG.randomize ()
 		print_debug ("RNG initialised; seed is ", RNG.seed, ".")
-	return (RNG.randi () % 16384576)	# 17664 workaround, ugh. FIXME: Remove for 3.2+ projects, fixed there.
+		return
 
 ### roll_dice
 # roll_dice (number_of_dice, dice_sides, add_to, sub_from)
@@ -48,7 +48,7 @@ func roll_dice (number_of_dice: int = 1, dice_sides: int = 6, add_to: int = 0, s
 
 ### find_random_average
 # find_random_average (total_numbers, random_range)
-# Generates <total_numbers> of random numbers up to <random_range>, returning the average of that total.
+# Generates <total_numbers> of random numbers (1 up to <random_range>), returning the average of that total.
 # Note that the average returned is a float rounded (down) to an int.
 func find_random_average (total_numbers: int = 1, random_range: int = 1) -> int:
 	var total: float = 0.0

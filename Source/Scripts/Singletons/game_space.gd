@@ -1,35 +1,31 @@
-"""
-   This file is part of:
-   GODOT SONIC ENGINE
+### This file is part of:
+#   GODOT SONIC ENGINE
 
-   Copyright (c) 2019- Stuart Moore.
+#   Copyright (c) 2019- Stuart Moore.
 
-   Licenced under the terms of the MIT "expat" license.
+#   Licenced under the terms of the MIT "expat" license.
 
-   Permission is hereby granted, free of charge, to any person obtaining
-   a copy of this software and associated documentation files (the
-   "Software"), to deal in the Software without restriction, including
-   without limitation the rights to use, copy, modify, merge, publish,
-   distribute, sublicense, and/or sell copies of the Software, and to
-   permit persons to whom the Software is furnished to do so, subject to
-   the following conditions:
+#   Permission is hereby granted, free of charge, to any person obtaining
+#   a copy of this software and associated documentation files (the
+#   "Software"), to deal in the Software without restriction, including
+#   without limitation the rights to use, copy, modify, merge, publish,
+#   distribute, sublicense, and/or sell copies of the Software, and to
+#   permit persons to whom the Software is furnished to do so, subject to
+#   the following conditions:
 
-   The above copyright notice and this permission notice shall be
-   included in all copies or substantial portions of the Software.
+#   The above copyright notice and this permission notice shall be
+#   included in all copies or substantial portions of the Software.
 
-   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-   IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-   CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-"""
+#   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+#   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+#   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+#   IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+#   CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+#   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+#   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-"""
-   Game(play) related functions and variables that are used throughout the entire game.
-   Also certain things (like timers) that are used globally.
-"""
+### Game(play) related functions and variables that are used throughout the entire game.
+# Also certain things (like timers) that are used globally.
 
 extends Node
 
@@ -54,27 +50,20 @@ var character_path = "res://Scenes/Player/character_sonic.tscn"	# The path to th
 func _ready () -> void:
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
 		printerr ("Game-space ready.")
-	$"Level_Timer".connect ("timeout", self, "update_level_timer")
+	helper_functions._whocares = $"Level_Timer".connect ("timeout", self, "update_level_timer")
 	return
 
-"""
-   update_hud
-
-   Updates the in-game HUD (if it's there to update) by calling its hud_layer_update function.
-
-   This is called mainly by the setters. It's also called by timer signals. ONLY this function should be used by any function
-   that needs to update the HUD.
-"""
+### update_hud
+# Updates the in-game HUD (if it's there to update) by calling its hud_layer_update function.
+# This is called mainly by the setters. It's also called by timer signals. ONLY this function should be used by any function
+# that needs to update the HUD.
 func update_hud () -> void:
 	if (has_node ("/root/Level/hud_layer")):
 		$"/root/Level/hud_layer".hud_layer_update ()
 	return
 
-"""
-   reset_game_space
-
-   As singletons are not reset by restarting an application, they have to be handled manually.
-"""
+### reset_game_space
+# As singletons are not reset by restarting an application, they have to be handled manually.
 func reset_game_space ():
 	level_time = Vector2.ZERO
 	lives = DEFAULT_LIVES
@@ -140,11 +129,8 @@ func get_score ():
 
 ### TIMERS.
 
-"""
-   update_level_timer
-
-   Updates the current time in the level.
-"""
+### update_level_timer
+# Updates the current time in the level.
 func update_level_timer () -> void:
 	# Only update the timer if a cutscene is not playing.
 	if (!(player_character.player_movement_state == player_character.MovementState.STATE_CUTSCENE)):

@@ -31,7 +31,7 @@
 
 extends ParallaxLayer
 
-export var movement_factor = Vector2.ZERO	# Have movement be able to be changed in the object inspector.
+export var movement_factor:Vector2 = Vector2.ZERO	# Have movement be able to be changed in the object inspector.
 
 func _ready () -> void:
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Give a bit of info about what is moving how.
