@@ -37,5 +37,5 @@ extends Node2D
 func _ready ():
 	if (OS.is_debug_build ()):
 		printerr (get_script ().resource_path, " ready.")
-	global_space.go_to_scene ("res://Scenes/Levels/level_test.tscn")
+	global_space.change_scene ("res://Scenes/Levels/level_test.tscn")
 	return

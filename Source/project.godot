@@ -21,12 +21,12 @@ config/icon="res://icon.png"
 
 [autoload]
 
-global_space="*res://Scenes/System/global_space.tscn"
-game_space="*res://Scenes/System/game_space.tscn"
-dice_engine="*res://Scenes/System/dice_engine.tscn"
-sound_player="*res://Scenes/System/sound_player.tscn"
-music_player="*res://Scenes/System/music_player.tscn"
-jingle_player="*res://Scenes/System/jingle_player.tscn"
+global_space="*res://Scenes/Singletons/global_space.tscn"
+game_space="*res://Scenes/Singletons/game_space.tscn"
+dice_engine="*res://Scenes/Singletons/dice_engine.tscn"
+sound_player="*res://Scenes/Singletons/sound_player.tscn"
+music_player="*res://Scenes/Singletons/music_player.tscn"
+jingle_player="*res://Scenes/Singletons/jingle_player.tscn"
 
 [display]
 

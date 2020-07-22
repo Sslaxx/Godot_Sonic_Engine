@@ -51,10 +51,11 @@ func roll_dice (DiceNumber: int = 1, DiceSides: int = 6, AddTo: int = 0, SubFrom
 	var Total: int = 0	# The total of the dice rolled.
 	var Count: int = 0	# Used to count the number of dice rolled.
 	var DiceRolled: int = 0	# Total of the dice rolled so far.
-	for Count in range (0, DiceNumber):	# Roll the dice.
+	while (Count < DiceNumber):	# Roll the dice.
 		DiceRolled = randi_range (1, DiceSides)
 		Total = Total + DiceRolled
 		printerr ("ROLLED: ", DiceRolled, " TOTAL IS NOW: ", Total)
+		Count += 1
 	Total = (Total + AddTo) - SubFrom	# Total calculated, so do any addition or subtraction needed here.
 	return (Total)	# And return it.
 

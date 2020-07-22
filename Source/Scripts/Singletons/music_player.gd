@@ -33,43 +33,39 @@
 
 extends AudioStreamPlayer
 
-onready var bus_index = AudioServer.get_bus_index ("Music")
+onready var bus_index := AudioServer.get_bus_index ("Music")
 
-func _ready ():
-	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
-		printerr (get_script ().resource_path, " ready.")
+func _ready () -> void:
+	print_debug (get_script ().resource_path, " ready.")
 	return
 
 """
    play_music
    music_player.play_music (path_to_music, play_from)
-   Plays a specified music file (path_to_music), unmuting the Music bus if need be.
+   Plays a specified music file (path_to_music).
    Will play from a specific point in the music (in seconds) if told to (play_from).
    Returns true if it plays something, otherwise false.
 """
-## TODO: This could make use of typed GDScript in 3.1, in theory, as path_to_music is a string.
-func play_music (path_to_music = "", play_from = 0.0):
+func play_music (path_to_music = "", play_from = 0.0) -> bool:
 	var play_me = null		# This will be used to set the stream data.
 	if (!ResourceLoader.exists (path_to_music)):	# The file specified to play does not exist.
-		printerr ("ERROR: ", path_to_music, " does not exist.")
+		printerr ("ERROR: music_player has no music to play! ", path_to_music, " does not exist.")
 		return (false)
 	play_me = load (path_to_music)
 	stream = play_me		# Everything's OK, so set the stream as needed?
 	if (stream == null):	# Except it's not actually a music file, so error out.
 		printerr ("ERROR: music_player has an empty stream! ", path_to_music, " is not a valid music file!")
 		return (false)
-	if (AudioServer.is_bus_mute (bus_index)):	# Unmute Music if it's muted...
-		AudioServer.set_bus_mute (bus_index, false)
-	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
-		printerr ("Playing ", stream, " from ", path_to_music, ", offset ", play_from, ".")
-	play (play_from)							# ...play the music...
-	return (true)								# ...and return true.
+	print_debug ("Playing ", stream, " from ", path_to_music, ", offset ", play_from, ".")
+	AudioServer.set_bus_mute (bus_index, false)		# Unmute the Music bus...
+	play (play_from)								# ...play the music...
+	return (true)									# ...and return true.
 
 """
    stop_music
    music_player.stop_music ()
    Just a bit of syntactic sugar. Stops the currently playing music.
 """
-func stop_music ():
+func stop_music () -> void:
 	stop ()
 	return
