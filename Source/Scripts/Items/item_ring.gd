@@ -50,6 +50,6 @@ func got_ring (body) -> void:
 # This doesn't do anything except remove the ring from the scene tree once the sound has finished playing.
 func ring_got () -> void:
 	if (OS.is_debug_build()):	# FOR DEBUGGING ONLY.
-		printerr ("Ring collected at ", position, ".")	# Report where the ring taken had been.
+		print_debug ("Ring ", self, " collected at ", position, ".")	# Report where the ring taken had been.
 	queue_free ()										# Remove the ring from the scene tree.
 	return

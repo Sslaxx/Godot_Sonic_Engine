@@ -32,7 +32,7 @@ extends "res://Scripts/Player/player_generic.gd"
 
 func _ready ():
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Ensure the debug HUD is added to the scene.
-		printerr ("Sonic - ", self, " - ready.")
+		print_debug ("Sonic - ", self, " - ready.")
 		if (has_node ("/root/Level/Startpoint")):
 			position = $"/root/Level/Startpoint".position
 		else:

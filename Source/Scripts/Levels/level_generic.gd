@@ -31,7 +31,7 @@ extends Node2D
 
 func _ready () -> void:
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Ensure the debug HUD is added to the scene.
-		printerr ("Generic level functionality ready.")
+		print_debug ("Generic level functionality ready.")
 		helper_functions.add_path_to_node ("res://Scenes/UI/debug_hud_layer.tscn", "/root/Level")
 	# Add the HUD to the scene.
 	helper_functions.add_path_to_node ("res://Scenes/UI/hud_layer.tscn", "/root/Level")

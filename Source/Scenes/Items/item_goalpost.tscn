@@ -1,16 +1,13 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/Items/item_goalpost.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Graphics/2D/Items/Goalpost/Goal_Posts.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Graphics/2D/Items/Goalpost/Goal_Sign.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Graphics/2D/Items/Goalpost/item_goalpost.svg" type="Texture" id=2]
 [ext_resource path="res://Assets/Audio/Sound/item_goalpost.ogg" type="AudioStream" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-
 extents = Vector2( 16, 32 )
 
 [sub_resource type="Animation" id=2]
-
 resource_name = "goal"
 length = 0.5
 tracks/0/type = "value"
@@ -30,12 +27,18 @@ tracks/0/keys = {
 script = ExtResource( 1 )
 
 [node name="Posts" type="Sprite" parent="."]
+position = Vector2( -16, -32 )
 texture = ExtResource( 2 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 32, 64 )
 
 [node name="Sign" type="Sprite" parent="."]
 position = Vector2( -16, 20 )
-texture = ExtResource( 3 )
+texture = ExtResource( 2 )
 centered = false
+region_enabled = true
+region_rect = Rect2( 33, 0, 32, 12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -46,4 +49,3 @@ anims/goal = SubResource( 2 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 bus = "SFX"
-

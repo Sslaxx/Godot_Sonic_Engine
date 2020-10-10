@@ -15,7 +15,7 @@
    viewBox="0 0 507.99999 285.75001"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="Floor_Handling.svg"
    inkscape:export-filename="/home/stuart/Data/Projects/Code/Godot/Projects/Sonic_Outbreak/Docs/Design/Floor_Handling.svg.png"
    inkscape:export-xdpi="96"
@@ -83,7 +83,7 @@
      showgrid="false"
      units="px"
      inkscape:window-width="1920"
-     inkscape:window-height="996"
+     inkscape:window-height="997"
      inkscape:window-x="0"
      inkscape:window-y="28"
      inkscape:window-maximized="1" />
@@ -105,13 +105,13 @@
      id="layer1"
      transform="translate(0,-11.249983)">
     <image
-       y="30.538868"
-       x="191.08192"
-       id="image18"
-       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAoCAYAAAACJPERAAAE2klEQVRYha2XUWhbVRjHfxnbyxik inW1uIIJy4OQlu22cIepeagvhc52UNybBTuZIg7K+qJNQZjxqTCoFExdx/q4kbE2i3QvedhWaSBN JYtIyUimm8TNCbuBgWBlx4d7z+29yUluqv7hQu/puef3/c/5vnNOfHgoHNgUAPQFdxsLZQCKlX6f 1/cqKT8KBzYFfUG6tY6WH1fzBhTKe4a7OodPPROqTt1aB9XYIgQ0nMEEj0H5BzU8TEIUOasMxm7s DeaEKG+ZLwFtt4ec1hvXmJ+6wrnVrxvAYMEv56lVZvEzxoR+gensr62hUj0MCwA/Y64AapVZlqcM BkbGOfFh1AZLqA3OG3DjGhuZ5xwaOq+E7qtveMia7yFrvhor1FiBSt58gPzGIwDmRz+FQtkF/Oqt GsFj5lJw6j1y6SRz+uvK5WqZAPWuJ/QLLL9WbHDoBH/+vb/pOrcFrS8XCbMHtTR4pjHLZZ/ijZca GPubwhyghsEu5xmdrBLRQ6xnS6xeGlS7t+q5JdQJk3I66tY6bOD0J28DoGtdsHCH1aVuqn1BBs90 2C5HJ6sUZ1pAe4M5IYQiOkcQMoCIHnJ1MQO4w+oS3L1klVOhDP1Ko2b29r+5JXiwtZupjoylUHYF 0v2BphwooocoVvqhUDbXstLfEJztNExC1B58wV/sUJ/f/or1R0CzwVWCrPtK5rQqNDpZZXVJ7dB2 WuSs7/6fKd8vL9Z8fsZ2NwUw6xTczoHVzUGy+ceugWQQET3E6GQVgPVsSQltWjJhEsKGgiuYCf0C 2okjDIyMA/C3NglANv+YCN+RSyfJvPIZX868q+R41mmtMusCO4HfzFzko/iU8ttDQ+cBOHl6jptX p72h4VPPBIUyTqDUOb2IduIIAAMj4+TSSduxVC6dJL/xqP0Nv96dSufYAv2Aa4olDGgJbICGA5tC JoxzPevlZ4yXiXGSfTZcwsjuMM2TlsvmeeKHSQhVEDKxaqzwBpt2+22eeo7Z9jVDzkKNFfyMMT91 hfzGI5Z/X2Hj29uAtZYXK55OG85TFSxMQtQqs7bbjcxzF1CWDAD6AU8DylPGBlowp37KvEMunWQ5 OwsB092AJ2YPUOfFKkxCzE9dAXZvEFLOrCW74wnd09UxFk+JiB5C17oY7LhqNgY0Jl61dqvsDjd5 4ZlMLZ3WA5PX08AIgJ1QVPIsO5bAXPe1vXhprluZbWEYhjAMQ8TiKQGIMAnRw7Cw7lKih2ERi6fE rcy28kIm5Zm9Eug8yiJ6iB6G7feDx4/Qw7BduwuLaVqBPaGWK5d0rYv34x8D5pXV+b/CvRJ9verD u21oveQ5GtFDyq2yrzdE8nqahcV00zE8E8mZPLrWha51kc0/Zj1bcrmUU1u4V+Lo0RD376sPcGiz ZE6enhPShX3tnPmtoY5rrHDwuLn5b28t/qufkU0ls9ar7X+RLIf68nG+38psCzkzzdT25gDmeqna CvdKLLA7/a3Wc68SUTpdrgzDEFE6BSBi8ZSI0imcs/GfiRIYi6fEHIfFz2A/cxy24bKPDBKQj612 M0zE4ikieogfh6IAjPMEgA7DYH9+iT+GzpPkMNM8IUongHmdsWQdBAC+tqBROsVg3Ly2352ZtAeT YKcm6OQ2T5VgCW/bqSKQhk6WE1XQrj7/AH6ciCPTqSexAAAAAElFTkSuQmCC "
+       y="30.539433"
+       x="191.08182"
+       id="image37"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAoCAYAAAACJPERAAACO0lEQVR42q2WJ6wVURCGT57D03vv vaNw9KrwgurwSHAPH7wX9A6eppF4Qffn5d/kS/5MZm/bM8l/y7y5852ZnZ19ZZzt2fildrr6qyJ8 paUBOX2/jpJihsOpJKoDlEc1HubO83644scC92763CUmOQIs/8e7J1IwcP1tbTnbxc4fXz15B/Qj KR5APkH/v38IGKiDOaDiInR6uD7r9EpGxQ78/fu3gxWj+OFgJYkV5uABQxavaxweFOEeMxXMQVH6 +70HT+qr99/1nlZP3FSwTA5UK5G+81uvUv7xtwztdAWwfKoQYATHw/UCD+/8VvfOaViCApyECVQ+ AYjVZ/lyqJJvWXSprpvrJtXVC6e9CZSKDTrGgEQw8oqTagHRVt4ntz449yvbSbJqWR4A0XT3aQQ7 kA2VCeDFa/N18qcNwCCggHl3Tb0Cc1gAl2XAI2w2YDJM6VSfLEscDqzzlaHWdwj36wCotDS6AJDK 5Pf2UmkrGBIAILdMGKAB5jBEcpYFw9QMGg9g96dD2w+SG89QtdNWo2AA2w0TwO0Hb1TADFSU/M2g tuDZq0AAde8cqhUQUSlQdYDvgmrfAh5+HRHV8l+8QQWk2nZQPlNthHLtBZ8JSMIMLJ/HCEilknxl iJEIuLcW8+sLsKkB6Pe1Xw7e6rT1XM8mRosBAUD4W7ZXK46qEGtPQH0GLA0HA1RS7dgfpSDfuT7Z +NDURgUCOJRnKXBgErEcajo4baOFDo4ieQYGPnGlUSRFwDLFmAVaqoditBSTLAAAAABJRU5ErkJg gg== "
        preserveAspectRatio="none"
-       height="173.56711"
-       width="125.83617" />
+       height="173.56667"
+       width="125.83584" />
     <path
        style="fill:none;stroke:#0000ff;stroke-width:2.05927086;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-2)"
        d="m 311.68934,152.33002 v 76.4872"

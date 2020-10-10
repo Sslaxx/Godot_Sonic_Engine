@@ -62,7 +62,7 @@ onready var player_gravity = ProjectSettings.get_setting ("physics/2d/default_gr
 export var acceleration_rate = 4	# Standard rate of acceleration.
 export var decel_rate_moving = 6	# Decelerating rate when moving in the other direction.
 export var decel_rate = 4			# Deceleration rate (not moving).
-export var max_player_speed = 60	# Default maximum speed is 60 pixels per second.
+export var max_player_speed = 400	# Default maximum speed is 60 pixels per second.
 
 ## AFFECTING THE PLAYER MOVING.
 
@@ -72,12 +72,12 @@ onready var player_gravity_vector = ProjectSettings.get_setting ("physics/2d/def
 
 var floor_snap = Vector2.ZERO		# Adjusting the "snap" to the floor. (0, 0) for in-air, (0, 32) otherwise.
 
-var max_floor_angle = deg2rad (45)			# For floor sanity checking.
+var max_floor_angle := deg2rad (360)			# For floor sanity checking.
 
-export var max_jump_height = -240			# Default max jumping height.
+export var max_jump_height := -240.0			# Default max jumping height.
 
-var ground_angle = 0				# Controlling the angle the player is in relation to the floor.
-var ground_normal = Vector2.ZERO
+var ground_angle := 0.0				# Controlling the angle the player is in relation to the floor.
+var ground_normal := Vector2.ZERO
 
 """
    Variables that control animation - like when to play walk/jog/run animations.
@@ -89,10 +89,8 @@ export var jog_limit = 0
 export var run_limit = 0
 
 func _ready ():
-	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Ensure the debug HUD is added to the scene.
-		printerr ("Generic player functionality ready.")
+	print_debug ("Generic player functionality ready.")
 	game_space.player_character = $"."	# Make sure the game knows which character to deal with!
-	sound_player.add_sound_to_library ("res://Assets/Audio/Sound/player_jump.ogg", "player_jump")
 	change_anim ("idle")				# Ensure some kind of animation is playing when instanced.
 	return
 
@@ -106,7 +104,7 @@ func _input (_event):
 			game_space.collectibles = 0
 		if (Input.is_action_pressed ("DEBUG_resetpos")):	# Reset player position to last good checkpoint.
 			if (game_space.last_checkpoint != null):
-				printerr ("DEBUG: Resetting player position to last known good checkpoint ", game_space.last_checkpoint.position, ".")
+				printerr ("DEBUG: Resetting player position to last known good checkpoint at ", game_space.last_checkpoint.position, ".")
 				moving_in = "nil"
 				player_speed = 0.0
 				game_space.last_checkpoint.return_to_checkpoint ()
@@ -156,8 +154,8 @@ func _physics_process (delta):
 	movement_state_machine_rotation (delta)		# Deal with rotation.
 	velocity.x = (player_speed * movement_direction)	# Work out velocity from speed * direction.
 	if (is_on_floor ()):								# Make sure gravity applies.
-		velocity.y = (0 if (velocity.y != 0 && moving_in == "nil" && player_speed < 0.1) else velocity.y)
-		velocity.y = (0 if velocity.y > 0.0 else (0 if velocity.y > -32.0 else velocity.y))
+		velocity.y = (0.0 if (velocity.y != 0.0 && moving_in == "nil" && player_speed < 0.1) else velocity.y)
+		velocity.y = (0.0 if velocity.y > 0.0 else (0.0 if velocity.y > -32.0 else velocity.y))
 		floor_snap = Vector2 (0, 32)
 	else:
 		velocity.y += (player_gravity/15)
@@ -187,7 +185,7 @@ func change_anim (anim_to_change_to):
 # The default multiplier will be (naturally) 1.0.
 # IMPORTANT: Player movement in a cutscene has to be handled directly by any scene(s) running the cutscene.
 func get_acceleration_mult ():
-	var acceleration_mult = 1.0			# Every factor gets added to/taken away from this value.
+	var acceleration_mult := 1.0		# Every factor gets added to/taken away from this value.
 	if (!is_on_floor ()):				# If not on the floor, emulate "air friction".
 		acceleration_mult -= 0.75
 	acceleration_mult = (0.01 if acceleration_mult < 0.0 else acceleration_mult)	# Ensure acceleration of some kind.
@@ -217,7 +215,7 @@ func get_max_player_speed_mult ():
 func speed_limiter ():
 	player_speed = (0.0 if player_speed < 0 else player_speed)	# Can't travel at negative speeds!
 	if (player_speed > (max_player_speed * get_max_player_speed_mult ())):	# Moving faster than maximum? Reduce speed.
-		player_speed -=  player_speed - (max_player_speed * get_max_player_speed_mult ())
+		player_speed -= (decel_rate_moving * get_deceleration_mult())
 	return
 
 ### STATE MACHINE FUNCTIONS.
@@ -273,13 +271,13 @@ func movement_state_machine_rotation (_delta):
 		$"FloorEdgeRight".enabled = false
 		rotation = 0.0
 		return
-	if (player_speed > (walk_limit/10)):
+	if (player_speed > (walk_limit/10)):	# If the player's moving, enable rotation.
 		ground_normal = $"PlayerPivot".get_collision_normal ()
 		ground_angle = (floor_normal.angle_to (ground_normal))
 		rotation = (0.0 if player_speed < 0.05 else ground_angle)
 		rotation = (rotation if $"PlayerPivot".is_colliding () else 0.0)
-	else:
-		rotation = 0
+	else:	# This shouldn't be necessary; fall-through.
+		rotation = 0.0
 	return
 
 ### movement_state_machine_ground

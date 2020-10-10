@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Goal_Posts.png-66cd635ae3231024152082d16aaa8afb.stex"
+path="res://.import/item_rings.png-2a34a95685df9647edb74ff9973b00b8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/2D/Items/Goalpost/Goal_Posts.png"
-dest_files=[ "res://.import/Goal_Posts.png-66cd635ae3231024152082d16aaa8afb.stex" ]
+source_file="res://Assets/Graphics/2D/Items/Rings/item_rings.png"
+dest_files=[ "res://.import/item_rings.png-2a34a95685df9647edb74ff9973b00b8.stex" ]
 
 [params]
 

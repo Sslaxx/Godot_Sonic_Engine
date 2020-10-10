@@ -2,14 +2,12 @@
 
 [ext_resource path="res://Scripts/Items/item_ring.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Audio/Sound/ring_get.ogg" type="AudioStream" id=2]
-[ext_resource path="res://Assets/Graphics/2D/Items/Rings/Rings.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Graphics/2D/Items/Rings/item_rings.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-
 radius = 7.98917
 
 [sub_resource type="Animation" id=2]
-
 resource_name = "default"
 length = 1.6
 loop = true
@@ -44,4 +42,3 @@ hframes = 16
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 autoplay = "default"
 anims/default = SubResource( 2 )
-

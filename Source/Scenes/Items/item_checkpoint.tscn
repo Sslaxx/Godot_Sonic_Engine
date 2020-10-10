@@ -1,11 +1,10 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Items/item_checkpoint.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Graphics/2D/Items/Checkpoint/Checkpoint.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Graphics/2D/Items/Checkpoint/item_checkpoint.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Audio/Sound/item_checkpoint.ogg" type="AudioStream" id=3]
 
 [sub_resource type="Animation" id=1]
-
 resource_name = "spin_green"
 length = 0.6
 loop = true
@@ -23,7 +22,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=2]
-
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -40,7 +38,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="CircleShape2D" id=3]
-
 radius = 14.5778
 
 [node name="Checkpoint" type="Area2D"]
@@ -63,4 +60,3 @@ shape = SubResource( 3 )
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 3 )
 bus = "SFX"
-

@@ -32,13 +32,12 @@
 
 extends Node2D
 
-export var motion = Vector2.ZERO	# The range of movement that the platform moves around with.
-export var cycle: float = 1.0		# Controls the speed of movement.
-var accum: float = 0.0
+export var motion:Vector2 = Vector2.ZERO	# The range of movement that the platform moves around with.
+export var cycle:float = 1.0		# Controls the speed of movement.
+var accum:float = 0.0
 
 func _ready () -> void:
-	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
-		printerr ("Moving platform at ", position, " ready. Moving in ", motion, " range and at ", cycle, " speed.")
+	print_debug ("Moving platform at ", position, " ready. Moving in ", motion, " range and at ", cycle, " speed.")
 	return
 
 func _physics_process (delta: float) -> void:

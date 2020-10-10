@@ -48,8 +48,7 @@ onready var last_checkpoint = null		# The last checkpoint passed by the player.
 var character_path = "res://Scenes/Player/character_sonic.tscn"	# The path to the scene that the player character is held in.
 
 func _ready () -> void:
-	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY.
-		printerr ("Game-space ready.")
+	print_debug ("Game-space ready.")
 	helper_functions._whocares = $"Level_Timer".connect ("timeout", self, "update_level_timer")
 	return
 
@@ -104,7 +103,7 @@ func set_collectibles (value):
 		collectibles_lives += (value - collectibles)
 	elif (value != collectibles):		# Lost items, so set the items-for-lives-counter to the new value.
 		collectibles_lives = value
-		sound_player.play_sound ("Lose_Rings")
+		sound_player.play_sound ("ring_loss")
 	else:
 		printerr ("NOTE: Shouldn't see this; attempting to change the value of collectibles to what it already is!")
 	collectibles = value
