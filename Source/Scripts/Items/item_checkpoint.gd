@@ -25,7 +25,8 @@
 #   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ### The checkpoint script.
-# If the player dies, they are either reset to the start position, or the last checkpoint they passed by. This makes it happen.
+# If the player dies, they are either reset to the start position, or the last checkpoint they passed by. This makes
+# it happen.
 
 extends Area2D
 
@@ -40,12 +41,11 @@ func _ready () -> void:
 # The checkpoint has been passed by, so set positions and play animations as required.
 func enter_checkpoint_body (body) -> void:
 	if (!taken && body is preload ("res://Scripts/Player/player_generic.gd")):
-		# The player has passed the checkpoint, change the animation and set the last_checkpoint variable to this checkpoint.
 		taken = true	# A checkpoint can only be activated once.
 		if (OS.is_debug_build()):	# FOR DEBUGGING ONLY.
 			print ("Checkpoint at ", position, " crossed.")
-		$"Sprite/AnimationPlayer".play_backwards ("spin_green")
-		game_space.last_checkpoint = self
+		$"Sprite/AnimationPlayer".play_backwards ("spin_green")	# Change the animation.
+		game_space.last_checkpoint = self	# Set the last checkpoint value to this checkpoint.
 		$"AudioStreamPlayer2D".play ()	# Play the checkpoint jingle.
 	return
 
@@ -53,7 +53,7 @@ func enter_checkpoint_body (body) -> void:
 # As it says, returns the player character to this checkpoint. Also resets their rotation and their state to idle.
 func return_to_checkpoint () -> void:
 	game_space.player_character.position = position
-	game_space.player_character.rotation = 0
+	game_space.player_character.rotation = 0.0
 	game_space.player_character.visible = true
 	game_space.player_character.player_movement_state = game_space.player_character.MovementState.STATE_IDLE
 	return

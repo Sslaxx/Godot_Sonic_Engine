@@ -24,8 +24,8 @@
 #   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 #   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-### This is the generic level code. All levels extend from this script. It handles all the generica that's common between levels -
-# starting and ending, checkpoints, which player character to use etc.
+### This is the generic level code. All levels extend from this script. It handles all the generica that's common
+# between levels - starting and ending, checkpoints, which player character to use etc.
 
 extends Node2D
 
@@ -35,7 +35,8 @@ func _ready () -> void:
 		helper_functions.add_path_to_node ("res://Scenes/UI/debug_hud_layer.tscn", "/root/Level")
 	# Add the HUD to the scene.
 	helper_functions.add_path_to_node ("res://Scenes/UI/hud_layer.tscn", "/root/Level")
-	game_space.last_checkpoint = null		# For sanity checking purposes (making sure checkpoints from a prior level are no longer valid).
+	# For sanity checking purposes (making sure checkpoints from a prior level are no longer valid).
+	game_space.last_checkpoint = null
 	if (has_node ("Startpoint")):
 		$"Startpoint".visible = false
 		$"Startpoint".taken = true

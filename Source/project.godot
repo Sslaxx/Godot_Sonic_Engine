@@ -22,11 +22,11 @@ config/icon="res://icon.png"
 [autoload]
 
 helper_functions="*res://Scenes/Singletons/helper_functions.tscn"
-game_space="*res://Scenes/Singletons/game_space.tscn"
 random_helpers="*res://Scenes/Singletons/random_helpers.tscn"
 sound_player="*res://Scenes/Singletons/sound_player.tscn"
 music_player="*res://Scenes/Singletons/music_player.tscn"
 jingle_player="*res://Scenes/Singletons/jingle_player.tscn"
+game_space="*res://Scenes/Singletons/game_space.tscn"
 
 [display]
 
@@ -128,6 +128,12 @@ DEBUG_cutscene={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":55,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[layer_names]
+
+2d_render/layer_1="layer_render_default"
+2d_physics/layer_1="layer_physics_default"
+2d_physics/layer_20="layer_physics_disabled"
 
 [rendering]
 

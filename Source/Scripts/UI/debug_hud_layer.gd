@@ -25,8 +25,8 @@
 #   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ### The debugging HUD layer. Whatever information is considered useful is put on this layer.
-# As this gets called every frame it could potentially eat up a lot of processing power. This should only ever be instantiated
-# by the level_generic.gd script if OS.is_debug_build is true.
+# As this gets called every frame it could potentially eat up a lot of processing power. This should only ever be
+# instantiated by the level_generic.gd script if OS.is_debug_build is true.
 
 extends CanvasLayer
 

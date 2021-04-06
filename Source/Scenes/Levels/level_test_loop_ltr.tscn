@@ -19,21 +19,29 @@ centered = false
 region_enabled = true
 region_rect = Rect2( 940, 4, 384, 390 )
 
-[node name="Loop_Collisions" type="StaticBody2D" parent="."]
+[node name="loop_tophalf" type="StaticBody2D" parent="."]
 
-[node name="Loop_TopHalf" type="CollisionPolygon2D" parent="Loop_Collisions"]
+[node name="collider_tophalf" type="CollisionPolygon2D" parent="loop_tophalf"]
 polygon = PoolVector2Array( 32, 0, 352, 0, 352, 176, 320, 176, 304, 144, 288, 112, 240, 80, 192, 80, 160, 80, 96, 112, 80, 144, 64, 176, 32, 176 )
 
-[node name="Loop_BottomLeft" type="CollisionPolygon2D" parent="Loop_Collisions"]
+[node name="loop_bottom_left" type="StaticBody2D" parent="."]
+collision_layer = 524288
+collision_mask = 524288
+
+[node name="collider_bottom_left" type="CollisionPolygon2D" parent="loop_bottom_left"]
 modulate = Color( 0, 0, 1, 1 )
 polygon = PoolVector2Array( 32, 176, 32, 352, 192, 352, 192, 320, 160, 320, 128, 304, 80, 256, 64, 176 )
-disabled = true
 
-[node name="Loop_BottomRight" type="CollisionPolygon2D" parent="Loop_Collisions"]
+[node name="loop_bottom_right" type="StaticBody2D" parent="."]
+collision_mask = 2147483649
+
+[node name="collider_bottom_right" type="CollisionPolygon2D" parent="loop_bottom_right"]
 modulate = Color( 1, 0, 0, 1 )
 polygon = PoolVector2Array( 352, 176, 320, 176, 320, 208, 304, 256, 256, 304, 224, 320, 192, 320, 192, 352, 352, 352, 352, 320, 352, 320 )
 
-[node name="Loop_Ground" type="CollisionPolygon2D" parent="Loop_Collisions"]
+[node name="loop_ground" type="StaticBody2D" parent="."]
+
+[node name="collider_ground" type="CollisionPolygon2D" parent="loop_ground"]
 polygon = PoolVector2Array( 0, 320, 384, 320, 384, 400, 0, 400 )
 
 [node name="Loop_Toggle_Left" type="Area2D" parent="."]
@@ -54,4 +62,3 @@ position = Vector2( 384, 272 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Loop_Toggle_Right"]
 shape = SubResource( 3 )
-

@@ -13,6 +13,7 @@ extends AudioStreamPlayer
 signal jingle_finished	# Jingle played from start to finish.
 signal jingle_aborted	# Jingle has been told to stop playing before it finished.
 
+# If something needs to access the audio bus used by the player, it can be found here.
 onready var bus_index := AudioServer.get_bus_index ("Jingles")
 
 # True (the default) will unmute the Music bus after playing the jingle; false will not.
@@ -34,7 +35,7 @@ func play_jingle (path_to_jingle = "", music_unmute = true) -> bool:
 	if (!ResourceLoader.exists (path_to_jingle)):	# The file doesn't exist, so say so.
 		printerr ("ERROR: jingle_player has no jingle to play! ", path_to_jingle, " does not exist!")
 		return (false)
-	play_me = load (path_to_jingle)
+	play_me = load (path_to_jingle) as AudioStream
 	stream = play_me		# Set the stream.
 	if (stream == null):	# If the stream is null, this means the sound file is invalid, so report an error.
 		printerr ("ERROR: jingle_player has an empty stream! ", path_to_jingle, " is not a valid sound file.")

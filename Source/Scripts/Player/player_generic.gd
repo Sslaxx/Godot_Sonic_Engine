@@ -46,11 +46,11 @@ enum MovementState {
 }
 
 var player_movement_state = MovementState.STATE_IDLE	# The current moving state the player character is in.
-var moving_in = "nil"		# Which direction the player is holding down, i.e. the direction the player is (going) to move in.
-var movement_direction = 0	# Which direction the player is currently moving in. -1 = left/up, 1 = right/down.
-var player_speed = 0.0		# The speed at which the player is moving at.
+var moving_in := "nil"		# Which direction the player is holding down, i.e. the direction the player is (going) to move in.
+var movement_direction := 0	# Which direction the player is currently moving in. -1 = left/up, 1 = right/down.
+var player_speed := 0.0		# The speed at which the player is moving at.
 
-var velocity = Vector2.ZERO	# The velocity (amount the player is moving in a direction).
+var velocity := Vector2.ZERO	# The velocity (amount the player is moving in a direction).
 
 ## HOW MUCH TO MOVE THE PLAYER.
 
@@ -59,18 +59,18 @@ var velocity = Vector2.ZERO	# The velocity (amount the player is moving in a dir
 onready var player_gravity = ProjectSettings.get_setting ("physics/2d/default_gravity")
 
 # Acceleration, deceleration and speed limits. These can be adjusted in the player scene directly.
-export var acceleration_rate = 4	# Standard rate of acceleration.
-export var decel_rate_moving = 6	# Decelerating rate when moving in the other direction.
-export var decel_rate = 4			# Deceleration rate (not moving).
-export var max_player_speed = 400	# Default maximum speed is 60 pixels per second.
+export var acceleration_rate := 4.0		# Standard rate of acceleration.
+export var decel_rate_moving := 6.0		# Decelerating rate when moving in the other direction.
+export var decel_rate := 4.0			# Deceleration rate (not moving).
+export var max_player_speed := 400.0	# Default maximum speed is 60 pixels per second.
 
 ## AFFECTING THE PLAYER MOVING.
 
-var floor_normal = Vector2.UP	# Vector to use for floor detection.
+var floor_normal := Vector2.UP	# Vector to use for floor detection.
 
 onready var player_gravity_vector = ProjectSettings.get_setting ("physics/2d/default_gravity_vector")	# Gravity's direction.
 
-var floor_snap = Vector2.ZERO		# Adjusting the "snap" to the floor. (0, 0) for in-air, (0, 32) otherwise.
+var floor_snap := Vector2.ZERO		# Adjusting the "snap" to the floor. (0, 0) for in-air, (0, 32) otherwise.
 
 var max_floor_angle := deg2rad (360)			# For floor sanity checking.
 
@@ -79,22 +79,20 @@ export var max_jump_height := -240.0			# Default max jumping height.
 var ground_angle := 0.0				# Controlling the angle the player is in relation to the floor.
 var ground_normal := Vector2.ZERO
 
-"""
-   Variables that control animation - like when to play walk/jog/run animations.
-"""
+### Variables that control animation - like when to play walk/jog/run animations.
 
 # Limits for changing between walk/jog/run animations - MUST BE SET IN THE CHARACTER SCENE.
-export var walk_limit = 0
-export var jog_limit = 0
-export var run_limit = 0
+export var walk_limit := 0.0
+export var jog_limit := 0.0
+export var run_limit := 0.0
 
-func _ready ():
+func _ready () -> void:
 	print_debug ("Generic player functionality ready.")
 	game_space.player_character = $"."	# Make sure the game knows which character to deal with!
 	change_anim ("idle")				# Ensure some kind of animation is playing when instanced.
 	return
 
-func _input (_event):
+func _input (_event) -> void:
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Debug keys and what they do.
 		if (Input.is_action_pressed ("DEBUG_gainrings")):	# Gain items!
 			printerr ("DEBUG: gain items pressed.")
@@ -141,7 +139,7 @@ func _input (_event):
 #		global_space.add_path_to_node ("res://Scenes/UI/paused.tscn", "/root/Level")
 	return
 
-func _physics_process (delta):
+func _physics_process (delta) -> void:
 	# Move the player character. This is the first thing done, so everything else can be calculated.
 	velocity = move_and_slide_with_snap (velocity, floor_snap, floor_normal, false, 4, max_floor_angle, false)
 	# Do state machine checks here.
@@ -165,17 +163,17 @@ func _physics_process (delta):
 ### ANIMATION.
 
 ### change_anim
-# change_anim (anim_to_change_to):
+# change_anim (anim_to_change_to, force_change):
 # Changes the animation playing to anim_to_change_to, if it isn't already playing.
-# Returns true if the animation has been played (changed to), otherwise false.
-func change_anim (anim_to_change_to):
+# Will always change the animation if force_change is true.
+# If force_change is set to true then it will change regardless.
+func change_anim (anim_to_change_to = "", force_change:bool = false) -> void:
 	if (!has_node ("AnimatedSprite")):						# Can't play animations without something to play with!
-		printerr ("ERROR: Trying to play an animation when ", self, " has no AnimatedSprite node!")
-		return (false)
-	if ($"AnimatedSprite".animation != anim_to_change_to):	# Animation's not already playing?
+		printerr ("ERROR: change_anim is trying to play an animation when ", self, " has no AnimatedSprite node!")
+		return
+	if ($"AnimatedSprite".animation != anim_to_change_to || force_change):	# Animation's not already playing?
 		$"AnimatedSprite".play (anim_to_change_to)			# Then change the animation to the one requested.
-		return (true)
-	return (false)											# The animation's already playing.
+	return
 
 ### ACCELERATION/DECELERATION/SPEED HELPER FUNCTIONS.
 
@@ -184,11 +182,11 @@ func change_anim (anim_to_change_to):
 # Note: this emits a *multiplier* to use to modify acceleration, and NOT acceleration itself.
 # The default multiplier will be (naturally) 1.0.
 # IMPORTANT: Player movement in a cutscene has to be handled directly by any scene(s) running the cutscene.
-func get_acceleration_mult ():
+func get_acceleration_mult () -> float:
 	var acceleration_mult := 1.0		# Every factor gets added to/taken away from this value.
 	if (!is_on_floor ()):				# If not on the floor, emulate "air friction".
 		acceleration_mult -= 0.75
-	acceleration_mult = (0.01 if acceleration_mult < 0.0 else acceleration_mult)	# Ensure acceleration of some kind.
+	acceleration_mult = clamp (acceleration_mult, 0.01, 100.0)
 	if (moving_in == "nil" || player_movement_state == MovementState.STATE_CUTSCENE):			# If not (supposed to be) moving, zero it.
 		acceleration_mult = 0.0			# This MUST override any other calculations to acceleration rate.
 	return (acceleration_mult)
@@ -196,8 +194,9 @@ func get_acceleration_mult ():
 ### get_deceleration_mult
 # Works the same way as get_acceleration_mult does.
 # IMPORTANT: Player movement in a cutscene has to be handled directly by any scene(s) running the cutscene.
-func get_deceleration_mult ():
-	var deceleration_mult = 1.0	# Every factor gets added to/taken away from this value.
+func get_deceleration_mult () -> float:
+	var deceleration_mult := 1.0	# Every factor gets added to/taken away from this value.
+	deceleration_mult = clamp (deceleration_mult, 0.01, 100.0)
 	deceleration_mult = (0.01 if deceleration_mult < 0.0 else deceleration_mult)		# Keep deceleration rate sane.
 	if (player_movement_state == MovementState.STATE_CUTSCENE):	# In a cutscene, so the multiplier is 4. KEEP THIS LAST.
 		deceleration_mult = 40.0	# This MUST override any other calculations to deceleration rate.
@@ -205,24 +204,24 @@ func get_deceleration_mult ():
 
 ### get_max_player_speed_mult
 # Works out (the multiplier for) maximum player speed.
-func get_max_player_speed_mult ():
-	var max_speed_mult = 1.0	# Every factor gets added to/taken away from this value.
-	max_speed_mult = (0 if max_speed_mult < 0 else max_speed_mult)		# Sanity checking.
+func get_max_player_speed_mult () -> float:
+	var max_speed_mult := 1.0	# Every factor gets added to/taken away from this value.
+	max_speed_mult = clamp (max_speed_mult, 0.0, 100.0)
 	return (max_speed_mult)
 
 ### speed_limiter
 # Makes sure the player cannot go any faster than the maximum speed (or slower than 0).
-func speed_limiter ():
+func speed_limiter () -> void:
 	player_speed = (0.0 if player_speed < 0 else player_speed)	# Can't travel at negative speeds!
-	if (player_speed > (max_player_speed * get_max_player_speed_mult ())):	# Moving faster than maximum? Reduce speed.
-		player_speed -= (decel_rate_moving * get_deceleration_mult())
+	# Reduce the player's speed if going above the current maximum.
+	player_speed -= (decel_rate_moving * get_deceleration_mult() if player_speed > max_player_speed * get_max_player_speed_mult () else 0.0)
 	return
 
 ### STATE MACHINE FUNCTIONS.
 
 ### movement_state_machine
 # The basic movement state logic goes in here. Sets movement direction based on movement state.
-func movement_state_machine (_delta):
+func movement_state_machine (_delta) -> void:
 	if (player_movement_state != MovementState.STATE_CUTSCENE):
 		match (moving_in):		# Set the movement state and direction as required.
 			"left":
@@ -243,7 +242,7 @@ func movement_state_machine (_delta):
 
 ### movement_state_machine_speed
 # Limits the speed of the player depending on what's going on.
-func movement_state_machine_speed (_delta):
+func movement_state_machine_speed (_delta) -> void:
 	if ((player_movement_state & MovementState.STATE_MOVE_LEFT) && movement_direction == 1):
 		# Wanting to move left but currently moving right, so decelerate.
 		player_speed -= (decel_rate_moving * get_deceleration_mult ())
@@ -259,23 +258,23 @@ func movement_state_machine_speed (_delta):
 
 ### movement_state_machine_rotation
 # Makes sure rotation is enabled when required, and as accurate as possible.
-func movement_state_machine_rotation (_delta):
-	if (is_on_floor () && $"PlayerPivot".enabled == false):	# On the ground, so enable the pivot.
-		$"PlayerPivot".enabled = true
-		$"FloorEdgeLeft".enabled = true
-		$"FloorEdgeRight".enabled = true
+func movement_state_machine_rotation (_delta) -> void:
+	if (is_on_floor () && $"detect_pivot".enabled == false):	# On the ground, so enable the pivot.
+		$"detect_pivot".enabled = true
+		$"detect_floor_left".enabled = true
+		$"detect_floor_right".enabled = true
 		rotation = 0.0
-	elif (!is_on_floor () && $"PlayerPivot".enabled):		# In the air, so disable the pivot.
-		$"PlayerPivot".enabled = false
-		$"FloorEdgeLeft".enabled = false
-		$"FloorEdgeRight".enabled = false
+	elif (!is_on_floor () && $"detect_pivot".enabled):		# In the air, so disable the pivot.
+		$"detect_pivot".enabled = false
+		$"detect_floor_left".enabled = false
+		$"detect_floor_right".enabled = false
 		rotation = 0.0
 		return
 	if (player_speed > (walk_limit/10)):	# If the player's moving, enable rotation.
-		ground_normal = $"PlayerPivot".get_collision_normal ()
+		ground_normal = $"detect_pivot".get_collision_normal ()
 		ground_angle = (floor_normal.angle_to (ground_normal))
 		rotation = (0.0 if player_speed < 0.05 else ground_angle)
-		rotation = (rotation if $"PlayerPivot".is_colliding () else 0.0)
+		rotation = (rotation if $"detect_pivot".is_colliding () else 0.0)
 	else:	# This shouldn't be necessary; fall-through.
 		rotation = 0.0
 	return
@@ -283,7 +282,7 @@ func movement_state_machine_rotation (_delta):
 ### movement_state_machine_ground
 # Sets movement direction according to player input, and does that based upon the current movement state. Also changes
 # animations. Called when the player character is on the ground (is_on_floor is true).
-func movement_state_machine_ground (_delta):
+func movement_state_machine_ground (_delta) -> void:
 	if (player_movement_state & MovementState.STATE_JUMPING):	# Finished jumping? Turn off the jump state.
 		player_movement_state &= ~MovementState.STATE_JUMPING
 	# Change the currently playing animation based on the player's current speed...
@@ -304,7 +303,7 @@ func movement_state_machine_ground (_delta):
 
 ### movement_state_machine_air
 # Does state machine checks while the player is in the air, either jumping or falling.
-func movement_state_machine_air (_delta):
+func movement_state_machine_air (_delta) -> void:
 	if (is_on_wall ()):		# Against a wall? Not on the ground? Then negate running speed.
 		player_speed = 0
 	# Change the currently playing animation based on the player's current speed...

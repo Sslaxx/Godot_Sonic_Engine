@@ -29,23 +29,24 @@
 
 extends Node
 
-const DEFAULT_LIVES = 3						# Default number of lives the player starts with.
-const DEFAULT_TIME_LIMIT = 10				# Time limit per level; defaults to 10 minutes.
-const DEFAULT_COLLECTIBLES_PER_LIFE = 100	# How many collectibles to collect to get an extra life.
+const DEFAULT_LIVES:int = 3						# Default number of lives the player starts with.
+const DEFAULT_TIME_LIMIT:int = 10				# Time limit per level; defaults to 10 minutes.
+const DEFAULT_COLLECTIBLES_PER_LIFE:int = 100	# How many collectibles to collect to get an extra life.
 
 ## VARIABLES THAT DO NOT NEED RESETTING ON GAME RESTART.
 
 ## VARIABLES THAT NEED TO BE RESET ON GAME RESTART.
 
-var level_time = Vector2.ZERO	# Time passed in the level so far. x is minutes, y seconds.
-var lives = DEFAULT_LIVES setget set_lives, get_lives			# Controls the lives the player has.
-var score = 0 setget set_score, get_score						# What the player's score is.
-var collectibles = 0 setget set_collectibles, get_collectibles	# The collectibles the player has.
-var collectibles_lives = 0										# Used to keep track of items for lives.
+var level_time:Vector2 = Vector2.ZERO	# Time passed in the level so far. x is minutes, y seconds.
+var lives:int = DEFAULT_LIVES setget set_lives, get_lives			# Controls the lives the player has.
+var score:int = 0 setget set_score, get_score						# What the player's score is.
+var collectibles:int = 0 setget set_collectibles, get_collectibles	# The collectibles the player has.
+var collectibles_lives:int = 0										# Used to keep track of items for lives.
 
 onready var player_character = null		# Will normally point to res://Scenes/Player/player_character.tscn
 onready var last_checkpoint = null		# The last checkpoint passed by the player.
-var character_path = "res://Scenes/Player/character_sonic.tscn"	# The path to the scene that the player character is held in.
+# The path to the scene that the player character is held in.
+var character_path = "res://Scenes/Player/character_sonic.tscn"
 
 func _ready () -> void:
 	print_debug ("Game-space ready.")
@@ -54,8 +55,8 @@ func _ready () -> void:
 
 ### update_hud
 # Updates the in-game HUD (if it's there to update) by calling its hud_layer_update function.
-# This is called mainly by the setters. It's also called by timer signals. ONLY this function should be used by any function
-# that needs to update the HUD.
+# This is called mainly by the setters. It's also called by timer signals.
+# ONLY this function should be used by any function that needs to update the HUD.
 func update_hud () -> void:
 	if (has_node ("/root/Level/hud_layer")):
 		$"/root/Level/hud_layer".hud_layer_update ()
@@ -63,7 +64,7 @@ func update_hud () -> void:
 
 ### reset_game_space
 # As singletons are not reset by restarting an application, they have to be handled manually.
-func reset_game_space ():
+func reset_game_space () -> void:
 	level_time = Vector2.ZERO
 	lives = DEFAULT_LIVES
 	score = 0
@@ -79,11 +80,11 @@ func reset_game_space ():
 ## For the lives.
 
 # Should handle most death, dying and extra life notifications as required.
-func set_lives (value):
+func set_lives (value:int) -> void:
 	if (value > 99):				# Can only have 99 lives maximum...
 		value = 99
 	if (value > lives):				# Got an extra life!
-		printerr ("TODO: Extra life!")
+		helper_functions._whocares = jingle_player.play_jingle ("res://Assets/Audio/Jingles/Extra_Life_PC.ogg")
 	elif (value < lives):			# Lost a life.
 		printerr ("TODO: Death!")
 	else:
@@ -92,14 +93,15 @@ func set_lives (value):
 	update_hud ()
 	return
 
-func get_lives ():
+func get_lives () -> int:
 	return (lives)
 
 ## For the collectibles.
 
 # Handles collecting items, and what to do when a certain number is reached if anything.
-func set_collectibles (value):
-	if (value > collectibles):			# Collected something, so add what the difference is to the items-for-lives-counter.
+func set_collectibles (value:int) -> void:
+	if (value > collectibles):
+		# Collected something, so add what the difference is to the items-for-lives-counter.
 		collectibles_lives += (value - collectibles)
 	elif (value != collectibles):		# Lost items, so set the items-for-lives-counter to the new value.
 		collectibles_lives = value
@@ -113,17 +115,17 @@ func set_collectibles (value):
 	update_hud ()
 	return
 
-func get_collectibles ():
+func get_collectibles () -> int:
 	return (collectibles)
 
 ## For score.
 
-func set_score (value):
+func set_score (value:int) -> void:
 	score = value
 	update_hud ()
 	return
 
-func get_score ():
+func get_score () -> int:
 	return (score)
 
 ### TIMERS.

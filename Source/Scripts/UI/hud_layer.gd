@@ -24,8 +24,8 @@
 #   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 #   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# This controls the HUD part of the UI; that is, the stuff that is always on screen playing in-game. Keeps the HUD display
-# updated. Updating every frame would be pretty heavy, so should be called only when something changes.
+# This controls the HUD part of the UI; that is, the stuff that is always on screen playing in-game. Keeps the HUD
+# display updated. Updating every frame would be pretty heavy, so should be called only when something changes.
 
 extends CanvasLayer
 
@@ -38,8 +38,8 @@ func _ready () -> void:
 	return
 
 ### hud_layer_update
-# Does all the heavy lifting. Updates the HUD (when called) to update all needed info. Should only ever be called when things
-# actually change!
+# Does all the heavy lifting. Updates the HUD (when called) to update all needed info. Should only ever be called when
+# things actually change!
 func hud_layer_update () -> void:
 	var prettied_text:String = ""
 	if (!has_node ("/root/Level")):	# Can't update the HUD for a level that doesn't exist!

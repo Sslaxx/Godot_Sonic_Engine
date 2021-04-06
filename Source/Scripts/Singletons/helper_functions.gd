@@ -17,6 +17,7 @@ onready var cli_args = Array (OS.get_cmdline_args ())	# An array of any command-
 
 func _ready () -> void:
 	print_debug (get_script ().resource_path, " ready. Node ", self, " (", self.name, ").")
+	Engine.target_fps = 60
 	return
 
 ### _input
@@ -59,13 +60,11 @@ func add_path_to_node (scene_path = "", node_to_add_to = "/root"):
 # helper_functions.change_scene (path)
 # Goes to the relevant scene; the scene is a path, so "res://<filename>".
 # You should specify the path as absolute wherever possible.
-# Note that it deletes the previous scene!
 # Returns the error codes given for change_scene_to (0 for OK, non-zero otherwise).
 func change_scene (scene_path) -> int:
 	var new_scene = ResourceLoader.load (scene_path)				# Load and...
-	print (scene_path, ": ", new_scene)
 	if (new_scene == null):											# ...check that the path/scene is valid, then...
-		printerr ("change_scene cannot use ", scene_path, "; it is not a valid or existing scene!")
+		printerr ("change_scene cannot use ", scene_path, "; it is not a valid or existing scene file!")
 		return (ERR_FILE_NOT_FOUND)
 	return (get_tree ().change_scene_to (new_scene))				# ...change to the new scene (or not...).
 
@@ -85,3 +84,13 @@ func do_once_only (do_me) -> bool:
 	print_debug (do_me, " has now been done.")
 	do_once_dictionary [do_me] = "I_AM_DONE"
 	return (true)
+
+### value_in_range
+# helper_functions.value_in_range (check_value, range_start, range_end)
+# Checks to see if <check_value> falls between <range_start> and <range_end>.
+# Returns true (it is) or false (it isn't; either because it is outside the range or function error).
+func value_in_range (check_value, range_start, range_end) -> bool:
+	if (range_start >= range_end):
+		printerr ("value_in_range cannot use ", range_start, "; it must be less than ", range_end, ".")
+		return (false)
+	return (check_value >= range_start && check_value <= range_end)

@@ -27,10 +27,10 @@ func init_rng () -> void:
 # Can add to (add_to) or subtract from (sub_from) the calculated total.
 # Defaults to 1d6+0-0 (1, 6, 0, 0).
 # Returns the total given, or -1 if not enough dice, or -2 if not enough sides.
-func roll_dice (number_of_dice: int = 1, dice_sides: int = 6, add_to: int = 0, sub_from: int = 0) -> int:
-	var total_rolled: int = 0	# The total of the dice rolled.
-	var dice_count: int = 0		# Used to count the number of dice rolled.
-	var dice_rolled: int = 0	# Total of the dice rolled so far.
+func roll_dice (number_of_dice:int = 1, dice_sides:int = 6, add_to:int = 0, sub_from:int = 0) -> int:
+	var total_rolled:int = 0	# The total of the dice rolled.
+	var dice_count:int = 0		# Used to count the number of dice rolled.
+	var dice_rolled:int = 0		# Total of the current dice rolled.
 	if (number_of_dice < 1):	# Invalid number of dice.
 		printerr ("roll_dice requires at least 1 \"dice\".")
 		return (-1)
@@ -50,7 +50,7 @@ func roll_dice (number_of_dice: int = 1, dice_sides: int = 6, add_to: int = 0, s
 # find_random_average (total_numbers, random_range)
 # Generates <total_numbers> of random numbers (1 up to <random_range>), returning the average of that total.
 # Note that the average returned is a float rounded (down) to an int.
-func find_random_average (total_numbers: int = 1, random_range: int = 1) -> int:
-	var total: float = 0.0
+func find_random_average (total_numbers:int = 1, random_range:int = 6) -> int:
+	var total:float = 0.0
 	total = float (roll_dice (total_numbers, random_range)) / float (total_numbers)
 	return (int (total))

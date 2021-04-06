@@ -25,12 +25,12 @@
 #   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ### This is the code for Sonic.
-# As the generic player code is (attempting to be) modelled after Sonic's gameplay, this should require very few changes, and
-# most of those should be to the exported vars.
+# As the generic player code is (attempting to be) modelled after Sonic's gameplay, this should require very few
+# changes, and most of those should be to the exported vars.
 
 extends "res://Scripts/Player/player_generic.gd"
 
-func _ready ():
+func _ready () -> void:
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Ensure the debug HUD is added to the scene.
 		print_debug ("Sonic - ", self, " - ready.")
 		if (has_node ("/root/Level/Startpoint")):
@@ -39,8 +39,8 @@ func _ready ():
 			position = Vector2 (42, -1973)
 	return
 
-func _input (_event):
+func _input (_event) -> void:
 	return
 
-func _physics_process (_delta):
+func _physics_process (_delta) -> void:
 	return

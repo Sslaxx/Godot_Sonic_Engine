@@ -5,10 +5,11 @@
 
 extends AudioStreamPlayer
 
+# If something needs to access the audio bus used by the player, it can be found here.
 onready var bus_index := AudioServer.get_bus_index ("SFX")
 
 onready var sound_library = {
-	# Put all the sound effects to be used globally here.
+	# Put all the sound effects to be used globally here. Using "add_sound_to_library" would be a better idea.
 	no_sound = preload ("res://Assets/Audio/Sound/no_sound.ogg"),	# Keep this as the first item in the list.
 }
 
@@ -21,11 +22,11 @@ func _ready () -> void:
 # Looks for item in sound_library and if it's there, play it.
 func play_sound (item = "no_sound") -> void:
 	if (sound_library.has (item)):
-		stream = sound_library [item]
+		stream = sound_library [item] as AudioStream
 		if (stream == null):	# The file associated with "item" isn't a valid sound file.
 			printerr ("sound_player has an empty stream! ", item, " is not a valid sound file.")
 			return
-		# The sound exists and is valid in the library, so play it out and return true.
+		# The sound exists and is valid in the library, so play it out.
 		play ()
 		print_debug (item, " played.")
 		return

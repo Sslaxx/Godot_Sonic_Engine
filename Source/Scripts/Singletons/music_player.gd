@@ -3,6 +3,7 @@
 
 extends AudioStreamPlayer
 
+# If something needs to access the audio bus used by the player, it can be found here.
 onready var bus_index := AudioServer.get_bus_index ("Music")
 
 func _ready () -> void:
@@ -14,20 +15,20 @@ func _ready () -> void:
 # Plays a specified music file (path_to_music).
 # Will play from a specific point in the music (in seconds) if told to (play_from).
 # Returns true if it plays something, otherwise false.
-func play_music (path_to_music = "", play_from = 0.0) -> bool:
+func play_music (path_to_music = "", play_from = 0.0) -> void:
 	var play_me = null		# This will be used to set the stream data.
 	if (!ResourceLoader.exists (path_to_music)):	# The music file doesn't actually exist.
 		printerr ("ERROR: music_player has no music to play! ", path_to_music, " does not exist.")
-		return (false)
-	play_me = load (path_to_music)
+		return
+	play_me = load (path_to_music) as AudioStream
 	stream = play_me		# Everything's OK, so set the stream as needed?
 	if (stream == null):	# Except it's not actually a music file, so error out.
 		printerr ("ERROR: music_player has an empty stream! ", path_to_music, " is not a valid music file!")
-		return (false)
+		return
 	print_debug ("Playing ", stream, " from ", path_to_music, ", offset ", play_from, ".")
 	AudioServer.set_bus_mute (bus_index, false)		# Unmute the Music bus...
-	play (play_from)								# ...play the music...
-	return (true)									# ...and return true.
+	play (play_from)								# ...and play the music.
+	return
 
 ### stop_music
 # music_player.stop_music ()

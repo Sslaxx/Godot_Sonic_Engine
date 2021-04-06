@@ -24,8 +24,8 @@
 #   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 #   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-### Just the script to the test level, to make sure scripts are working as they should. Normally this type of script would handle
-# things specific to a level.
+### Just the script to the test level, to make sure scripts are working as they should. Normally this type of script
+# would handle things specific to a level.
 # All these scripts MUST inherit from level_generic.gd, which in turn inherits from Node2D.
 
 extends "res://Scripts/Levels/level_generic.gd"
