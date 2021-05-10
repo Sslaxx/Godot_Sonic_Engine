@@ -16,3 +16,4 @@ thumbs.db
 # Directories to ignore.
 .import/
 logs/
+
