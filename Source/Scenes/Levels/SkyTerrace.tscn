@@ -7,7 +7,7 @@
 [ext_resource path="res://Assets/Graphics/Sprites/Backgrounds/Festival/Villa.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/LevelItems/FallingParticles.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scripts/AudioPlayer.gd" type="Script" id=9]
-[ext_resource path="res://Scenes/UI/LevelUILayout.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/UI/HUD/LevelUILayout.tscn" type="PackedScene" id=15]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0790698, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
@@ -169,6 +169,7 @@ tile_data = PoolIntArray( 65489, 0, 0, 65490, 0, 0, 65491, 0, 0, 65492, 0, 0, 65
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+bus = "Music"
 script = ExtResource( 9 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]

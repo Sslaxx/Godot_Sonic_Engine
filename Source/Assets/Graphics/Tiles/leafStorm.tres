@@ -38,8 +38,8 @@
 [ext_resource path="res://Assets/Graphics/Tiles/leafStorm/145.png" type="Texture" id=36]
 [ext_resource path="res://Assets/Graphics/Tiles/leafStorm/146.png" type="Texture" id=37]
 [ext_resource path="res://Assets/Graphics/Tiles/leafStorm/178.png" type="Texture" id=38]
-[ext_resource path="res://Assets/Graphics/Tiles/wall3.png" type="Texture" id=40]
-[ext_resource path="res://Assets/Graphics/Tiles/wall4.png" type="Texture" id=41]
+[ext_resource path="res://Assets/Graphics/Tiles/leafStorm/wall3.png" type="Texture" id=40]
+[ext_resource path="res://Assets/Graphics/Tiles/leafStorm/wall4.png" type="Texture" id=41]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )

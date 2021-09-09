@@ -10,7 +10,7 @@ export(bool) var _autoPlay = true
 
 # records whether or not the track is in the loopable 
 # section yet
-var loopbackFlag = false
+var loopbackFlag := false
 
 # automatically play the track if "autoplay" is enabled
 func _ready():

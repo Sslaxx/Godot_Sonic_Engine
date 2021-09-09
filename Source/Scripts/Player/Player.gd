@@ -139,7 +139,7 @@ var pgVel = 0	# the ground velocity during the previous frame
 
 var backLayer = false	# whether or not sonic is currently on the "back" layer
 
-func _ready():
+func _ready() -> void:
 	# get all the raycast nodes
 	LeftCast = find_node("LeftCast")
 	RightCast = find_node("RightCast")
@@ -191,10 +191,11 @@ func _ready():
 
 	# reset all game values
 	resetGame()
+	return
 
-func limitAngle(ang):
+func limitAngle(ang:float) -> float:
 	"""Returns the given angle as an angle (in radians) between -PI and PI"""
-	var sign1 = 1
+	var sign1 := 1.0
 	if not ang == 0:
 		sign1 = ang/abs(ang)
 	ang = fmod(ang,PI*2)
@@ -202,7 +203,7 @@ func limitAngle(ang):
 		ang = (2*PI-abs(ang))*sign1*-1
 	return ang
 
-func angleDist(rot1,rot2):
+func angleDist(rot1:float,rot2:float) -> float:
 	"""returns the angle distance between rot1 and rot2, even over the 360deg
 	mark (i.e. 350 and 10 will be 20 degrees apart)"""
 	rot1 = limitAngle(rot1)
@@ -218,7 +219,7 @@ func VecDist(vec1,vec2):
 	"""gets the distance between point vec1 and point vec2 (probably unnecessary)"""
 	return (vec1-vec2).length()
 
-func boostControl():
+func boostControl() -> void:
 	"""handles the boosting controls"""
 
 	if Input.is_action_just_pressed("boost") and boostBar.boostAmount > 0:
@@ -288,8 +289,9 @@ func boostControl():
 
 		# we're not boosting, so set boosting to false
 		boosting = false
+	return
 
-func airProcess():
+func airProcess() -> void:
 	"""handles physics while Sonic is in the air"""
 
 	# apply gravity
@@ -356,7 +358,7 @@ func airProcess():
 			stomping = false
 	else:
 #		print("GROUND MISS: %s" % str(avgGPoint))
-		pass
+		return
 
 	# air-based movement (using the arrow keys)
 	if Input.is_action_pressed("move right") and velocity1.x < 16:
@@ -429,8 +431,9 @@ func airProcess():
 
 	# ensure the proper speed of the animated sprites
 	sprite1.speed_scale = 1
+	return
 
-func gndProcess():
+func gndProcess() -> void:
 	# caluclate the ground rotation for the left and right raycast colliders,
 	# respectively
 	langle = -atan2(LeftCast.get_collision_normal().x,LeftCast.get_collision_normal().y)-PI
@@ -588,6 +591,7 @@ func gndProcess():
 	# set the previous ground velocity and last rotation for next frame
 	pgVel = gVel
 	lRot = rotation
+	return
 
 var lastPos = Vector2.ZERO
 
@@ -596,8 +600,9 @@ func _process(_delta):
 		sprite1.modulate = Color(1,1,1,1-(invincible % 30)/30.0)
 	else:
 		hurt = false
+	return
 
-func _physics_process(_delta):
+func _physics_process(_delta) -> void:
 	"""calculate Sonic's physics, controls, and all that fun stuff"""
 	if invincible > 0:
 		invincible -= 1
@@ -694,8 +699,9 @@ func _physics_process(_delta):
 			i.process_material.direction = Vector3(velocity1.x,velocity1.y,0)
 			i.process_material.initial_velocity = velocity1.length()*20
 			i.rotation = -rotation
+	return
 
-func setCollisionLayer(value):
+func setCollisionLayer(value) -> void:
 	# shortcut to change the collision mask for every raycast node connected to
 	# sonic at the same time. Value is true for layer 1, false for layer 0
 	backLayer = value
@@ -711,41 +717,45 @@ func setCollisionLayer(value):
 	LeftCastTop.set_collision_mask_bit(1,backLayer)
 	RightCastTop.set_collision_mask_bit(0,not backLayer)
 	RightCastTop.set_collision_mask_bit(1,backLayer)
+	return
 
-func _flipLayer(_body):
+func _flipLayer(_body) -> void:
 	# toggle between layers
 	setCollisionLayer(not backLayer)
-	pass # replace with function body
+	return # replace with function body
 
-func _layer0(area):
+func _layer0(area) -> void:
 	# explicitly set the collision layer to 0
 	print("layer0",area.name)
 	setCollisionLayer(false)
-	pass # replace with function body
+	return # replace with function body
 
-func _layer1(area):
+func _layer1(area) -> void:
 	# explicitly set the collision layer to 1
 	print("layer1",area.name)
 	setCollisionLayer(true)
-	pass # replace with function body
+	return # replace with function body
 
-func _on_DeathPlane_area_entered(area):
+func _on_DeathPlane_area_entered(area) -> void:
 	if self == area:
 		resetGame()
 		if get_tree().reload_current_scene() != OK:
 			print("ERROR: Could not reload current scene!")
+	return
 
-func resetGame():
+func resetGame() -> void:
 	# reset your position and state if you pull a dimps (fall out of the world)
 	velocity1 = Vector2.ZERO
 	state = -1
 	position = startpos
 	setCollisionLayer(false)
+	return
 
-func _setVelocity(vel):
+func _setVelocity(vel) -> void:
 	velocity1 = vel
+	return
 
-func _on_Railgrind(area,curve,origin):
+func _on_Railgrind(area,curve,origin) -> void:
 	"""
 	this function is run whenever sonic hits a rail.
 	"""
@@ -769,14 +779,15 @@ func _on_Railgrind(area,curve,origin):
 			boostSound.stream = stomp_land_sfx
 			boostSound.play()
 			stomping = false
+	return
 
-func isAttacking():
+func isAttacking() -> bool:
 	if stomping or boosting or rolling or \
 		(sprite1.animation == "Roll" and state == -1):
 		return true
 	return false
 
-func hurt_player():
+func hurt_player() -> void:
 	if not invincible > 0:
 		invincible = 120*5
 		state = -1
@@ -788,8 +799,8 @@ func hurt_player():
 		voiceSound.play_hurt()
 
 		var t = 0
-		var angle = 101.25
-		var n = false
+		var angle := 101.25
+		var n := false
 		var speed = 4
 
 		while t < min(ringCounter.ringCount,32):
@@ -806,3 +817,4 @@ func hurt_player():
 				angle = 101.25
 			get_node("/root/Node2D").call_deferred("add_child",currentRing)
 		ringCounter.ringCount = 0
+	return

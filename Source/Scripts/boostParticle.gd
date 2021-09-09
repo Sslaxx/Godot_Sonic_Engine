@@ -1,6 +1,6 @@
 extends Node2D
 
-var initialVel = Vector2()
+var initialVel = Vector2.ZERO
 var cVel = initialVel
 
 export(float) var boostValue = 2

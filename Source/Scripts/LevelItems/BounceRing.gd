@@ -5,7 +5,7 @@ this script is for the bouncy-type rings that fly out of you when you get hit
 extends Area2D
 
 # true if the ring has been collected 
-var collected = false
+var collected := false
 
 # stores a reference to the raycast node
 var downCast
@@ -21,7 +21,7 @@ var boostBar
 var collectionStartTimer = 120
 
 # represents the current velocity of the ring.
-export(Vector2) var velocity1 = Vector2(0,0)
+export(Vector2) var velocity1 := Vector2.ZERO
 
 func _ready():
 	# grab all the relevent nodes on startup
@@ -39,7 +39,7 @@ func _process(_delta):
 func _physics_process(_delta):
 	# count down the timer
 	collectionStartTimer -= 1
-	
+
 	if not collected:
 		# bounce on relevent ground nodes
 		if downCast.is_colliding() and downCast.get_collision_point().y < position.y + 16:

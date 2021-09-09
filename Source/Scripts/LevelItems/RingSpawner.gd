@@ -19,32 +19,35 @@ export(PackedScene) var ringSource
 var posList = []
 
 # Generates the positions for all rings and stores them in posList
-func placeRings():
+func placeRings() -> void:
 	posList.append(Vector2(0,0))
 	for i in range(1,count):
 		posList.append((posList[i-1])+offset.rotated(rotationalOffset*i))
+	return
 
 # place rings once the script is run in play mode
-func _ready():
+func _ready() -> void:
 	placeRings()
 	if not Engine.editor_hint:
 		for i in posList:
 			var currentRing = ringSource.instance()
 			currentRing.position = i
 			add_child(currentRing)
-
+	return
 
 # place ring circle hints inside the editor
-func _process(_delta):
+func _process(_delta) -> void:
 	if Engine.editor_hint:
 		var pposList = posList;
 		posList = []
 		placeRings()
 		if not pposList == posList:
 			update()
+	return
 
 # draw the circles for the rings
-func _draw():
+func _draw() -> void:
 	if Engine.editor_hint:
 		for i in posList:
 			draw_circle(i,7,Color(0.6,0.6,1,0.5))
+	return

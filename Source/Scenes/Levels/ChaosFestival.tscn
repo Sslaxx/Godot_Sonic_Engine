@@ -13,7 +13,7 @@
 [ext_resource path="res://Scenes/LevelItems/EggPawn.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/LevelItems/Rail.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/LevelItems/RingSpawner.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Scenes/UI/LevelUILayout.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/UI/HUD/LevelUILayout.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Scenes/LevelItems/lamp.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Assets/Graphics/Sprites/light.png" type="Texture" id=17]
 
@@ -211,6 +211,7 @@ tile_data = PoolIntArray( -458758, 0, 0, -458757, 0, 0, -458756, 0, 0, -458755, 
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+bus = "Music"
 script = ExtResource( 9 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]

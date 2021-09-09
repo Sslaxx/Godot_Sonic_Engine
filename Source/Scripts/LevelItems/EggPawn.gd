@@ -8,30 +8,32 @@ extends Area2D
 export(PackedScene) var boostParticle
 
 # is the egg pawn alive?
-var alive = true
+var alive := true
 
 # keeps track of the pawn's velocity once it has "exploded"
-var splodeVel = Vector2(0,0)
+var splodeVel := Vector2.ZERO
 
 # keeps a reference to the audio stream player for the explosion sound
 var boomSound
 
-func _ready():
+func _ready() -> void:
 	# get a reference to the explosion audio stream player node
 	boomSound = get_node("BoomSound")
+	return
 
-func _process(_delta):
+func _process(delta) -> void:
 	if alive:
-		# a stupid simple AI routine. Simply move x by -0.1 pixels per frame
-		position.x -= 0.1;
+		# a stupid simple AI routine. Simply move x by -delta pixels per frame
+		position.x -= abs (delta);
 	else:
 		# calculations for the explosion animation. 
 		# Applies velocity, rotates, and then applies gravity
 		position += splodeVel
 		rotation += 0.1
 		splodeVel.y += 0.2
+	return
 
-func _on_EggPawn_area_entered(area):
+func _on_EggPawn_area_entered(area) -> void:
 	# if the player collides with this egg pawn
 	if area.name == "Player" and alive:
 		# if the player isn't attacking (boosting or jumping) hurt the player
@@ -57,3 +59,4 @@ func _on_EggPawn_area_entered(area):
 
 		# play the explosion sfx
 		boomSound.play()
+	return

@@ -15,12 +15,13 @@ var animation	# stores the animated sprite
 var sound		# stores the audio stream player
 var scaling = 1	# stores the current scale of the spring
 
-func _ready():
+func _ready() -> void:
 	# find the animation and sound nodes
 	animation = find_node("AnimatedSprite")
 	sound = find_node("AudioStreamPlayer")
+	return
 
-func _on_Area2D_area_entered(area):
+func _on_Area2D_area_entered(area) -> void:
 	# if the player collides with the spring
 	if area.name == "Player":
 
@@ -62,9 +63,11 @@ func _on_Area2D_area_entered(area):
 		sound.play()
 		# scale the spring (only applies if "ringScale" is enabled)
 		scaling = 2
+	return
 
-func _process(_delta):
+func _process(_delta) -> void:
 	# set and lerp scale if ringScale is enabled
 	if ringScale:
 		scale = Vector2(scaling,scaling)
 		scaling = lerp(scaling,1,0.1)
+	return
