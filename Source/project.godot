@@ -15,11 +15,20 @@ _global_script_class_icons={
 [application]
 
 config/name="Flow Engine"
-run/main_scene="res://Scenes/ChaosFestival.tscn"
+run/main_scene="res://Scenes/scn_preload.tscn"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 1 )
 config/icon="res://icon.png"
+
+[autoload]
+
+helper_functions="*res://Scenes/Singletons/helper_functions.tscn"
+random_helpers="*res://Scenes/Singletons/random_helpers.tscn"
+sound_player="*res://Scenes/Singletons/sound_player.tscn"
+music_player="*res://Scenes/Singletons/music_player.tscn"
+jingle_player="*res://Scenes/Singletons/jingle_player.tscn"
+config_helper="*res://Scenes/Singletons/config_helper.tscn"
 
 [debug]
 
@@ -27,8 +36,7 @@ settings/stdout/print_fps=true
 
 [display]
 
-window/size/width=1280
-window/size/height=720
+window/size/height=576
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 

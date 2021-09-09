@@ -19,8 +19,7 @@ var lPos
 var timer = 0
 
 func _ready():
-	randomize()
-	initialVel = Vector2(randf()-0.5,randf()-0.5)
+	initialVel = Vector2(random_helpers.RNG.randf()-0.5,random_helpers.RNG.randf()-0.5)
 	initialVel = initialVel.normalized()*speed
 
 	player = get_node("/root/Node2D/Player")
@@ -33,6 +32,7 @@ func _ready():
 
 	for i in range(lineLength):
 		line.points[i] = Vector2(0,0)
+	return
 
 func _process(delta):
 	if timer < 1:
@@ -57,3 +57,4 @@ func _process(delta):
 		queue_free()
 
 	lPos = position
+	return
