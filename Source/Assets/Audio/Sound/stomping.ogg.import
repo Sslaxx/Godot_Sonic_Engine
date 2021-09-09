@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/stomping.ogg-2f1ebc65fb2504276e958210718cf3a7.oggstr"
+
+[deps]
+
+source_file="res://Assets/Audio/Sound/stomping.ogg"
+dest_files=[ "res://.import/stomping.ogg-2f1ebc65fb2504276e958210718cf3a7.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/RightThereRideOn.ogg-5f7fe8a19c8e5144e7cdd5668b9bb193.oggstr"
+
+[deps]
+
+source_file="res://Assets/Audio/Music/RightThereRideOn.ogg"
+dest_files=[ "res://.import/RightThereRideOn.ogg-5f7fe8a19c8e5144e7cdd5668b9bb193.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
