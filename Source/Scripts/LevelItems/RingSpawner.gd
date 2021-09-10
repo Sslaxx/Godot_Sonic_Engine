@@ -38,7 +38,7 @@ func _ready() -> void:
 # place ring circle hints inside the editor
 func _process(_delta) -> void:
 	if Engine.editor_hint:
-		var pposList = posList;
+		var pposList = posList
 		posList = []
 		placeRings()
 		if not pposList == posList:

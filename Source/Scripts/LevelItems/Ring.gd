@@ -5,7 +5,7 @@ controls a typical (non-flying) ring
 extends Area2D
 
 # true if the ring has been collected 
-var collected = false
+var collected := false
 
 # holds a reference to the AnimatedSprite node for the ring
 var sprite

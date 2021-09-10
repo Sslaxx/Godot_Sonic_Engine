@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/sonic_boost_1.png-d38c0a5e5c24101ec9e8ef41f618ddc7.stex"
+path="res://.import/sonic_boost_1.png-b7df0b645a9f8a3c1128a4f9f485cd31.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Effects/sonic_boost_1.png"
-dest_files=[ "res://.import/sonic_boost_1.png-d38c0a5e5c24101ec9e8ef41f618ddc7.stex" ]
+source_file="res://Assets/Graphics/Effects/Boost/sonic_boost_1.png"
+dest_files=[ "res://.import/sonic_boost_1.png-b7df0b645a9f8a3c1128a4f9f485cd31.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Villa.png-b59c06b7a7167934c988d26f9ba80a77.stex"
+path="res://.import/Villa.png-bd41c9361e52902b2c0f950bb7498f07.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Sprites/Backgrounds/Festival/Villa.png"
-dest_files=[ "res://.import/Villa.png-b59c06b7a7167934c988d26f9ba80a77.stex" ]
+source_file="res://Assets/Graphics/Backgrounds/Festival/Villa.png"
+dest_files=[ "res://.import/Villa.png-bd41c9361e52902b2c0f950bb7498f07.stex" ]
 
 [params]
 

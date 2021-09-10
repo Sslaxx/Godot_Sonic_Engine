@@ -12,4 +12,4 @@ dest_files=[ "res://.import/JehJehRocket.ogg-d652f43c1d77e49f267a4779ae8e7cac.og
 [params]
 
 loop=true
-loop_offset=0
+loop_offset=13.25

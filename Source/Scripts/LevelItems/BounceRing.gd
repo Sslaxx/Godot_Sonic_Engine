@@ -23,26 +23,28 @@ var collectionStartTimer = 120
 # represents the current velocity of the ring.
 export(Vector2) var velocity1 := Vector2.ZERO
 
-func _ready():
+func _ready () -> void:
 	# grab all the relevent nodes on startup
-	sprite = get_node("AnimatedSprite")
-	audio = get_node("AudioStreamPlayer")
-	downCast = get_node("DownCast")
+	sprite = get_node ("AnimatedSprite")
+	audio = get_node ("AudioStreamPlayer")
+	downCast = get_node ("DownCast")
+	return
 
-func _process(_delta):
+func _process (_delta) -> void:
 	# make the sprite invisible once the ring has been collected and
 	# the sparkle animation is over
 	if collected and sprite.animation == "Sparkle" and \
 		sprite.frame >= 6:
 		visible = false
+	return
 
-func _physics_process(_delta):
+func _physics_process (_delta) -> void:
 	# count down the timer
 	collectionStartTimer -= 1
 
 	if not collected:
 		# bounce on relevent ground nodes
-		if downCast.is_colliding() and downCast.get_collision_point().y < position.y + 16:
+		if downCast.is_colliding () and downCast.get_collision_point ().y < position.y + 16:
 			velocity1.y *= -1
 
 		# add gravity
@@ -53,16 +55,18 @@ func _physics_process(_delta):
 
 	# once the timer gets to a certain point, start flashing the ring sprite
 	if collectionStartTimer < -900:
-		sprite.modulate = Color(1,1,1,1-(-collectionStartTimer%30)/30.0)
+		sprite.modulate = Color (1,1,1,1- (-collectionStartTimer%30)/30.0)
 
 	# remove the ring node once the timer is up
 	if collectionStartTimer < -1080:
-		queue_free()
+		queue_free ()
+	return
 
-func _on_Ring_area_entered(area):
+func _on_Ring_area_entered (area) -> void:
 	# if the ring hasn't been collected and the player collides...
 	if not collected and area.name == "Player" and collectionStartTimer <= 0:
 		collected = true					# set collected to true
 		sprite.animation = "Sparkle"		# set the animation to the sparkle
-		audio.play();						# play the ring sfx
-		get_node("/root/Node2D/CanvasLayer/RingCounter").addRing()	# add a ring to the total
+		audio.play ();						# play the ring sfx
+		get_node ("/root/Node2D/CanvasLayer/RingCounter").addRing ()	# add a ring to the total
+	return

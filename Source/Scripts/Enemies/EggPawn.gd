@@ -14,11 +14,11 @@ var alive := true
 var splodeVel := Vector2.ZERO
 
 # keeps a reference to the audio stream player for the explosion sound
-var boomSound
+onready var boomSound = get_node("BoomSound")
 
 func _ready() -> void:
 	# get a reference to the explosion audio stream player node
-	boomSound = get_node("BoomSound")
+#	boomSound
 	return
 
 func _process(delta) -> void:

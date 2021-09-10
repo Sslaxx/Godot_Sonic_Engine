@@ -26,7 +26,7 @@ func _on_Area2D_area_entered(area) -> void:
 	if area.name == "Player":
 
 		# calculate what vector to launch Sonic in
-		var launchVector = Vector2(0,-STRENGTH).rotated(rotation)
+		var launchVector := Vector2(0, -STRENGTH).rotated(rotation)
 
 		# calculate how fast sonic is moving perpendicularly to the spring
 		var sideVector = area.velocity1.dot(launchVector.normalized().rotated(PI/2))\
@@ -34,12 +34,13 @@ func _on_Area2D_area_entered(area) -> void:
 
 		# calculate the final vector to throw sonic in. Ignore sideVector if 
 		# the spring is directed
-		var finalVector = (Vector2.ZERO if DIRECTED else sideVector) + launchVector
+		var finalVector := (Vector2.ZERO if DIRECTED else sideVector) + launchVector
 
 		# print out the values for debugging
-		print("sideVector: ",sideVector)
-		print("launchVector: ",launchVector)
-		print("finalVector: ",finalVector)
+		if (OS.is_debug_build ()):
+			print("sideVector: ", sideVector)
+			print("launchVector: ", launchVector)
+			print("finalVector: ", finalVector)
 
 		# set sonic's velocity to the final vector
 		area.velocity1 = finalVector
@@ -67,7 +68,7 @@ func _on_Area2D_area_entered(area) -> void:
 
 func _process(_delta) -> void:
 	# set and lerp scale if ringScale is enabled
-	if ringScale:
-		scale = Vector2(scaling,scaling)
-		scaling = lerp(scaling,1,0.1)
+	if (ringScale):
+		scale = Vector2(scaling, scaling)
+		scaling = lerp(scaling, 1, 0.1)
 	return

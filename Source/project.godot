@@ -33,6 +33,7 @@ config_helper="*res://Scenes/Singletons/config_helper.tscn"
 [debug]
 
 settings/stdout/print_fps=true
+settings/stdout/verbose_stdout=true
 
 [display]
 
