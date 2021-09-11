@@ -1,4 +1,4 @@
-# controls a spring, as well as boost rings
+# controls "air furniture", such as springs, boost rings etc.
 
 extends Area2D
 
@@ -12,6 +12,10 @@ export(bool) var ringScale = false
 onready var animation = find_node ("AnimatedSprite")	# stores the animated sprite
 onready var sound = find_node ("AudioStreamPlayer")		# stores the audio stream player
 var scaling = 1	# stores the current scale of the spring
+
+func _ready () -> void:
+	helper_functions._whocares = self.connect ("area_entered", self, "_on_Area2D_area_entered")
+	return
 
 func _on_Area2D_area_entered (area) -> void:
 	# if the player collides with the spring

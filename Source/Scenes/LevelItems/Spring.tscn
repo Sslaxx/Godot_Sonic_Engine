@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://Scripts/LevelItems/Spring.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/LevelItems/air_furniture.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/LevelItems/Spring1.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Audio/Sound/spring.ogg" type="AudioStream" id=3]
 
@@ -49,5 +49,3 @@ shape = SubResource( 6 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 bus = "SFX"
-
-[connection signal="area_entered" from="." to="." method="_on_Area2D_area_entered"]

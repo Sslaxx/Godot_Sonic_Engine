@@ -18,6 +18,10 @@ var splodeVel := Vector2.ZERO
 # keeps a reference to the audio stream player for the explosion sound
 onready var boomSound = get_node ("BoomSound")
 
+func _ready () -> void:
+	helper_functions._whocares = self.connect ("area_entered", self, "_on_EggPawn_area_entered")
+	return
+
 func _process (delta) -> void:
 	if (alive):
 		# a stupid simple AI routine. Simply move x by -delta pixels per frame

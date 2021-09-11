@@ -79,6 +79,8 @@ var boosting := false
 var tricking := false
 var trickingCanStop := false
 
+var lastPos := Vector2.ZERO
+
 # flags and values for getting hurt
 var hurt := false
 var invincible = 0
@@ -121,29 +123,27 @@ var RAILSOUND_MAXPITCH = 2.0
 onready var cam = find_node ("Camera2D")
 onready var grindParticles = find_node ("GrindParticles")	# a reference to the particle node for griding
 
-var avgGPoint = Vector2.ZERO	#average Ground position between the two foot raycasts
-var avgTPoint = Vector2.ZERO	#average top position between the two head raycasts
-var avgGRot = 0					# average ground rotation between the two foot raycasts
-var langle = 0					# the angle of the left foot raycast
-var rangle = 0					# the angle of the right foot raycast
-var lRot = 0					# Sonic's rotation during the last frame
-var startpos = Vector2.ZERO		# the position at which sonic starts the level
-var startLayer = 0				# the layer on which sonic starts
+var avgGPoint := Vector2.ZERO	#average Ground position between the two foot raycasts
+var avgTPoint := Vector2.ZERO	#average top position between the two head raycasts
+var avgGRot := 0.0					# average ground rotation between the two foot raycasts
+var langle := 0.0					# the angle of the left foot raycast
+var rangle := 0.0					# the angle of the right foot raycast
+var lRot := 0.0						# Sonic's rotation during the last frame
+var startpos := Vector2.ZERO		# the position at which sonic starts the level
+var startLayer := 0.0				# the layer on which sonic starts
 
-var velocity1 = Vector2.ZERO	# sonic's current velocity
+var velocity1 := Vector2.ZERO	# sonic's current velocity
 
-var gVel = 0	# the ground velocity
-var pgVel = 0	# the ground velocity during the previous frame
+var gVel := 0.0		# the ground velocity
+var pgVel := 0.0	# the ground velocity during the previous frame
 
-var backLayer = false	# whether or not sonic is currently on the "back" layer
+var backLayer := false	# whether or not sonic is currently on the "back" layer
 
 func _ready () -> void:
 	# put all child particle systems in parts except for the grind particles
 	for i in get_children ():
 		if i is Particles2D and not i == grindParticles:
 			parts.append (i)
-
-	# get the camera
 
 	# get the debug label
 	text_label = find_node ("RichTextLabel")
@@ -187,10 +187,6 @@ func angleDist (rot1:float, rot2:float) -> float:
 		return (abs ((limitAngle (rot1)+PI*2)-(limitAngle (rot2))))
 	else:
 		return abs (rot1-rot2)
-
-func VecDist (vec1, vec2) -> float:
-	# gets the distance between point vec1 and point vec2 (probably unnecessary)
-	return ((vec1-vec2).length ())
 
 func boostControl () -> void:
 	# handles the boosting controls
@@ -271,16 +267,14 @@ func airProcess () -> void:
 	velocity1 = Vector2 (velocity1.x, velocity1.y+GRAVITY)
 
 	# get the angle of the point for the left and right floor raycasts
-	langle = -atan2 (LeftCast.get_collision_normal ().x, LeftCast.get_collision_normal ().y)-PI
-	langle = limitAngle (langle)
-	rangle = -atan2 (RightCast.get_collision_normal ().x, RightCast.get_collision_normal ().y)-PI
-	rangle = limitAngle (rangle)
+	langle = limitAngle (-atan2 (LeftCast.get_collision_normal ().x, LeftCast.get_collision_normal ().y)-PI)
+	rangle = limitAngle (-atan2 (RightCast.get_collision_normal ().x, RightCast.get_collision_normal ().y)-PI)
 
 	# calculate the average ground rotation (averaged between the points)
 	avgGRot = (langle+rangle)/2
 
 	# set a default avgGPoint
-	avgGPoint = Vector2 (-INF, -INF)
+	avgGPoint = Vector2.INF
 
 	# calculate the average ground point (the elifs are for cases where one
 	# raycast cannot find a collider)
@@ -292,9 +286,7 @@ func airProcess () -> void:
 		var RightCastPt = Vector2 (
 			RightCast.get_collision_point ().x-cos (rotation)*8,
 			RightCast.get_collision_point ().y-sin (rotation)*8)
-		avgGPoint = \
-		LeftCastPt if VecDist (position, LeftCastPt) < VecDist (position, RightCastPt) \
-		else RightCastPt
+		avgGPoint = (LeftCastPt if position.distance_to (LeftCastPt) < position.distance_to (RightCastPt) else RightCastPt)
 	elif LeftCast.is_colliding ():
 		text_label.text += "Left Collision"
 		avgGPoint = Vector2 (LeftCast.get_collision_point ().x+cos (rotation)*8, LeftCast.get_collision_point ().y+sin (rotation)*8)
@@ -317,7 +309,7 @@ func airProcess () -> void:
 
 	# handle collision with the ground
 	if abs (avgGPoint.y-position.y) < 21: #-velocity1.y
-	#if VecDist (avgGPoint, position) < 21:
+	#if avgGPoint.distance_to (position) < 21:
 #		print ("ground hit")
 		state = 0
 		rotation = avgGRot
@@ -377,25 +369,22 @@ func airProcess () -> void:
 	sprite1.rotation = lerp (sprite1.rotation, 0, 0.1)
 
 	# handle left and right sideways collision (respectively)
-	if LSideCast.is_colliding () and VecDist (LSideCast.get_collision_point (), position+velocity1) < 14 and velocity1.x < 0:
+	if LSideCast.is_colliding () and LSideCast.get_collision_point ().distance_to (position+velocity1) < 14 and velocity1.x < 0:
 		velocity1 = Vector2 (0, velocity1.y)
 		position = LSideCast.get_collision_point () + Vector2 (14, 0)
 		boosting = false
-	if RSideCast.is_colliding () and VecDist (RSideCast.get_collision_point (), position+velocity1) < 14 and velocity1.x > 0:
+	if RSideCast.is_colliding () and RSideCast.get_collision_point ().distance_to (position+velocity1) < 14 and velocity1.x > 0:
 		velocity1 = Vector2 (0, velocity1.y)
 		position = RSideCast.get_collision_point () - Vector2 (14, 0)
 		boosting = false
 
 	# top collision
-	if VecDist (avgTPoint, position+velocity1) < 21:
+	if avgTPoint.distance_to (position+velocity1) < 21:
 #		Vector2 (avgTPoint.x-20*sin (rotation), avgTPoint.y+20*cos (rotation))
 		velocity1 = Vector2 (velocity1.x, 0)
 
 	# render the sprites facing the correct direction
-	if velocity1.x < 0:
-		sprite1.flip_h = false
-	elif velocity1.x > 0:
-		sprite1.flip_h = true
+	sprite1.flip_h = (false if velocity1.x < 0 else true)
 
 	# Allow the player to change the duration of the jump by releasing the jump
 	# button early
@@ -467,11 +456,11 @@ func gndProcess () -> void:
 			gVel = 0
 
 	# left and right wall collision, respectively
-	if LSideCast.is_colliding () and VecDist (LSideCast.get_collision_point (), position) < 21 and gVel < 0:
+	if LSideCast.is_colliding () and LSideCast.get_collision_point ().distance_to (position) < 21 and gVel < 0:
 		gVel = 0
 		position = LSideCast.get_collision_point () + Vector2 (position.x-LSideCast.get_collision_point ().x, position.y-LSideCast.get_collision_point ().y).normalized ()*21
 		boosting = false
-	if RSideCast.is_colliding () and VecDist (RSideCast.get_collision_point (), position) < 21 and gVel > 0:
+	if RSideCast.is_colliding () and RSideCast.get_collision_point ().distance_to (position) < 21 and gVel > 0:
 		gVel = 0
 		position = RSideCast.get_collision_point () + Vector2 (position.x-RSideCast.get_collision_point ().x, position.y-RSideCast.get_collision_point ().y).normalized ()*21
 		boosting = false
@@ -481,7 +470,7 @@ func gndProcess () -> void:
 	velocity1 = Vector2 (cos (rotation)*gVel, sin (rotation)*gVel)
 
 	# enter the air state if you run off a ramp, or walk off a cliff, or something
-	if not VecDist (avgGPoint, position) < 21 or not (LeftCast.is_colliding () and RightCast.is_colliding ()):
+	if not avgGPoint.distance_to (position) < 21 or not (LeftCast.is_colliding () and RightCast.is_colliding ()):
 		state = -1
 		sprite1.rotation = rotation
 		rotation = 0
@@ -496,10 +485,7 @@ func gndProcess () -> void:
 		rolling = false
 
 	# ensure Sonic is facing the right direction
-	if gVel < 0:
-		sprite1.flip_h = false
-	elif gVel > 0:
-		sprite1.flip_h = true
+	sprite1.flip_h = (false if gVel < 0 else (true if gVel > 0 else sprite1.flip_h))
 
 	# set Sonic's sprite based on his ground velocity
 	# FIXME: Replace "magic numbers" here with variables, e.g. 0.02 with "walk_threshold"?
@@ -567,19 +553,13 @@ func gndProcess () -> void:
 	lRot = rotation
 	return
 
-var lastPos := Vector2.ZERO
-
-func _process (_delta) -> void:
-	if invincible > 0:
+func _physics_process (_delta) -> void:
+	# calculate Sonic's physics, controls, and all that fun stuff
+	if invincible > 0:	# Invincible? If so, run the counter down.
+		invincible -= 1
 		sprite1.modulate = Color (1, 1, 1, 1-(invincible % 30)/30.0)
 	else:
 		hurt = false
-	return
-
-func _physics_process (_delta) -> void:
-	# calculate Sonic's physics, controls, and all that fun stuff
-	if invincible > 0:
-		invincible -= 1
 	# reset using the dedicated reset button
 	if Input.is_action_pressed ('restart'):
 		resetGame ()
@@ -662,14 +642,14 @@ func _physics_process (_delta) -> void:
 	for i in range (0, TRAIL_LENGTH-1):
 		boostLine.points[i] = (boostLine.points[i+1]-velocity1+ (lastPos-position))
 	boostLine.points[TRAIL_LENGTH-1] = Vector2.ZERO
-	if stomping:
+	if (stomping):
 		boostLine.points[TRAIL_LENGTH-1] = Vector2 (0, 8)
 
 	# apply the character's velocity, no matter what state the player is in.
 	position = Vector2 (position.x+velocity1.x, position.y+velocity1.y)
 	lastPos = position
 
-	if parts:
+	if (parts):
 		for i in parts:
 			i.process_material.direction = Vector3 (velocity1.x, velocity1.y, 0)
 			i.process_material.initial_velocity = velocity1.length ()*20

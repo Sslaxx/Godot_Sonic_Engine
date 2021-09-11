@@ -4,12 +4,17 @@ extends Area2D
 
 export(String, 'layer 0', 'layer 1', 'toggle') var function = 'layer 0'
 
+func _ready () -> void:
+	helper_functions._whocares = self.connect ("area_entered", self, "_tripped")
+	return
+
 func _tripped (area) -> void:
 	if (area.name == 'Player'):
-		if (function == 'layer 0'):
-			area._layer0 (area)
-		if (function == 'layer 1'):
-			area._layer1 (area)
-		if (function == 'toggle'):
-			area._flipLayer (area)
+		match (function):
+			"layer 0":
+				area._layer0 (area)
+			"layer 1":
+				area._layer1 (area)
+			"toggle":
+				area._flipLayer (area)
 	return
