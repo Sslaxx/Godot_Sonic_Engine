@@ -1,6 +1,4 @@
-"""
-this script is for the bouncy-type rings that fly out of you when you get hit
-"""
+# this script is for the bouncy-type rings that fly out of you when you get hit
 
 extends Area2D
 
@@ -8,27 +6,20 @@ extends Area2D
 var collected := false
 
 # stores a reference to the raycast node
-var downCast
+onready var downCast = get_node ("DownCast")
 # holds a reference to the AnimatedSprite node for the ring
-var sprite
+onready var sprite = get_node ("AnimatedSprite")
 # holds a referene to the AudioStreamPlayer for the ring
-var audio
+onready var audio = get_node ("AudioStreamPlayer")
 
 # holds a reference to the boost bar
-var boostBar
+#var boostBar
 
 # timer variable to keep track of when the ring disappears.
 var collectionStartTimer = 120
 
 # represents the current velocity of the ring.
 export(Vector2) var velocity1 := Vector2.ZERO
-
-func _ready () -> void:
-	# grab all the relevent nodes on startup
-	sprite = get_node ("AnimatedSprite")
-	audio = get_node ("AudioStreamPlayer")
-	downCast = get_node ("DownCast")
-	return
 
 func _process (_delta) -> void:
 	# make the sprite invisible once the ring has been collected and

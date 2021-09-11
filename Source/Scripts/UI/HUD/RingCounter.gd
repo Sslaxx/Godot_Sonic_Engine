@@ -1,6 +1,4 @@
-"""
-controls the current ring count indicator
-"""
+# controls the current ring count indicator
 
 extends Control
 

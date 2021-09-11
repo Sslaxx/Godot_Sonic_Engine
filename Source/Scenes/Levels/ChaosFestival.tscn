@@ -113,16 +113,6 @@ scale_random = 1.0
 scale_curve = SubResource( 2 )
 color = Color( 0.0470588, 0.639216, 0.968627, 1 )
 
-[sub_resource type="Curve2D" id=8]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 29.2266, -6.94788, -187.895, 4.75683, 187.895, -4.75683, 407.395, 2.5658, -202.165, -4.75683, 202.165, 4.75683, 745.129, -228.14, -126.056, -95.1366, 126.056, 95.1366, 1144.7, -159.166, 42.8115, -128.434, -42.8115, 128.434, 1301.68, 307.003, 183.138, 49.9467, -183.138, -49.9467, 1056.7, 456.843, -71.3524, 187.895, 71.3524, -187.895, 878.322, 109.595, 0, 0, 0, 0, 1901.04, 19.2149 )
-}
-
-[sub_resource type="Curve2D" id=9]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 119.476, 58.3504, -115.817, 76.6173, 115.817, -76.6173, 549.873, -4.86755, 5.34539, 49.8903, -5.34539, -49.8903, 505.328, -548.316, -117.599, 39.1995, 117.599, -39.1995, 603.325, -742.532, -52.0449, -20.7631, 52.0449, 20.7631, 847.405, -741.708, -25.3903, -53.4813, 25.3903, 53.4813, 938.405, -648.208, -57.5, -1.5, 57.5, 1.5, 1042.41, -582.208 )
-}
-
 [sub_resource type="Gradient" id=10]
 offsets = PoolRealArray( 0, 0.768868, 1 )
 colors = PoolColorArray( 0.00784314, 0.121569, 0.180392, 1, 0.207, 0, 0.46, 1, 0.921569, 0.556863, 0, 1 )
@@ -160,6 +150,16 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 55.3032, -42.4971, -88.5848, -1.59801, 88.5848, 1.59801, 256.648, -41.6062, 93.8376, -1.33635, -93.8376, 1.33635, 287.83, -175.686, -98.2878, -3.53553, 98.2878, 3.53553, 321.238, -41.1608, 0, 0, 0, 0, 648.199, -39.5564 )
 }
 
+[sub_resource type="Curve2D" id=8]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 29.2266, -6.94788, -187.895, 4.75683, 187.895, -4.75683, 407.395, 2.5658, -202.165, -4.75683, 202.165, 4.75683, 745.129, -228.14, -126.056, -95.1366, 126.056, 95.1366, 1144.7, -159.166, 42.8115, -128.434, -42.8115, 128.434, 1301.68, 307.003, 183.138, 49.9467, -183.138, -49.9467, 1056.7, 456.843, -71.3524, 187.895, 71.3524, -187.895, 878.322, 109.595, 0, 0, 0, 0, 1901.04, 19.2149 )
+}
+
+[sub_resource type="Curve2D" id=9]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 119.476, 58.3504, -115.817, 76.6173, 115.817, -76.6173, 549.873, -4.86755, 5.34539, 49.8903, -5.34539, -49.8903, 505.328, -548.316, -117.599, 39.1995, 117.599, -39.1995, 603.325, -742.532, -52.0449, -20.7631, 52.0449, 20.7631, 847.405, -741.708, -25.3903, -53.4813, 25.3903, 53.4813, 938.405, -648.208, -57.5, -1.5, 57.5, 1.5, 1042.41, -582.208 )
+}
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
@@ -184,14 +184,6 @@ process_material = SubResource( 6 )
 [node name="Particles2D5" parent="Player" instance=ExtResource( 6 )]
 amount = 25
 process_material = SubResource( 7 )
-
-[node name="Rail" parent="." instance=ExtResource( 13 )]
-position = Vector2( 6658.96, -652.828 )
-curve = SubResource( 8 )
-
-[node name="Rail2" parent="." instance=ExtResource( 13 )]
-position = Vector2( 7759.59, -57.2917 )
-curve = SubResource( 9 )
 
 [node name="TileMap2" type="TileMap" parent="."]
 position = Vector2( 8, 0 )
@@ -474,7 +466,7 @@ shape = SubResource( 15 )
 
 [node name="Rails" type="Node" parent="."]
 
-[node name="Rail" parent="Rails" instance=ExtResource( 13 )]
+[node name="Rail1" parent="Rails" instance=ExtResource( 13 )]
 position = Vector2( -164.994, 0.44545 )
 curve = SubResource( 16 )
 
@@ -484,6 +476,14 @@ curve = SubResource( 17 )
 [node name="Rail3" parent="Rails" instance=ExtResource( 13 )]
 position = Vector2( 5160.16, -10.5665 )
 curve = SubResource( 18 )
+
+[node name="Rail4" parent="Rails" instance=ExtResource( 13 )]
+position = Vector2( 6658.96, -652.828 )
+curve = SubResource( 8 )
+
+[node name="Rail5" parent="Rails" instance=ExtResource( 13 )]
+position = Vector2( 7759.59, -57.2917 )
+curve = SubResource( 9 )
 
 [node name="Enemies" type="Node" parent="."]
 

@@ -92,34 +92,34 @@ var grindHeight = 16		# how high above the rail is the center of Sonic's sprite?
 
 # references to all the various raycasting nodes used for Sonic's collision with
 # the map
-var LeftCast
-var RightCast
-var LSideCast
-var RSideCast
-var LeftCastTop
-var RightCastTop
+onready var LeftCast = find_node ("LeftCast")
+onready var RightCast = find_node ("RightCast")
+onready var LSideCast = find_node ("LSideCast")
+onready var RSideCast = find_node ("RSideCast")
+onready var LeftCastTop = find_node ("LeftCastTop")
+onready var RightCastTop = find_node ("RightCastTop")
 
 # a reference to Sonic's physics collider
-var collider
+onready var collider = find_node ("playerCollider")
 
 # sonic's sprites/renderers
-var sprite1		# sonic's sprite
-var boostSprite	# the sprite that appears over sonic while boosting
-var boostLine	# the line renderer for boosting and stomping
+onready var sprite1 = find_node ("PlayerSprites")		# sonic's sprite
+onready var boostSprite = find_node ("BoostSprite")	# the sprite that appears over sonic while boosting
+onready var boostLine = find_node ("BoostLine")	# the line renderer for boosting and stomping
 
-var boostBar	# holds a reference to the boost UI bar
-var ringCounter	# holds a reference to the ring counter UI item
+onready var boostBar = get_node ("/root/Node2D/CanvasLayer/boostBar")	# holds a reference to the boost UI bar
+onready var ringCounter = get_node ("/root/Node2D/CanvasLayer/RingCounter")	# holds a reference to the ring counter UI item
 
-var boostSound	# the audio stream player with the boost sound
-var RailSound	# the audio stream player with the rail grinding sound
-var voiceSound	# the audio stream player with the character's voices
+onready var boostSound = find_node ("BoostSound")	# the audio stream player with the boost sound
+onready var RailSound = find_node ("RailSound")	# the audio stream player with the rail grinding sound
+onready var voiceSound = find_node ("Voice")	# the audio stream player with the character's voices
 
 # the minimum and maximum speed/pitch changes on the grinding sound
 var RAILSOUND_MINPITCH = 0.5
 var RAILSOUND_MAXPITCH = 2.0
 
-var cam			# a reference to the scene's camera
-var grindParticles	# a reference to the particle node for griding
+onready var cam = find_node ("Camera2D")
+onready var grindParticles = find_node ("GrindParticles")	# a reference to the particle node for griding
 
 var avgGPoint = Vector2.ZERO	#average Ground position between the two foot raycasts
 var avgTPoint = Vector2.ZERO	#average top position between the two head raycasts
@@ -138,43 +138,12 @@ var pgVel = 0	# the ground velocity during the previous frame
 var backLayer = false	# whether or not sonic is currently on the "back" layer
 
 func _ready () -> void:
-	# get all the raycast nodes
-	LeftCast = find_node ("LeftCast")
-	RightCast = find_node ("RightCast")
-	LSideCast = find_node ("LSideCast")
-	RSideCast = find_node ("RSideCast")
-	LeftCastTop = find_node ("LeftCastTop")
-	RightCastTop = find_node ("RightCastTop")
-
-	# get Sonic's collider
-	collider = find_node ("playerCollider")
-
-	# get the UI elements
-	boostBar = get_node ("/root/Node2D/CanvasLayer/boostBar")
-	ringCounter = get_node ("/root/Node2D/CanvasLayer/RingCounter")
-
-	# get sonic's sprite
-	sprite1 = find_node ("PlayerSprites")
-
-	# get the particle system for grinding fx
-	grindParticles = find_node ("GrindParticles")
-
-	# get the visual elements for boosting
-	boostSprite = find_node ("BoostSprite")
-	boostLine = find_node ("BoostLine")
-
-	# get the audio stream player nodes
-	boostSound = find_node ("BoostSound")
-	RailSound = find_node ("RailSound")
-	voiceSound = find_node ("Voice")
-
 	# put all child particle systems in parts except for the grind particles
 	for i in get_children ():
 		if i is Particles2D and not i == grindParticles:
 			parts.append (i)
 
 	# get the camera
-	cam = find_node ("Camera2D")
 
 	# get the debug label
 	text_label = find_node ("RichTextLabel")
@@ -192,7 +161,7 @@ func _ready () -> void:
 	return
 
 func limitAngle (ang:float) -> float:
-	"""Returns the given angle as an angle (in radians) between -PI and PI"""
+	# Returns the given angle as an angle (in radians) between -PI and PI
 	var sign1 := 1.0
 	if not ang == 0:
 		sign1 = ang/abs (ang)
@@ -201,9 +170,15 @@ func limitAngle (ang:float) -> float:
 		ang = (2*PI-abs (ang))*sign1*-1
 	return (ang)
 
+func _input (_event: InputEvent) -> void:
+	if (Input.is_action_just_pressed ("toggle_pause")):
+		# TODO: Crude and hacky but pausing works. Make it less crude and hacky!
+		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Node2D/CanvasLayer")
+	return
+
 func angleDist (rot1:float, rot2:float) -> float:
-	"""returns the angle distance between rot1 and rot2, even over the 360deg
-	mark (i.e. 350 and 10 will be 20 degrees apart)"""
+	# returns the angle distance between rot1 and rot2, even over the 360deg mark
+	# (i.e. 350 and 10 will be 20 degrees apart)
 	rot1 = limitAngle (rot1)
 	rot2 = limitAngle (rot2)
 	if abs (rot1-rot2) > PI and rot1>rot2:
@@ -213,12 +188,12 @@ func angleDist (rot1:float, rot2:float) -> float:
 	else:
 		return abs (rot1-rot2)
 
-func VecDist (vec1, vec2):
-	"""gets the distance between point vec1 and point vec2 (probably unnecessary)"""
+func VecDist (vec1, vec2) -> float:
+	# gets the distance between point vec1 and point vec2 (probably unnecessary)
 	return ((vec1-vec2).length ())
 
 func boostControl () -> void:
-	"""handles the boosting controls"""
+	# handles the boosting controls
 
 	if Input.is_action_just_pressed ("boost") and boostBar.boostAmount > 0:
 		# setup the boost when the player first presses the boost button
@@ -290,7 +265,7 @@ func boostControl () -> void:
 	return
 
 func airProcess () -> void:
-	"""handles physics while Sonic is in the air"""
+	# handles physics while Sonic is in the air
 
 	# apply gravity
 	velocity1 = Vector2 (velocity1.x, velocity1.y+GRAVITY)
@@ -448,7 +423,7 @@ func gndProcess () -> void:
 	# caluculate the average ground level based on the available colliders
 	if (LeftCast.is_colliding () and RightCast.is_colliding ()):
 		avgGPoint = Vector2 ((LeftCast.get_collision_point ().x+RightCast.get_collision_point ().x)/2, (LeftCast.get_collision_point ().y+RightCast.get_collision_point ().y)/2)
-		# ((acos (LeftCast.get_collision_normal ().y/1)+PI)+ (acos (RightCast.get_collision_normal ().y/1)+PI))/2
+		# ((acos (LeftCast.get_collision_normal ().y/1)+PI)+(acos (RightCast.get_collision_normal ().y/1)+PI))/2
 	elif LeftCast.is_colliding ():
 		avgGPoint = Vector2 (LeftCast.get_collision_point ().x+cos (rotation)*8, LeftCast.get_collision_point ().y+sin (rotation)*8)
 		avgGRot = langle
@@ -602,14 +577,15 @@ func _process (_delta) -> void:
 	return
 
 func _physics_process (_delta) -> void:
-	"""calculate Sonic's physics, controls, and all that fun stuff"""
+	# calculate Sonic's physics, controls, and all that fun stuff
 	if invincible > 0:
 		invincible -= 1
 	# reset using the dedicated reset button
 	if Input.is_action_pressed ('restart'):
 		resetGame ()
 		if get_tree ().reload_current_scene () != OK:
-			print ("ERROR: Could not reload current scene!")
+			printerr ("ERROR: Could not reload current scene!")
+			get_tree ().quit ()
 
 	grindParticles.emitting = grinding
 
@@ -739,7 +715,8 @@ func _on_DeathPlane_area_entered (area) -> void:
 	if self == area:
 		resetGame ()
 		if get_tree ().reload_current_scene () != OK:
-			print ("ERROR: Could not reload current scene!")
+			printerr ("ERROR: Could not reload current scene!")
+			get_tree ().quit ()
 	return
 
 func resetGame () -> void:
@@ -755,11 +732,9 @@ func _setVelocity (vel) -> void:
 	return
 
 func _on_Railgrind (area, curve, origin) -> void:
-	"""
-	this function is run whenever sonic hits a rail.
-	"""
+	# this function is run whenever sonic hits a rail.
 
-	# stick to the current rail if you're already grindin
+	# stick to the current rail if you're already grinding
 	if grinding:
 		return
 

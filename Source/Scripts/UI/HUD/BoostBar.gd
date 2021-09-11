@@ -1,6 +1,4 @@
-"""
-Used to control the boost bar UI
-"""
+# Used to control the boost bar UI
 
 extends Control
 
@@ -29,20 +27,18 @@ func _process (_delta) -> void:
 	else:
 		visualBar = boostAmount
 
-	# If infinite boost is enabled, keep boost amount at maximum.
-	boostAmount = (60 if infiniteBoost else boostAmount)
+	# Make sure boost mount is kept within 0 to 60. If infinite boost is enabled, keep boost amount at maximum.
+	boostAmount = (60.0 if infiniteBoost else clamp (boostAmount, 0.0, 60.0))
 
-	# Make sure boost mount is kept within 0 to 60.
-	boostAmount = clamp (boostAmount, 0, 60)
-
-	var index = 0
+	var index := 0
 	for i in barItems:
 		index+=1
-		var colorVal = floor (visualBar/20)+ (1 if floor (fmod (visualBar, 20)) > index else 0)
+		var colorVal = floor (visualBar/20)+(1 if floor (fmod (visualBar, 20)) > index else 0)
 		i.get_node ("TextureRect").rect_position.y = -24+8*colorVal
 		i.rect_scale.x = lerp (i.rect_scale.x, 2, 0.2)
 	return
 
-func changeBy (x) -> void:
+# Change the current boost amount.
+func changeBy (x:float) -> void:
 	boostAmount += x
 	return

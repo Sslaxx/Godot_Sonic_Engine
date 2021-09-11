@@ -1,14 +1,14 @@
 extends Node2D
 
 var initialVel := Vector2.ZERO
-var cVel = initialVel
+var cVel := initialVel
 
-export (float) var boostValue = 2
+export(float) var boostValue = 2
 
-var player
-var boostBar
+onready var player = get_node ("/root/Node2D/Player")
+onready var boostBar = get_node ("/root/Node2D/CanvasLayer/boostBar")
 
-var line 
+onready var line = get_node ("Line2D")
 var lineLength = 30
 
 var speed = 10
@@ -22,16 +22,11 @@ func _ready () -> void:
 	initialVel = Vector2 (random_helpers.RNG.randf ()-0.5, random_helpers.RNG.randf ()-0.5)
 	initialVel = initialVel.normalized () * speed
 
-	player = get_node ("/root/Node2D/Player")
-	boostBar = get_node ("/root/Node2D/CanvasLayer/boostBar")
-
-	line = get_node ("Line2D")
-
 	oPos = position
 	lPos = oPos
 
 	for i in range (lineLength):
-		line.points [i] = Vector2 (0, 0)
+		line.points [i] = Vector2.ZERO
 	return
 
 func _process (delta) -> void:
@@ -48,9 +43,9 @@ func _process (delta) -> void:
 	oPos += initialVel
 
 	for i in range (lineLength-1, 0, -1):
-		line.points [i] = line.points [i-1]- (position-lPos)
+		line.points [i] = line.points [i-1]-(position-lPos)
 
-	line.points [0] = Vector2 (0, 0)
+	line.points [0] = Vector2.ZERO
 
 	if (timer >= 1 && position.distance_to (player.position) <= speed):
 		boostBar.changeBy (boostValue)

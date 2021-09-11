@@ -13,16 +13,18 @@ export(bool) var _autoPlay = true
 var loopbackFlag := false
 
 # automatically play the track if "autoplay" is enabled
-func _ready():
+func _ready ():
 	if _autoPlay:
-		play(0)
+		play (0)
+	return
 
-func _process(_delta):
+func _process (_delta):
 	# set the loopback flag if we are in the loopable section
-	if get_playback_position() > loopbackTime:
+	if (get_playback_position () > loopbackTime):
 		loopbackFlag = true
 
 	# if the track loops back to the beginning, automatically 
 	# skip to the loopable section instead
-	if get_playback_position() < loopbackTime and loopbackFlag:
-		seek(loopbackTime)
+	if (get_playback_position () < loopbackTime and loopbackFlag):
+		seek (loopbackTime)
+	return

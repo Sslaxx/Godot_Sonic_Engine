@@ -44,6 +44,7 @@ func _ready () -> void:
 	)
 	$"options_tabholder/Options/btn_fullscreencheck".pressed = OS.window_fullscreen
 	$"btn_goback".grab_focus ()
+	raise ()
 	get_tree ().paused = true	# Pause the rest of the game while the options screen is visible.
 	return
 
