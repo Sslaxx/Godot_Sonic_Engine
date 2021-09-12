@@ -82,6 +82,12 @@ var trickingCanStop := false
 # Player's last position.
 var last_position := Vector2.ZERO
 
+# Speed thresholds for the player.
+export(float) var walk_threshold = 0.02
+export(float) var jog_threshold = 5/2
+export(float) var run_threshold = 10/2
+export(float) var fast_threshold = 12/2
+
 # flags and values for getting hurt
 var hurt := false
 var invincible := 0
@@ -133,13 +139,13 @@ var avgGRot := 0.0					# average ground rotation between the two foot raycasts
 var langle := 0.0					# the angle of the left foot raycast
 var rangle := 0.0					# the angle of the right foot raycast
 var lRot := 0.0						# Sonic's rotation during the last frame
-var startpos := Vector2.ZERO		# the position at which sonic starts the level
+var start_position := Vector2.ZERO		# the position at which sonic starts the level
 var startLayer := 0.0				# the layer on which sonic starts
 
 var player_velocity := Vector2.ZERO	# sonic's current velocity
 
-var gVel := 0.0		# the ground velocity
-var pgVel := 0.0	# the ground velocity during the previous frame
+var ground_velocity := 0.0		# the ground velocity
+var previous_ground_velocity := 0.0	# the ground velocity during the previous frame
 
 var backLayer := false	# whether or not sonic is currently on the "back" layer
 
@@ -153,7 +159,7 @@ func _ready () -> void:
 	text_label = find_node ("RichTextLabel")
 
 	# set the start position and layer
-	startpos = position
+	start_position = position
 	startLayer = collision_layer
 	setCollisionLayer (false)
 
@@ -233,7 +239,7 @@ func boostControl () -> void:
 			grindVel = BOOST_SPEED*(1 if sprite1.flip_h else -1)
 		elif state == 0:
 			# apply boost if you are on the ground
-			gVel = BOOST_SPEED*(1 if sprite1.flip_h else -1)
+			ground_velocity = BOOST_SPEED*(1 if sprite1.flip_h else -1)
 		elif angleDist (player_velocity.angle (), 0) < PI/3 or angleDist (player_velocity.angle (), PI) < PI/3:
 			# apply boost if you are in the air (and are not going straight up or down
 			player_velocity = player_velocity.normalized ()*BOOST_SPEED
@@ -319,7 +325,7 @@ func airProcess () -> void:
 		state = 0
 		rotation = avgGRot
 		sprite1.rotation = 0
-		gVel = sin (rotation)*(player_velocity.y+0.5)+cos (rotation)*player_velocity.x
+		ground_velocity = sin (rotation)*(player_velocity.y+0.5)+cos (rotation)*player_velocity.x
 
 		# play the stomp sound if you were stomping
 		if stomping:
@@ -429,48 +435,48 @@ func gndProcess () -> void:
 
 	if not rolling:
 		# handle rightward acceleration
-		if Input.is_action_pressed ("move right") and gVel < MAX_SPEED:
-			gVel = gVel + ACCELERATION
+		if Input.is_action_pressed ("move right") and ground_velocity < MAX_SPEED:
+			ground_velocity = ground_velocity + ACCELERATION
 			# "skid" mechanic, to more quickly accelerate when reversing
 			# (this makes Sonic feel more responsive)
-			if gVel < 0:
-				gVel = gVel + SKID_ACCEL
+			if ground_velocity < 0:
+				ground_velocity = ground_velocity + SKID_ACCEL
 
 		# handle leftward acceleration
-		elif Input.is_action_pressed ("move left") and gVel > -MAX_SPEED:
-			gVel = gVel - ACCELERATION
+		elif Input.is_action_pressed ("move left") and ground_velocity > -MAX_SPEED:
+			ground_velocity = ground_velocity - ACCELERATION
 
 			# "skid" mechanic (see rightward section)
-			if gVel > 0:
-				gVel = gVel - SKID_ACCEL
+			if ground_velocity > 0:
+				ground_velocity = ground_velocity - SKID_ACCEL
 		else:
 			# general deceleration and stopping if no key is pressed
 			# declines at a constant rate
-			if not gVel == 0:
-				gVel -= SPEED_DECAY*(gVel/abs (gVel))
-			if abs (gVel) < SPEED_DECAY*1.5:
-				gVel = 0
+			if not ground_velocity == 0:
+				ground_velocity -= SPEED_DECAY*(ground_velocity/abs (ground_velocity))
+			if abs (ground_velocity) < SPEED_DECAY*1.5:
+				ground_velocity = 0
 	else:
 		# general deceleration and stopping if no key is pressed
 		# declines at a constant rate
-		if not gVel == 0:
-			gVel -= SPEED_DECAY*(gVel/abs (gVel))*0.3
-		if abs (gVel) < SPEED_DECAY*1.5:
-			gVel = 0
+		if not ground_velocity == 0:
+			ground_velocity -= SPEED_DECAY*(ground_velocity/abs (ground_velocity))*0.3
+		if abs (ground_velocity) < SPEED_DECAY*1.5:
+			ground_velocity = 0
 
 	# left and right wall collision, respectively
-	if LSideCast.is_colliding () and LSideCast.get_collision_point ().distance_to (position) < 21 and gVel < 0:
-		gVel = 0
+	if LSideCast.is_colliding () and LSideCast.get_collision_point ().distance_to (position) < 21 and ground_velocity < 0:
+		ground_velocity = 0
 		position = LSideCast.get_collision_point () + Vector2 (position.x-LSideCast.get_collision_point ().x, position.y-LSideCast.get_collision_point ().y).normalized ()*21
 		boosting = false
-	if RSideCast.is_colliding () and RSideCast.get_collision_point ().distance_to (position) < 21 and gVel > 0:
-		gVel = 0
+	if RSideCast.is_colliding () and RSideCast.get_collision_point ().distance_to (position) < 21 and ground_velocity > 0:
+		ground_velocity = 0
 		position = RSideCast.get_collision_point () + Vector2 (position.x-RSideCast.get_collision_point ().x, position.y-RSideCast.get_collision_point ().y).normalized ()*21
 		boosting = false
 
 	# apply gravity if you are on a slope, and apply the ground velocity
-	gVel += sin (rotation)*GRAVITY
-	player_velocity = Vector2 (cos (rotation)*gVel, sin (rotation)*gVel)
+	ground_velocity += sin (rotation)*GRAVITY
+	player_velocity = Vector2 (cos (rotation)*ground_velocity, sin (rotation)*ground_velocity)
 
 	# enter the air state if you run off a ramp, or walk off a cliff, or something
 	if not avgGPoint.distance_to (position) < 21 or not (LeftCast.is_colliding () and RightCast.is_colliding ()):
@@ -480,7 +486,7 @@ func gndProcess () -> void:
 		rolling = false
 
 	# fall off of walls if you aren't going fast enough
-	if abs (rotation) >= PI/3 and (abs (gVel) < 0.2 or (not gVel == 0 and not pgVel == 0 and not gVel/abs (gVel) == pgVel/abs (pgVel))):
+	if abs (rotation) >= PI/3 and (abs (ground_velocity) < 0.2 or (not ground_velocity == 0 and not previous_ground_velocity == 0 and not ground_velocity/abs (ground_velocity) == previous_ground_velocity/abs (previous_ground_velocity))):
 		state = -1
 		sprite1.rotation = rotation
 		rotation = 0
@@ -488,29 +494,28 @@ func gndProcess () -> void:
 		rolling = false
 
 	# set Sonic's sprite based on his ground velocity
-	# FIXME: Replace "magic numbers" here with variables, e.g. 0.02 with "walk_threshold"?
 	if not rolling:
-		if abs (gVel) > 12/2:
+		if abs (ground_velocity) > fast_threshold:
 			sprite1.animation = "Run4"
-		elif abs (gVel) > 10/2:
+		elif abs (ground_velocity) > run_threshold:
 			sprite1.animation = "Run3"
-		elif abs (gVel) > 5/2:
+		elif abs (ground_velocity) > jog_threshold:
 			sprite1.animation = "Run2"
-		elif abs (gVel) > 0.02:
+		elif abs (ground_velocity) > walk_threshold:
 			sprite1.animation = "Walk"
 		elif not crouching:
 			sprite1.animation = "idle"
 	else:
 		sprite1.animation = "Roll"
 
-	if abs (gVel) > 0.02:
+	if abs (ground_velocity) > walk_threshold:
 		crouching = false
 		sprite1.speed_scale = 1
 	else:
-		gVel = 0
+		ground_velocity = 0
 		rolling = false
 
-	if Input.is_action_pressed ("ui_down") and abs (gVel) <= 0.02:
+	if Input.is_action_pressed ("ui_down") and abs (ground_velocity) <= walk_threshold:
 		crouching = true
 		sprite1.animation = "Crouch"
 		sprite1.speed_scale = 1
@@ -544,12 +549,12 @@ func gndProcess () -> void:
 		sprite1.animation = "Spindash"
 		sprite1.speed_scale = 1
 		if not Input.is_action_pressed ("ui_down"):
-			gVel = 15 *(1 if sprite1.flip_h else -1)
+			ground_velocity = 15*(1 if sprite1.flip_h else -1)
 			spindashing = false
 			rolling = true
 
 	# set the previous ground velocity and last rotation for next frame
-	pgVel = gVel
+	previous_ground_velocity = ground_velocity
 	lRot = rotation
 	return
 
@@ -706,7 +711,7 @@ func resetGame () -> void:
 	# reset your position and state if you pull a dimps (fall out of the world)
 	player_velocity = Vector2.ZERO
 	state = -1
-	position = startpos
+	position = start_position
 	setCollisionLayer (false)
 	return
 
