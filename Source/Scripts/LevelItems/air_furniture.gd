@@ -25,7 +25,7 @@ func _on_Area2D_area_entered (area) -> void:
 		var launchVector := Vector2 (0, -STRENGTH).rotated (rotation)
 
 		# calculate how fast sonic is moving perpendicularly to the spring
-		var sideVector = area.velocity1.dot (launchVector.normalized ().rotated (PI/2))\
+		var sideVector = area.player_velocity.dot (launchVector.normalized ().rotated (PI/2))\
 				*launchVector.normalized ().rotated (PI/2)
 
 		# calculate the final vector to throw sonic in. Ignore sideVector if 
@@ -39,7 +39,7 @@ func _on_Area2D_area_entered (area) -> void:
 			print ("finalVector: ", finalVector)
 
 		# set sonic's velocity to the final vector
-		area.velocity1 = finalVector
+		area.player_velocity = finalVector
 		# set sonic to the air state
 		area.state = -1
 		# Sonic didn't jump here...
