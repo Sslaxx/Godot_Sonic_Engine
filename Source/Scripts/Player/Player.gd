@@ -85,6 +85,9 @@ var lastPos := Vector2.ZERO
 var hurt := false
 var invincible = 0
 
+# Movement strength/direction.
+var movement_direction := 0.0
+
 # grinding values.
 var grindPos := Vector2.ZERO	# the origin position of the currently grinded rail
 var grindOffset := 0.0		# how far along the rail (in pixels) is sonic?
@@ -174,6 +177,7 @@ func _input (_event: InputEvent) -> void:
 	if (Input.is_action_just_pressed ("toggle_pause")):
 		# TODO: Crude and hacky but pausing works. Make it less crude and hacky!
 		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Node2D/CanvasLayer")
+	movement_direction = (Input.get_action_strength ("move right")-Input.get_action_strength("move left"))
 	return
 
 func angleDist (rot1:float, rot2:float) -> float:
@@ -326,10 +330,11 @@ func airProcess () -> void:
 		return
 
 	# air-based movement (using the arrow keys)
-	if Input.is_action_pressed ("move right") and velocity1.x < 16:
-		velocity1 = Vector2 (velocity1.x+AIR_ACCEL, velocity1.y)
-	elif Input.is_action_pressed ("move left") and velocity1.x > -16:
-		velocity1 = Vector2 (velocity1.x-AIR_ACCEL, velocity1.y)
+	#if Input.is_action_pressed ("move right") and velocity1.x < 16:
+	#	velocity1 = Vector2 (velocity1.x+AIR_ACCEL, velocity1.y)
+	#elif Input.is_action_pressed ("move left") and velocity1.x > -16:
+#		velocity1 = Vector2 (velocity1.x-AIR_ACCEL, velocity1.y)
+	velocity1 = Vector2 (velocity1.x-AIR_ACCEL * movement_direction, velocity1.y)
 
 	### STOMPING CONTROLS ###
 
@@ -382,9 +387,6 @@ func airProcess () -> void:
 	if avgTPoint.distance_to (position+velocity1) < 21:
 #		Vector2 (avgTPoint.x-20*sin (rotation), avgTPoint.y+20*cos (rotation))
 		velocity1 = Vector2 (velocity1.x, 0)
-
-	# render the sprites facing the correct direction
-	sprite1.flip_h = (false if velocity1.x < 0 else true)
 
 	# Allow the player to change the duration of the jump by releasing the jump
 	# button early
@@ -484,9 +486,6 @@ func gndProcess () -> void:
 		position = Vector2 (position.x-sin (rotation)*2, position.y+cos (rotation)*2)
 		rolling = false
 
-	# ensure Sonic is facing the right direction
-	sprite1.flip_h = (false if gVel < 0 else (true if gVel > 0 else sprite1.flip_h))
-
 	# set Sonic's sprite based on his ground velocity
 	# FIXME: Replace "magic numbers" here with variables, e.g. 0.02 with "walk_threshold"?
 	if not rolling:
@@ -571,7 +570,6 @@ func _physics_process (_delta) -> void:
 
 	# run the correct function based on the current air/ground state
 	if grinding:
-
 		if tricking:
 			sprite1.animation = "railTrick"
 			sprite1.speed_scale = 1
@@ -654,6 +652,10 @@ func _physics_process (_delta) -> void:
 			i.process_material.direction = Vector3 (velocity1.x, velocity1.y, 0)
 			i.process_material.initial_velocity = velocity1.length ()*20
 			i.rotation = -rotation
+
+	# ensure Sonic is facing the right direction
+	sprite1.flip_h = (false if velocity1.x < 0.0 else (true if velocity1.x > 0.0 else sprite1.flip_h))
+
 	return
 
 func setCollisionLayer (value) -> void:

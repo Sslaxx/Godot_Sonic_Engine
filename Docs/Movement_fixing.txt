@@ -2,6 +2,8 @@ HOW DO YOU MOVE?
 
 Direction movement is determined by the strength of the direction. The strength of the direction is from -1 for left, to 1 for right. Use the sign of the strength to determine the actual direction, and the strength to determine the degree of movement.
 
-Use the sign of the strength of movement to determine which way the character faces.
+Ala speed = (movement * direction strength) * sign of direction
+
+Use the sign of the strength of movement to determine which way the character faces, with 0 being "leave facing direction as-is".
 
 Order of movement should be: Movement -> Input -> Processing -> Movement -> ...
