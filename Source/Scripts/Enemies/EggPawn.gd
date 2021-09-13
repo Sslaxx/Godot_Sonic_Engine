@@ -13,7 +13,7 @@ var alive := true
 export(int) var hits_left = 1
 
 # keeps track of the pawn's velocity once it has "exploded"
-var splodeVel := Vector2.ZERO
+var explode_velocity := Vector2.ZERO
 
 # keeps a reference to the audio stream player for the explosion sound
 onready var boomSound = get_node ("BoomSound")
@@ -29,9 +29,9 @@ func _process (delta) -> void:
 	else:
 		# calculations for the explosion animation. 
 		# Applies velocity, rotates, and then applies gravity
-		position += splodeVel
+		position += explode_velocity
 		rotation += 0.1
-		splodeVel.y += 0.2
+		explode_velocity.y += 0.2
 	return
 
 func _on_EggPawn_area_entered (area) -> void:
@@ -42,7 +42,7 @@ func _on_EggPawn_area_entered (area) -> void:
 			area.hurt_player ()
 		elif (area.state == -1):
 			# if it is attacking from the air, bounce it back up a bit 
-			area.velocity1.y = -5
+			area.player_velocity.y = -5
 		if (area.isAttacking ()):
 #			get_node ("/root/Node2D/CanvasLayer/boostBar").changeBy (2)
 			var newNode = boostParticle.instance ()
@@ -54,9 +54,9 @@ func _on_EggPawn_area_entered (area) -> void:
 		alive = false
 
 		# set the velocity to match Sonic's speed, with a few constraints
-		splodeVel = area.get ("velocity1")*1.5
-		splodeVel.y = min (splodeVel.y, 10)
-		splodeVel.y -= 7
+		explode_velocity = area.get ("player_velocity") * 1.5
+		explode_velocity.y = min (explode_velocity.y, 10)
+		explode_velocity.y -= 7
 
 		# play the explosion sfx
 		boomSound.play ()

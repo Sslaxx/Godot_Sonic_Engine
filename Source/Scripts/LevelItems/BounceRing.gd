@@ -19,7 +19,7 @@ onready var audio = get_node ("AudioStreamPlayer")
 var collectionStartTimer = 120
 
 # represents the current velocity of the ring.
-export(Vector2) var velocity1 := Vector2.ZERO
+export(Vector2) var ring_velocity := Vector2.ZERO
 
 func _process (_delta) -> void:
 	# make the sprite invisible once the ring has been collected and
@@ -36,13 +36,13 @@ func _physics_process (_delta) -> void:
 	if not collected:
 		# bounce on relevent ground nodes
 		if downCast.is_colliding () and downCast.get_collision_point ().y < position.y + 16:
-			velocity1.y *= -1
+			ring_velocity.y *= -1
 
 		# add gravity
-		velocity1.y += 0.02
+		ring_velocity.y += 0.02
 
 		# apply velocity 
-		position += velocity1
+		position += ring_velocity
 
 	# once the timer gets to a certain point, start flashing the ring sprite
 	if collectionStartTimer < -900:
