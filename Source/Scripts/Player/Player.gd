@@ -337,12 +337,8 @@ func airProcess () -> void:
 #		return
 
 	# air-based movement
-#	if movement_direction > 0 and player_velocity.x < 16:
-#		player_velocity = Vector2 (player_velocity.x+AIR_ACCEL, player_velocity.y)
-#	elif movement_direction < 0 and player_velocity.x > -16:
-#		player_velocity = Vector2 (player_velocity.x-AIR_ACCEL, player_velocity.y)
-	print (movement_direction)
-	player_velocity = Vector2 (player_velocity.x+(AIR_ACCEL * (0.0 if (movement_direction > -1 && movement_direction < 1) else sign (movement_direction))), player_velocity.y)
+	if (abs (player_velocity.x) < 16):
+		player_velocity = Vector2 (player_velocity.x+(AIR_ACCEL * (0.0 if (movement_direction > -1 && movement_direction < 1) else sign (movement_direction))), player_velocity.y)
 
 	### STOMPING CONTROLS ###
 
