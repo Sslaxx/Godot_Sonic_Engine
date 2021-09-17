@@ -3,7 +3,7 @@
 [ext_resource path="res://Scripts/LevelItems/Ring.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/LevelItems/Rings_sparkle.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Graphics/LevelItems/Rings.png" type="Texture" id=3]
-[ext_resource path="res://Assets/Audio/Sound/ring.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Audio/Sound/LevelItems/ring.ogg" type="AudioStream" id=4]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
@@ -87,7 +87,7 @@ script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 16 )
-frame = 1
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
