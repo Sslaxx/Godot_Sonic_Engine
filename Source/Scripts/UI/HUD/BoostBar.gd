@@ -27,7 +27,7 @@ func _process (_delta) -> void:
 	else:
 		visualBar = boostAmount
 
-	# Make sure boost mount is kept within 0 to 60. If infinite boost is enabled, keep boost amount at maximum.
+	# Make sure boost amount is kept within 0 to 60. If infinite boost is enabled, keep boost amount at maximum.
 	boostAmount = (60.0 if infiniteBoost else clamp (boostAmount, 0.0, 60.0))
 
 	var index := 0
@@ -39,6 +39,6 @@ func _process (_delta) -> void:
 	return
 
 # Change the current boost amount.
-func changeBy (x:float) -> void:
-	boostAmount += x
+func changeBy (value:float) -> void:
+	boostAmount += value
 	return

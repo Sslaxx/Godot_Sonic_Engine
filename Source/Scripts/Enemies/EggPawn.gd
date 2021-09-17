@@ -24,8 +24,8 @@ func _ready () -> void:
 
 func _process (delta) -> void:
 	if (alive):
-		# a stupid simple AI routine. Simply move x by -delta pixels per frame
-		position.x -= abs (delta)
+		# a stupid simple AI routine. Simply move x by pixels per frame
+		position.x -= abs (random_helpers.RNG.randf_range (delta, 0.1))
 	else:
 		# calculations for the explosion animation. 
 		# Applies velocity, rotates, and then applies gravity
@@ -45,6 +45,9 @@ func _on_EggPawn_area_entered (area) -> void:
 			area.player_velocity.y = -5
 		if (area.isAttacking ()):
 #			get_node ("/root/Node2D/CanvasLayer/boostBar").changeBy (2)
+			hits_left = hits_left - 1
+			if (hits_left > 0):
+				return
 			var newNode = boostParticle.instance ()
 			newNode.position = position
 			newNode.boostValue = 2

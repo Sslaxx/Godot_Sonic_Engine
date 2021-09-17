@@ -25,12 +25,12 @@ func _on_Area2D_area_entered (area) -> void:
 		var launchVector := Vector2 (0, -STRENGTH).rotated (rotation)
 
 		# calculate how fast sonic is moving perpendicularly to the spring
-		var sideVector = area.player_velocity.dot (launchVector.normalized ().rotated (PI/2))\
-				*launchVector.normalized ().rotated (PI/2)
+		var sideVector = (Vector2.ZERO if DIRECTED else area.player_velocity.dot (launchVector.normalized ().rotated (PI/2))\
+				*launchVector.normalized ().rotated (PI/2))
 
 		# calculate the final vector to throw sonic in. Ignore sideVector if 
 		# the spring is directed
-		var finalVector := (Vector2.ZERO if DIRECTED else sideVector) + launchVector
+		var finalVector = sideVector + launchVector
 
 		# print out the values for debugging
 		if (OS.is_debug_build ()):
