@@ -684,15 +684,15 @@ func _flipLayer (_body) -> void:
 	setCollisionLayer (not backLayer)
 	return # replace with function body
 
-func _layer0 (area) -> void:
+func _layer0 (_area) -> void:
 	# explicitly set the collision layer to 0
-	print ("layer0", area.name)
+#	print ("layer0", area.name)
 	setCollisionLayer (false)
 	return # replace with function body
 
-func _layer1 (area) -> void:
+func _layer1 (_area) -> void:
 	# explicitly set the collision layer to 1
-	print ("layer1", area.name)
+#	print ("layer1", area.name)
 	setCollisionLayer (true)
 	return # replace with function body
 

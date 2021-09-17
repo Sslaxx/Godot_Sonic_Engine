@@ -5,10 +5,10 @@ extends Area2D
 export(String, 'layer 0', 'layer 1', 'toggle') var function = 'layer 0'
 
 func _ready () -> void:
-	helper_functions._whocares = self.connect ("area_entered", self, "_tripped")
+	helper_functions._whocares = self.connect ("area_entered", self, "_on_LayerSwitch_area_entered")
 	return
 
-func _tripped (area) -> void:
+func _on_LayerSwitch_area_entered (area) -> void:
 	if (area.name == 'Player'):
 		match (function):
 			"layer 0":
