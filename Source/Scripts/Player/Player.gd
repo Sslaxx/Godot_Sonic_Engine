@@ -184,7 +184,7 @@ func _input (_event: InputEvent) -> void:
 	if (Input.is_action_just_pressed ("toggle_pause")):
 		# TODO: Crude and hacky but pausing works. Make it less crude and hacky!
 		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Node2D/CanvasLayer")
-	movement_direction = (Input.get_action_strength ("move right")-Input.get_action_strength("move left"))
+	movement_direction = (Input.get_action_strength ("move_right") - Input.get_action_strength ("move_left"))
 	return
 
 func angleDist (rot1:float, rot2:float) -> float:
@@ -332,16 +332,17 @@ func airProcess () -> void:
 			boostSound.stream = stomp_land_sfx
 			boostSound.play ()
 			stomping = false
-	else:
+#	else:
 #		print ("GROUND MISS: %s" % str (avgGPoint))
-		return
+#		return
 
-	# air-based movement (using the arrow keys)
-	#if Input.is_action_pressed ("move right") and player_velocity.x < 16:
-	#	player_velocity = Vector2 (player_velocity.x+AIR_ACCEL, player_velocity.y)
-	#elif Input.is_action_pressed ("move left") and player_velocity.x > -16:
+	# air-based movement
+#	if movement_direction > 0 and player_velocity.x < 16:
+#		player_velocity = Vector2 (player_velocity.x+AIR_ACCEL, player_velocity.y)
+#	elif movement_direction < 0 and player_velocity.x > -16:
 #		player_velocity = Vector2 (player_velocity.x-AIR_ACCEL, player_velocity.y)
-	player_velocity = Vector2 (player_velocity.x-AIR_ACCEL * movement_direction, player_velocity.y)
+	print (movement_direction)
+	player_velocity = Vector2 (player_velocity.x+(AIR_ACCEL * (0.0 if (movement_direction > -1 && movement_direction < 1) else sign (movement_direction))), player_velocity.y)
 
 	### STOMPING CONTROLS ###
 
@@ -367,7 +368,7 @@ func airProcess () -> void:
 		player_velocity = Vector2 (max (-MAX_STOMP_XVEL, min (MAX_STOMP_XVEL, player_velocity.x)), STOMP_SPEED)
 
 		# make sure that the boost sprite is not visible
-		boostSprite.visible = false;
+		boostSprite.visible = false
 
 		# manage the boost line
 		boostLine.visible = true
@@ -435,7 +436,7 @@ func gndProcess () -> void:
 
 	if not rolling:
 		# handle rightward acceleration
-		if Input.is_action_pressed ("move right") and ground_velocity < MAX_SPEED:
+		if movement_direction > 0 and ground_velocity < MAX_SPEED:
 			ground_velocity = ground_velocity + ACCELERATION
 			# "skid" mechanic, to more quickly accelerate when reversing
 			# (this makes Sonic feel more responsive)
@@ -443,7 +444,7 @@ func gndProcess () -> void:
 				ground_velocity = ground_velocity + SKID_ACCEL
 
 		# handle leftward acceleration
-		elif Input.is_action_pressed ("move left") and ground_velocity > -MAX_SPEED:
+		elif movement_direction < 0 and ground_velocity > -MAX_SPEED:
 			ground_velocity = ground_velocity - ACCELERATION
 
 			# "skid" mechanic (see rightward section)
