@@ -40,21 +40,23 @@ func _on_EggPawn_area_entered (area) -> void:
 		# if the player isn't attacking (boosting or jumping) hurt the player
 		if (not area.isAttacking ()):
 			area.hurt_player ()
+			return
 		elif (area.state == -1):
 			# if it is attacking from the air, bounce it back up a bit 
 			area.player_velocity.y = -5
 		if (area.isAttacking ()):
+			# Been hit, take damage.
 #			get_node ("/root/Node2D/CanvasLayer/boostBar").changeBy (2)
 			hits_left = hits_left - 1
-			if (hits_left > 0):
+			if (hits_left > 0):	# More than one hit remaining means the enemy survives.
 				return
-			var newNode = boostParticle.instance ()
-			newNode.position = position
-			newNode.boostValue = 2
-			get_node ("/root/Node2D").add_child (newNode)
 
 		# this robot is dead...
 		alive = false
+		var newNode = boostParticle.instance ()
+		newNode.position = position
+		newNode.boostValue = 2
+		get_node ("/root/Node2D").add_child (newNode)
 
 		# set the velocity to match Sonic's speed, with a few constraints
 		explode_velocity = area.get ("player_velocity") * 1.5
