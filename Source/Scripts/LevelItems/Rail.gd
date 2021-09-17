@@ -8,6 +8,7 @@ onready var line = get_node ("Line2D")
 onready var coll = get_node ("Area2D/CollisionPolygon2D")
 
 func _ready () -> void:
+	helper_functions._whocares = $"Area2D".connect ("area_entered", self, "_on_Area2D_area_entered")
 	# set the line points for rendering 
 	line.points = curve.get_baked_points ()
 
@@ -32,4 +33,5 @@ func _on_Area2D_area_entered (area) -> void:
 	# know it should be grinding now.
 	if (area.name == "Player"):
 		area._on_Railgrind (area, curve, global_position)
+		area.rotation = 0.0
 	return

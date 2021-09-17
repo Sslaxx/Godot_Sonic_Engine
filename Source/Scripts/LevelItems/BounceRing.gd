@@ -58,6 +58,6 @@ func _on_Ring_area_entered (area) -> void:
 	if not collected and area.name == "Player" and collectionStartTimer <= 0:
 		collected = true					# set collected to true
 		sprite.animation = "Sparkle"		# set the animation to the sparkle
-		audio.play ();						# play the ring sfx
+		audio.play ()						# play the ring sfx
 		get_node ("/root/Node2D/CanvasLayer/RingCounter").addRing ()	# add a ring to the total
 	return
