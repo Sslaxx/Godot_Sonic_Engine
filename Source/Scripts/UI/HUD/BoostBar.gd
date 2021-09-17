@@ -22,7 +22,7 @@ func _ready () -> void:
 
 func _process (_delta) -> void:
 	if (visualBar < boostAmount and visualBar <= 60):
-		visualBar += 0.5;
+		visualBar += 0.5
 		barItems [floor (fmod (visualBar-2, 20))].rect_scale.x = 4
 	else:
 		visualBar = boostAmount
