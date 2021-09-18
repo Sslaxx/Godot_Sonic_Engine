@@ -18,6 +18,7 @@ var boostBar
 func _process (_delta) -> void:
 	if (collected and sprite.animation == "Sparkle" and sprite.frame >= 6):
 		visible = false
+		queue_free ()
 	return
 
 func _on_Ring_area_entered (area) -> void:
