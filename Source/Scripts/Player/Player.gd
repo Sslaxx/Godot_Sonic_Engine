@@ -534,6 +534,7 @@ func gndProcess () -> void:
 			sprite1.animation = "Roll"
 			canShort = true
 			rolling = false
+			sound_player.play_sound ("player_jump")
 	else:
 		canShort = false
 
