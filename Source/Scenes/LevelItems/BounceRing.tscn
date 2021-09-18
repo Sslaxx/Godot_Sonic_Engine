@@ -1,7 +1,7 @@
 [gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scripts/LevelItems/BounceRing.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Graphics/LevelItems/Rings_sparkle.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Graphics/Effects/Sparkle.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Graphics/LevelItems/Rings.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Audio/Sound/LevelItems/ring.ogg" type="AudioStream" id=4]
 

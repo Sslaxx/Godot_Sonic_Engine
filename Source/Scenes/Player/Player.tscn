@@ -361,7 +361,7 @@ visible = false
 modulate = Color( 1, 1, 1, 0.78451 )
 light_mask = 0
 frames = SubResource( 29 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="BoostSound" type="AudioStreamPlayer" parent="."]

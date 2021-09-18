@@ -33,10 +33,7 @@ func _on_Area2D_area_entered (area) -> void:
 		var finalVector = sideVector + launchVector
 
 		# print out the values for debugging
-		if (OS.is_debug_build ()):
-			print ("sideVector: ", sideVector)
-			print ("launchVector: ", launchVector)
-			print ("finalVector: ", finalVector)
+		print_debug ("sideVector: ", sideVector, " launchVector: ", launchVector, " finalVector: ", finalVector)
 
 		# set sonic's velocity to the final vector
 		area.player_velocity = finalVector

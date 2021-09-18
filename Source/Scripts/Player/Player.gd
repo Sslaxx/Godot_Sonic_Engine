@@ -320,8 +320,7 @@ func airProcess () -> void:
 
 	# handle collision with the ground
 	if abs (avgGPoint.y-position.y) < 21: #-player_velocity.y
-	#if avgGPoint.distance_to (position) < 21:
-#		print ("ground hit")
+		print_debug ("Ground hit at ", position)
 		state = 0
 		rotation = avgGRot
 		sprite1.rotation = 0
@@ -332,13 +331,10 @@ func airProcess () -> void:
 			boostSound.stream = stomp_land_sfx
 			boostSound.play ()
 			stomping = false
-#	else:
-#		print ("GROUND MISS: %s" % str (avgGPoint))
-#		return
 
 	# air-based movement
 	if (abs (player_velocity.x) < 16):
-		player_velocity = Vector2 (player_velocity.x+(AIR_ACCEL * (0.0 if (movement_direction > -1 && movement_direction < 1) else sign (movement_direction))), player_velocity.y)
+		player_velocity = Vector2 (player_velocity.x+(AIR_ACCEL * movement_direction), player_velocity.y)
 
 	### STOMPING CONTROLS ###
 
@@ -684,15 +680,15 @@ func _flipLayer (_body) -> void:
 	setCollisionLayer (not backLayer)
 	return # replace with function body
 
-func _layer0 (_area) -> void:
+func _layer0 (area) -> void:
 	# explicitly set the collision layer to 0
-#	print ("layer0", area.name)
+	print_debug ("layer0: ", area.name)
 	setCollisionLayer (false)
 	return # replace with function body
 
-func _layer1 (_area) -> void:
+func _layer1 (area) -> void:
 	# explicitly set the collision layer to 1
-#	print ("layer1", area.name)
+	print_debug ("layer1: ", area.name)
 	setCollisionLayer (true)
 	return # replace with function body
 
