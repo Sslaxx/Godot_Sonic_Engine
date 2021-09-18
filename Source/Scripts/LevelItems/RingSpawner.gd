@@ -41,6 +41,10 @@ func _process (_delta) -> void:
 		placeRings ()
 		if (not pposList == posList):
 			update ()
+	else:
+		# During the game, if there're no rings left parented to the spawner, delete it.
+		if (get_child_count () < 1):
+			queue_free ()
 	return
 
 # draw the circles for the rings
