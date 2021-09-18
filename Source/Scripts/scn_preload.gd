@@ -7,5 +7,6 @@ extends Node2D
 
 func _ready () -> void:
 	config_helper.load_config ()
+	sound_player.add_sound_to_library ("res://Assets/Audio/Sound/Player/jump.ogg", "player_jump")
 	helper_functions._whocares = helper_functions.change_scene ("res://Scenes/UI/main_menu.tscn")
 	return
