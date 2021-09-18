@@ -15,9 +15,9 @@
 [ext_resource path="res://Assets/Graphics/Effects/Boost/sonic_boost_0.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Graphics/Player/Sonic/sonic_run4_5.png" type="Texture" id=14]
 [ext_resource path="res://Assets/Graphics/Effects/Boost/sonic_boost_3.png" type="Texture" id=15]
-[ext_resource path="res://Assets/Audio/Sound/stomping.ogg" type="AudioStream" id=16]
-[ext_resource path="res://Assets/Audio/Sound/Boost.ogg" type="AudioStream" id=17]
-[ext_resource path="res://Assets/Audio/Sound/stomping_land.ogg" type="AudioStream" id=18]
+[ext_resource path="res://Assets/Audio/Sound/Player/stomping.ogg" type="AudioStream" id=16]
+[ext_resource path="res://Assets/Audio/Sound/Player/Boost.ogg" type="AudioStream" id=17]
+[ext_resource path="res://Assets/Audio/Sound/Player/stomping_land.ogg" type="AudioStream" id=18]
 [ext_resource path="res://Scripts/Player/Player.gd" type="Script" id=19]
 [ext_resource path="res://Assets/Graphics/Player/Sonic/sonic_run2_6.png" type="Texture" id=20]
 [ext_resource path="res://Assets/Graphics/Player/Sonic/Sonic_run31.png" type="Texture" id=21]
@@ -52,57 +52,117 @@
 [ext_resource path="res://Assets/Graphics/Player/Sonic/Sonic_run35.png" type="Texture" id=50]
 [ext_resource path="res://Assets/Graphics/Player/Sonic/Sonic_run36.png" type="Texture" id=51]
 [ext_resource path="res://Assets/Graphics/Player/Sonic/Sonic_run37.png" type="Texture" id=52]
-[ext_resource path="res://Assets/Audio/Sound/rail.ogg" type="AudioStream" id=53]
+[ext_resource path="res://Assets/Audio/Sound/LevelItems/rail.ogg" type="AudioStream" id=53]
 [ext_resource path="res://Assets/Graphics/Player/Sonic/hurt.png" type="Texture" id=54]
 [ext_resource path="res://Scenes/LevelItems/BounceRing.tscn" type="PackedScene" id=55]
 [ext_resource path="res://Assets/Graphics/Player/Sonic/railFlip.png" type="Texture" id=56]
 [ext_resource path="res://Scenes/Player/BoostParticle.tscn" type="PackedScene" id=57]
 [ext_resource path="res://Scripts/Player/voices.gd" type="Script" id=58]
-[ext_resource path="res://Assets/Audio/Sound/Sonic/Hurt/08_V_SNC_007_b.ogg" type="AudioStream" id=59]
-[ext_resource path="res://Assets/Audio/Sound/Sonic/Effort/14_V_SNC_013_a.ogg" type="AudioStream" id=60]
-[ext_resource path="res://Assets/Audio/Sound/Sonic/Hurt/07_V_SNC_006_a.ogg" type="AudioStream" id=61]
-[ext_resource path="res://Assets/Audio/Sound/Sonic/Effort/18_V_SNC_033_c.ogg" type="AudioStream" id=62]
-[ext_resource path="res://Assets/Audio/Sound/Sonic/Hurt/21_V_SNC_035_c.ogg" type="AudioStream" id=63]
-[ext_resource path="res://Assets/Audio/Sound/Sonic/Effort/01_V_SNC_002_a.ogg" type="AudioStream" id=64]
-[ext_resource path="res://Assets/Audio/Sound/Sonic/Effort/01_V_SNC_000_b.ogg" type="AudioStream" id=65]
-[ext_resource path="res://Assets/Audio/Sound/Sonic/Hurt/16_V_SNC_030_b.ogg" type="AudioStream" id=66]
-[ext_resource path="res://Assets/Audio/Sound/Sonic/Hurt/08_V_SNC_008_c.ogg" type="AudioStream" id=67]
+[ext_resource path="res://Assets/Audio/Sound/Player/Sonic/Hurt/08_V_SNC_007_b.ogg" type="AudioStream" id=59]
+[ext_resource path="res://Assets/Audio/Sound/Player/Sonic/Effort/14_V_SNC_013_a.ogg" type="AudioStream" id=60]
+[ext_resource path="res://Assets/Audio/Sound/Player/Sonic/Hurt/07_V_SNC_006_a.ogg" type="AudioStream" id=61]
+[ext_resource path="res://Assets/Audio/Sound/Player/Sonic/Effort/18_V_SNC_033_c.ogg" type="AudioStream" id=62]
+[ext_resource path="res://Assets/Audio/Sound/Player/Sonic/Hurt/21_V_SNC_035_c.ogg" type="AudioStream" id=63]
+[ext_resource path="res://Assets/Audio/Sound/Player/Sonic/Effort/01_V_SNC_002_a.ogg" type="AudioStream" id=64]
+[ext_resource path="res://Assets/Audio/Sound/Player/Sonic/Effort/01_V_SNC_000_b.ogg" type="AudioStream" id=65]
+[ext_resource path="res://Assets/Audio/Sound/Player/Sonic/Hurt/16_V_SNC_030_b.ogg" type="AudioStream" id=66]
+[ext_resource path="res://Assets/Audio/Sound/Player/Sonic/Hurt/08_V_SNC_008_c.ogg" type="AudioStream" id=67]
 
-[sub_resource type="CapsuleShape2D" id=20]
+[sub_resource type="CapsuleShape2D" id=1]
 
-[sub_resource type="AtlasTexture" id=21]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 54 )
 region = Rect2( 0, 0, 40, 40 )
 
-[sub_resource type="AtlasTexture" id=22]
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 54 )
 region = Rect2( 40, 0, 40, 40 )
 
-[sub_resource type="AtlasTexture" id=23]
+[sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 54 )
 region = Rect2( 80, 0, 40, 40 )
 
-[sub_resource type="AtlasTexture" id=24]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 54 )
 region = Rect2( 120, 0, 40, 40 )
 
-[sub_resource type="AtlasTexture" id=25]
+[sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 54 )
 region = Rect2( 160, 0, 40, 40 )
 
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 6 )
+region = Rect2( 40, 0, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 6 )
+region = Rect2( 80, 0, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 6 )
+region = Rect2( 120, 0, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 4 )
+region = Rect2( 120, 0, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 4 )
+region = Rect2( 80, 0, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 4 )
+region = Rect2( 40, 0, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 56 )
+region = Rect2( 0, 0, 40, 45 )
+
 [sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 56 )
+region = Rect2( 40, 0, 40, 45 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 56 )
+region = Rect2( 80, 0, 40, 45 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 56 )
+region = Rect2( 120, 0, 40, 45 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 56 )
+region = Rect2( 160, 0, 40, 45 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 56 )
+region = Rect2( 200, 0, 40, 45 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 56 )
+region = Rect2( 240, 0, 40, 45 )
+
+[sub_resource type="AtlasTexture" id=22]
 atlas = ExtResource( 11 )
 region = Rect2( 0, 0, 40, 40 )
 
-[sub_resource type="AtlasTexture" id=17]
+[sub_resource type="AtlasTexture" id=23]
 atlas = ExtResource( 11 )
 region = Rect2( 40, 0, 40, 40 )
 
-[sub_resource type="AtlasTexture" id=18]
+[sub_resource type="AtlasTexture" id=24]
 atlas = ExtResource( 11 )
 region = Rect2( 120, 0, 40, 40 )
 
-[sub_resource type="AtlasTexture" id=19]
+[sub_resource type="AtlasTexture" id=25]
 atlas = ExtResource( 11 )
 region = Rect2( 80, 0, 40, 40 )
 
@@ -110,94 +170,24 @@ region = Rect2( 80, 0, 40, 40 )
 atlas = ExtResource( 12 )
 region = Rect2( 33, 0, 33, 35 )
 
-[sub_resource type="AtlasTexture" id=27]
-atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 40, 40 )
-
-[sub_resource type="AtlasTexture" id=28]
-atlas = ExtResource( 6 )
-region = Rect2( 40, 0, 40, 40 )
-
-[sub_resource type="AtlasTexture" id=29]
-atlas = ExtResource( 6 )
-region = Rect2( 80, 0, 40, 40 )
-
-[sub_resource type="AtlasTexture" id=30]
-atlas = ExtResource( 6 )
-region = Rect2( 120, 0, 40, 40 )
-
-[sub_resource type="AtlasTexture" id=31]
-atlas = ExtResource( 4 )
-region = Rect2( 120, 0, 40, 40 )
-
-[sub_resource type="AtlasTexture" id=32]
-atlas = ExtResource( 4 )
-region = Rect2( 80, 0, 40, 40 )
-
-[sub_resource type="AtlasTexture" id=33]
-atlas = ExtResource( 4 )
-region = Rect2( 40, 0, 40, 40 )
-
-[sub_resource type="AtlasTexture" id=34]
-atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 40, 40 )
-
-[sub_resource type="AtlasTexture" id=35]
-atlas = ExtResource( 56 )
-region = Rect2( 0, 0, 40, 45 )
-
-[sub_resource type="AtlasTexture" id=36]
-atlas = ExtResource( 56 )
-region = Rect2( 40, 0, 40, 45 )
-
-[sub_resource type="AtlasTexture" id=37]
-atlas = ExtResource( 56 )
-region = Rect2( 80, 0, 40, 45 )
-
-[sub_resource type="AtlasTexture" id=38]
-atlas = ExtResource( 56 )
-region = Rect2( 120, 0, 40, 45 )
-
-[sub_resource type="AtlasTexture" id=39]
-atlas = ExtResource( 56 )
-region = Rect2( 160, 0, 40, 45 )
-
-[sub_resource type="AtlasTexture" id=40]
-atlas = ExtResource( 56 )
-region = Rect2( 200, 0, 40, 45 )
-
-[sub_resource type="AtlasTexture" id=41]
-atlas = ExtResource( 56 )
-region = Rect2( 240, 0, 40, 45 )
-
-[sub_resource type="SpriteFrames" id=42]
+[sub_resource type="SpriteFrames" id=27]
 animations = [ {
 "frames": [ ExtResource( 40 ), ExtResource( 46 ), ExtResource( 38 ), ExtResource( 42 ), ExtResource( 39 ), ExtResource( 32 ), ExtResource( 25 ), ExtResource( 33 ) ],
 "loop": true,
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ) ],
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
 "loop": false,
 "name": "hurt",
 "speed": 10.0
-}, {
-"frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 18 ), SubResource( 17 ), SubResource( 16 ) ],
-"loop": true,
-"name": "Crouch",
-"speed": 10.0
-}, {
-"frames": [ SubResource( 26 ) ],
-"loop": true,
-"name": "Grind",
-"speed": 5.0
 }, {
 "frames": [ ExtResource( 49 ), ExtResource( 10 ), ExtResource( 7 ), ExtResource( 3 ), ExtResource( 9 ), ExtResource( 14 ), ExtResource( 5 ), ExtResource( 1 ) ],
 "loop": true,
 "name": "Run4",
 "speed": 26.0
 }, {
-"frames": [ SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ) ],
+"frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
 "loop": true,
 "name": "Roll",
 "speed": 16.0
@@ -212,12 +202,12 @@ animations = [ {
 "name": "Run2",
 "speed": 15.0
 }, {
-"frames": [ SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ) ],
+"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
 "loop": true,
 "name": "Spindash",
 "speed": 15.0
 }, {
-"frames": [ SubResource( 35 ), SubResource( 36 ), SubResource( 37 ), SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), SubResource( 41 ) ],
+"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ) ],
 "loop": true,
 "name": "railTrick",
 "speed": 20.0
@@ -226,13 +216,23 @@ animations = [ {
 "loop": true,
 "name": "Walk",
 "speed": 8.0
+}, {
+"frames": [ SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 24 ), SubResource( 23 ), SubResource( 22 ) ],
+"loop": true,
+"name": "Crouch",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 26 ) ],
+"loop": true,
+"name": "Grind",
+"speed": 5.0
 } ]
 
-[sub_resource type="Gradient" id=43]
+[sub_resource type="Gradient" id=28]
 offsets = PoolRealArray( 0.0927152, 0.390728 )
 colors = PoolColorArray( 0.00990295, 0.0960615, 0.230469, 0, 0, 0.320313, 1, 1 )
 
-[sub_resource type="SpriteFrames" id=44]
+[sub_resource type="SpriteFrames" id=29]
 animations = [ {
 "frames": [ ExtResource( 13 ), ExtResource( 8 ), ExtResource( 2 ), ExtResource( 15 ) ],
 "loop": true,
@@ -240,20 +240,20 @@ animations = [ {
 "speed": 25.0
 } ]
 
-[sub_resource type="Gradient" id=45]
+[sub_resource type="Gradient" id=30]
 offsets = PoolRealArray( 0, 0.0180723, 0.46988 )
 colors = PoolColorArray( 0.99295, 1, 0.871094, 1, 0.945313, 1, 0, 1, 1, 0, 0, 1 )
 
-[sub_resource type="GradientTexture" id=46]
-gradient = SubResource( 45 )
+[sub_resource type="GradientTexture" id=31]
+gradient = SubResource( 30 )
 
-[sub_resource type="Curve" id=47]
+[sub_resource type="Curve" id=32]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0899471, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.374359, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=48]
-curve = SubResource( 47 )
+[sub_resource type="CurveTexture" id=33]
+curve = SubResource( 32 )
 
-[sub_resource type="ParticlesMaterial" id=49]
+[sub_resource type="ParticlesMaterial" id=34]
 lifetime_randomness = 1.0
 trail_divisor = 3
 flag_align_y = true
@@ -269,8 +269,8 @@ damping = 90.38
 damping_random = 1.0
 scale = 4.0
 scale_random = 1.0
-scale_curve = SubResource( 48 )
-color_ramp = SubResource( 46 )
+scale_curve = SubResource( 33 )
+color_ramp = SubResource( 31 )
 
 [node name="Player" type="Area2D"]
 collision_layer = 4
@@ -285,7 +285,7 @@ SKID_ACCEL = 0.1
 JUMP_VELOCITY = 4.0
 
 [node name="playerCollider" type="CollisionShape2D" parent="."]
-shape = SubResource( 20 )
+shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -1.05945 )
@@ -312,9 +312,8 @@ __meta__ = {
 }
 
 [node name="PlayerSprites" type="AnimatedSprite" parent="."]
-frames = SubResource( 42 )
+frames = SubResource( 27 )
 animation = "idle"
-frame = 1
 playing = true
 flip_h = true
 
@@ -353,7 +352,7 @@ z_index = -2
 points = PoolVector2Array( 0, 0, -200, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 width = 20.0
 default_color = Color( 0.4, 0.501961, 1, 0 )
-gradient = SubResource( 43 )
+gradient = SubResource( 28 )
 texture_mode = 4124
 joint_mode = 2
 
@@ -361,7 +360,8 @@ joint_mode = 2
 visible = false
 modulate = Color( 1, 1, 1, 0.78451 )
 light_mask = 0
-frames = SubResource( 44 )
+frames = SubResource( 29 )
+frame = 1
 playing = true
 
 [node name="BoostSound" type="AudioStreamPlayer" parent="."]
@@ -380,7 +380,7 @@ position = Vector2( 1.38243, 13.8875 )
 amount = 500
 randomness = 1.0
 local_coords = false
-process_material = SubResource( 49 )
+process_material = SubResource( 34 )
 
 [node name="Voice" type="AudioStreamPlayer2D" parent="."]
 bus = "SFX"

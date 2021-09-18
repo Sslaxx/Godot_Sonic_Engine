@@ -15,6 +15,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Flow Engine"
+config/description="Open-source recreation of Sonic-styled physics."
 run/main_scene="res://Scenes/scn_preload.tscn"
 boot_splash/fullsize=false
 boot_splash/use_filter=false

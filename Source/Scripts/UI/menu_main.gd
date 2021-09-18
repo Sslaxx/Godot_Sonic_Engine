@@ -17,7 +17,6 @@ func _ready () -> void:
 # Starts a new game!
 func btnNewGame_on_press () -> void:
 	helper_functions._whocares = helper_functions.change_scene ("res://Scenes/Levels/ChaosFestival.tscn")
-	print ("TODO")
 	return
 
 ### btnOptions_on_press
