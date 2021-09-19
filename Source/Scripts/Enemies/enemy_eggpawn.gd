@@ -1,22 +1,7 @@
 # this is the controller script for the basic egg pawn enemy. It is currently
 # pretty basic, but I'll probably update it a bit more later
 
-extends Area2D
-
-export(PackedScene) var boostParticle
-
-# is the egg pawn alive?
-var alive := true
-
-# How many hits does the enemy have left before being destroyed?
-# TODO: Set this up!
-export(int) var hits_left = 1
-
-# keeps track of the pawn's velocity once it has "exploded"
-var explode_velocity := Vector2.ZERO
-
-# keeps a reference to the audio stream player for the explosion sound
-onready var boomSound = get_node ("BoomSound")
+extends "res://Scripts/Enemies/enemy_generic.gd"
 
 func _ready () -> void:
 	helper_functions._whocares = self.connect ("area_entered", self, "_on_EggPawn_area_entered")
