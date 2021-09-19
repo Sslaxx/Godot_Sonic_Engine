@@ -6,6 +6,7 @@
 [ext_resource path="res://Scenes/UI/HUD/RingCounter.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/UI/HUD/BoostBar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/LevelItems/Rail.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/LevelItems/DeathPlane.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Assets/Graphics/Tiles/leafStorm.tres" type="TileSet" id=50]
 [ext_resource path="res://Assets/Audio/Music/JehJehRocket.ogg" type="AudioStream" id=51]
 [ext_resource path="res://Assets/Graphics/Backgrounds/back.png" type="Texture" id=52]
@@ -77,15 +78,12 @@ extents = Vector2( 32, 32 )
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 32, 32 )
 
-[sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 10000, 64 )
-
-[sub_resource type="Curve2D" id=9]
+[sub_resource type="Curve2D" id=8]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 8.15796, -68.1965, -170.859, -2.66968, 170.859, 2.66968, 288.474, -65.5269, -49.3891, 30.7013, 49.3891, -30.7013, 504.718, -313.807, -177.534, 1.33484, 177.534, -1.33484, 675.579, -343.174, -90.7691, -37.3755, 90.7691, 37.3755, 818.406, -98.8978, 0, 0, 0, 0, 1152.12, -73.5359 )
 }
 
-[sub_resource type="Curve2D" id=10]
+[sub_resource type="Curve2D" id=9]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, -2656.84, -339.234, -429.921, -22.6274, 429.921, 22.6274, -1751.75, -435.401, -169.706, -42.4264, 169.706, 42.4264, -954.131, -226.097, -441.235, -113.137, 441.235, 113.137, -51.8643, -47.9061, -197.99, 0, 197.99, 0, 380.885, 362.216, 0, 0, 0, 0, 912.629, 359.387 )
 }
@@ -241,14 +239,6 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LayerSwitches/Layer1-3"]
 shape = SubResource( 6 )
 
-[node name="DeathPlane" type="Area2D" parent="."]
-position = Vector2( 4024.73, 1986.99 )
-collision_layer = 1048575
-collision_mask = 1048575
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathPlane"]
-shape = SubResource( 8 )
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 51 )
 autoplay = true
@@ -282,11 +272,11 @@ DIRECTED = true
 
 [node name="Rail" parent="." instance=ExtResource( 6 )]
 position = Vector2( 3008.69, 286.934 )
-curve = SubResource( 9 )
+curve = SubResource( 8 )
 
 [node name="Rail2" parent="Rail" instance=ExtResource( 6 )]
 position = Vector2( 3845.88, -7.41382 )
-curve = SubResource( 10 )
+curve = SubResource( 9 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -294,6 +284,9 @@ curve = SubResource( 10 )
 
 [node name="boostBar" parent="CanvasLayer" instance=ExtResource( 5 )]
 infiniteBoost = true
+
+[node name="DeathPlane" parent="." instance=ExtResource( 7 )]
+position = Vector2( 4024.73, 1986.99 )
 
 [connection signal="area_entered" from="LayerSwitches/Flipper-2" to="Player" method="_flipLayer"]
 [connection signal="area_entered" from="LayerSwitches/Flipper-3" to="Player" method="_flipLayer"]
@@ -307,4 +300,3 @@ infiniteBoost = true
 [connection signal="area_entered" from="LayerSwitches/Layer1-2" to="Player" method="_layer1"]
 [connection signal="area_entered" from="LayerSwitches/Layer1-4" to="Player" method="_layer1"]
 [connection signal="area_entered" from="LayerSwitches/Layer1-3" to="Player" method="_layer1"]
-[connection signal="area_entered" from="DeathPlane" to="Player" method="_on_DeathPlane_area_entered"]

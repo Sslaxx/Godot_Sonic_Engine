@@ -1,12 +1,9 @@
-# this is the controller script for the basic egg pawn enemy. It is currently
-# pretty basic, but I'll probably update it a bit more later
+# this is the controller script for the basic egg pawn enemy. It is currently pretty basic, but I'll probably update it a bit
+# more later
 
 extends "res://Scripts/Enemies/enemy_generic.gd"
 
-func _ready () -> void:
-	helper_functions._whocares = self.connect ("area_entered", self, "_on_EggPawn_area_entered")
-	return
-
+# The basic pawn is updated every frame.
 func _process (delta) -> void:
 	if (alive):
 		# a stupid simple AI routine. Simply move x by pixels per frame
@@ -17,11 +14,14 @@ func _process (delta) -> void:
 		position += explode_velocity
 		rotation += 0.1
 		explode_velocity.y += 0.2
+		if (explode_velocity.y > 10):	# After a certain point, free them.
+			queue_free ()
 	return
 
-func _on_EggPawn_area_entered (area) -> void:
+# Something has hit the pawn?
+func _on_enemy_area_entered (area) -> void:
 	# if the player collides with this egg pawn
-	if (area.name == "Player" and alive):
+	if (area.name == "Player" && alive):
 		# if the player isn't attacking (boosting or jumping) hurt the player
 		if (not area.isAttacking ()):
 			area.hurt_player ()
