@@ -6,6 +6,7 @@
 [ext_resource path="res://Assets/Graphics/Backgrounds/Festival/Castle.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Graphics/Backgrounds/Festival/Villa.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/LevelItems/FallingParticles.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/LevelItems/DeathPlane.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scripts/AudioPlayer.gd" type="Script" id=9]
 [ext_resource path="res://Scenes/UI/HUD/LevelUILayout.tscn" type="PackedScene" id=15]
 
@@ -121,9 +122,6 @@ colors = PoolColorArray( 0.00784314, 0.121569, 0.180392, 1, 0.207, 0, 0.46, 1, 0
 gradient = SubResource( 10 )
 width = 128
 
-[sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 9000, 100 )
-
 [node name="Node2D" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
@@ -231,14 +229,6 @@ rotation = -1.5708
 scale = Vector2( 2.5, 1000 )
 texture = SubResource( 11 )
 
-[node name="DeathPlane" type="Area2D" parent="."]
-position = Vector2( 4321.7, 489.486 )
-collision_layer = 1048575
-collision_mask = 1048575
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathPlane"]
-shape = SubResource( 12 )
-
 [node name="CanvasLayer" parent="." instance=ExtResource( 15 )]
 
-[connection signal="area_entered" from="DeathPlane" to="Player" method="_on_DeathPlane_area_entered"]
+[node name="DeathPlane" parent="." instance=ExtResource( 7 )]
