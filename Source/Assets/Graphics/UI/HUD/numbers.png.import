@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/RingCount.png-62ed9d610e15d439b0d77e5a9a4648d6.stex"
+path="res://.import/numbers.png-fc0052924566e80824553a33a8bdfa70.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/UI/RingCount.png"
-dest_files=[ "res://.import/RingCount.png-62ed9d610e15d439b0d77e5a9a4648d6.stex" ]
+source_file="res://Assets/Graphics/UI/HUD/numbers.png"
+dest_files=[ "res://.import/numbers.png-fc0052924566e80824553a33a8bdfa70.stex" ]
 
 [params]
 

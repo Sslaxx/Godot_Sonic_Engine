@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/BoostBar.png-b0247a16c9c2a66a9e786866955234a7.stex"
+path="res://.import/RingCount.png-4ba7dd5ba7004de6e28b207f3cd2bcb6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/UI/BoostBar.png"
-dest_files=[ "res://.import/BoostBar.png-b0247a16c9c2a66a9e786866955234a7.stex" ]
+source_file="res://Assets/Graphics/UI/HUD/RingCount.png"
+dest_files=[ "res://.import/RingCount.png-4ba7dd5ba7004de6e28b207f3cd2bcb6.stex" ]
 
 [params]
 
