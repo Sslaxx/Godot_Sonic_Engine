@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/numbers.png-1cf6bd80eca6ab3b3cdda0b99d8840c1.stex"
+path="res://.import/BoostBar.png-cb870d7b41975fb91e4a89d0701f37f8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/UI/numbers.png"
-dest_files=[ "res://.import/numbers.png-1cf6bd80eca6ab3b3cdda0b99d8840c1.stex" ]
+source_file="res://Assets/Graphics/UI/HUD/BoostBar.png"
+dest_files=[ "res://.import/BoostBar.png-cb870d7b41975fb91e4a89d0701f37f8.stex" ]
 
 [params]
 

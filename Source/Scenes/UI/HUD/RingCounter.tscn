@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Assets/Graphics/UI/numbers.png" type="Texture" id=1]
-[ext_resource path="res://Assets/Graphics/UI/RingCount.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Graphics/UI/HUD/numbers.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Graphics/UI/HUD/RingCount.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/UI/HUD/RingCounter.gd" type="Script" id=3]
 
 [node name="RingCounter" type="TextureRect"]

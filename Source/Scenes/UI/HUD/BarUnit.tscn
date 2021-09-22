@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Assets/Graphics/UI/BoostBar.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Graphics/UI/HUD/BoostBar.png" type="Texture" id=1]
 
 [node name="Unit" type="Control"]
 anchor_top = 1.0
