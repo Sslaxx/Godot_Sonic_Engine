@@ -5,11 +5,11 @@ export(Array, AudioStream) var hurt
 export(Array, AudioStream) var effort
 
 func play_hurt():
-	stream = hurt[floor(hurt.size()*random_helpers.RNG.randf())]
-	play(0)
+	stream = hurt [floor (hurt.size ()*random_helpers.RNG.randf ())]
+	play (0)
 	return
 
 func play_effort():
-	stream = effort[floor(effort.size()*random_helpers.RNG.randf())]
-	play(0)
+	stream = effort [floor (effort.size ()*random_helpers.RNG.randf ())]
+	play (0)
 	return

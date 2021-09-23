@@ -430,8 +430,7 @@ func _physics_process (_delta) -> void:
 			+Vector2.UP*grindHeight*cos (rotation)+Vector2.RIGHT*grindHeight*sin (rotation)\
 			+grindPos
 
-		RailSound.pitch_scale = lerp (RAILSOUND_MINPITCH, RAILSOUND_MAXPITCH, \
-			abs (grindVel)/BOOST_SPEED)
+		RailSound.pitch_scale = lerp (RAILSOUND_MINPITCH, RAILSOUND_MAXPITCH, abs (grindVel)/BOOST_SPEED)
 		grindVel += sin (rotation)*GRAVITY
 
 		if dirVec.length () < 0.5 or \
