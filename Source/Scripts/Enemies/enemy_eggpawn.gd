@@ -49,5 +49,5 @@ func _on_enemy_area_entered (area) -> void:
 		explode_velocity.y -= 7
 
 		# play the explosion sfx
-		boomSound.play ()
+		sound_player.play_sound ("enemy_boom")
 	return

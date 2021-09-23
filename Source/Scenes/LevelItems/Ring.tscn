@@ -1,9 +1,8 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scripts/LevelItems/Ring.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/Effects/Sparkle.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Graphics/LevelItems/Rings.png" type="Texture" id=3]
-[ext_resource path="res://Assets/Audio/Sound/LevelItems/ring.ogg" type="AudioStream" id=4]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
@@ -92,9 +91,5 @@ playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 17 )
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
-bus = "SFX"
 
 [connection signal="area_entered" from="." to="." method="_on_Ring_area_entered"]

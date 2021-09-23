@@ -110,15 +110,15 @@ onready var collider = find_node ("playerCollider")
 
 # the player's sprites/renderers
 onready var player_sprite = find_node ("PlayerSprites")		# the player's sprite
-onready var boostSprite = find_node ("BoostSprite")	# the sprite that appears over the player while boosting
-onready var boostLine = find_node ("BoostLine")	# the line renderer for boosting and stomping
+onready var boostSprite = find_node ("BoostSprite")			# the sprite that appears over the player while boosting
+onready var boostLine = find_node ("BoostLine")				# the line renderer for boosting and stomping
 
-onready var boostBar = get_node ("/root/Node2D/CanvasLayer/boostBar")	# holds a reference to the boost UI bar
+onready var boostBar = get_node ("/root/Node2D/CanvasLayer/boostBar")		# holds a reference to the boost UI bar
 onready var ringCounter = get_node ("/root/Node2D/CanvasLayer/RingCounter")	# holds a reference to the ring counter UI item
 
-onready var boostSound = find_node ("BoostSound")	# the audio stream player with the boost sound
-onready var RailSound = find_node ("RailSound")	# the audio stream player with the rail grinding sound
-onready var voiceSound = find_node ("Voice")	# the audio stream player with the character's voices
+onready var boostSound = find_node ("sound_boost")	# the audio stream player with the boost sound
+onready var RailSound = find_node ("sound_rail")	# the audio stream player with the rail grinding sound
+onready var voiceSound = find_node ("sound_voice")	# the audio stream player with the character's voices
 
 # the minimum and maximum speed/pitch changes on the grinding sound
 var RAILSOUND_MINPITCH = 0.5

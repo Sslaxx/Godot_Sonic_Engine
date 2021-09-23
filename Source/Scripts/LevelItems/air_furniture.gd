@@ -18,7 +18,7 @@ func _ready () -> void:
 	return
 
 func _on_Area2D_area_entered (area) -> void:
-	# if the player collides with the spring
+	# if the player collides
 	if area.name == "Player":
 
 		# calculate what vector to launch Sonic in
@@ -41,9 +41,9 @@ func _on_Area2D_area_entered (area) -> void:
 		area.state = -1
 		# Sonic didn't jump here...
 		area.canShort = false
-		# set Sonic's position to the spring's position
+		# set Sonic's position to this position
 		area.position = position
-		# if sonic stomped on to the spring, he is no longer stomping
+		# if sonic stomped on it, he is no longer stomping
 		area.stomping = false
 
 		# set sonic's sprite rotation to Sonic's rotation
@@ -51,11 +51,11 @@ func _on_Area2D_area_entered (area) -> void:
 		# reset sonic's rotation (this is typically how sonic works in the air)
 		area.rotation = 0
 
-		# set the spring's current animation frame to 0
+		# set the current animation frame to 0
 		animation.frame = 0
-		# play the spring sound
+		# play the sound
 		sound.play ()
-		# scale the spring (only applies if "ringScale" is enabled)
+		# scale it (only applies if "ringScale" is enabled)
 		scaling = 2
 	return
 

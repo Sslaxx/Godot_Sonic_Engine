@@ -71,84 +71,84 @@
 [sub_resource type="CapsuleShape2D" id=1]
 
 [sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 54 )
-region = Rect2( 0, 0, 40, 40 )
+atlas = ExtResource( 4 )
+region = Rect2( 120, 0, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 54 )
-region = Rect2( 40, 0, 40, 40 )
-
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 54 )
+atlas = ExtResource( 4 )
 region = Rect2( 80, 0, 40, 40 )
 
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 4 )
+region = Rect2( 40, 0, 40, 40 )
+
 [sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 54 )
-region = Rect2( 120, 0, 40, 40 )
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 54 )
-region = Rect2( 160, 0, 40, 40 )
+region = Rect2( 0, 0, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 40, 40 )
+atlas = ExtResource( 54 )
+region = Rect2( 40, 0, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 6 )
-region = Rect2( 40, 0, 40, 40 )
+atlas = ExtResource( 54 )
+region = Rect2( 80, 0, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 6 )
-region = Rect2( 80, 0, 40, 40 )
+atlas = ExtResource( 54 )
+region = Rect2( 120, 0, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 6 )
-region = Rect2( 120, 0, 40, 40 )
+atlas = ExtResource( 54 )
+region = Rect2( 160, 0, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 4 )
-region = Rect2( 120, 0, 40, 40 )
-
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 4 )
-region = Rect2( 80, 0, 40, 40 )
-
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 4 )
-region = Rect2( 40, 0, 40, 40 )
-
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 40, 40 )
-
-[sub_resource type="AtlasTexture" id=15]
 atlas = ExtResource( 56 )
 region = Rect2( 0, 0, 40, 45 )
 
-[sub_resource type="AtlasTexture" id=16]
+[sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 56 )
 region = Rect2( 40, 0, 40, 45 )
 
-[sub_resource type="AtlasTexture" id=17]
+[sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 56 )
 region = Rect2( 80, 0, 40, 45 )
 
-[sub_resource type="AtlasTexture" id=18]
+[sub_resource type="AtlasTexture" id=14]
 atlas = ExtResource( 56 )
 region = Rect2( 120, 0, 40, 45 )
 
-[sub_resource type="AtlasTexture" id=19]
+[sub_resource type="AtlasTexture" id=15]
 atlas = ExtResource( 56 )
 region = Rect2( 160, 0, 40, 45 )
 
-[sub_resource type="AtlasTexture" id=20]
+[sub_resource type="AtlasTexture" id=16]
 atlas = ExtResource( 56 )
 region = Rect2( 200, 0, 40, 45 )
 
-[sub_resource type="AtlasTexture" id=21]
+[sub_resource type="AtlasTexture" id=17]
 atlas = ExtResource( 56 )
 region = Rect2( 240, 0, 40, 45 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 6 )
+region = Rect2( 40, 0, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 6 )
+region = Rect2( 80, 0, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 6 )
+region = Rect2( 120, 0, 40, 40 )
 
 [sub_resource type="AtlasTexture" id=22]
 atlas = ExtResource( 11 )
@@ -177,17 +177,32 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
+"frames": [ ExtResource( 34 ), ExtResource( 23 ), ExtResource( 35 ), ExtResource( 45 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 20 ), ExtResource( 41 ) ],
+"loop": true,
+"name": "Run2",
+"speed": 15.0
+}, {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"loop": true,
+"name": "Spindash",
+"speed": 15.0
+}, {
+"frames": [ ExtResource( 26 ), ExtResource( 44 ), ExtResource( 27 ), ExtResource( 22 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ) ],
+"loop": true,
+"name": "Walk",
+"speed": 8.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
 "loop": false,
 "name": "hurt",
 "speed": 10.0
 }, {
-"frames": [ ExtResource( 49 ), ExtResource( 10 ), ExtResource( 7 ), ExtResource( 3 ), ExtResource( 9 ), ExtResource( 14 ), ExtResource( 5 ), ExtResource( 1 ) ],
+"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ) ],
 "loop": true,
-"name": "Run4",
-"speed": 26.0
+"name": "railTrick",
+"speed": 20.0
 }, {
-"frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
+"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ) ],
 "loop": true,
 "name": "Roll",
 "speed": 16.0
@@ -196,26 +211,6 @@ animations = [ {
 "loop": true,
 "name": "Run3",
 "speed": 18.0
-}, {
-"frames": [ ExtResource( 34 ), ExtResource( 23 ), ExtResource( 35 ), ExtResource( 45 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 20 ), ExtResource( 41 ) ],
-"loop": true,
-"name": "Run2",
-"speed": 15.0
-}, {
-"frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
-"loop": true,
-"name": "Spindash",
-"speed": 15.0
-}, {
-"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ) ],
-"loop": true,
-"name": "railTrick",
-"speed": 20.0
-}, {
-"frames": [ ExtResource( 26 ), ExtResource( 44 ), ExtResource( 27 ), ExtResource( 22 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ) ],
-"loop": true,
-"name": "Walk",
-"speed": 8.0
 }, {
 "frames": [ SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 24 ), SubResource( 23 ), SubResource( 22 ) ],
 "loop": true,
@@ -226,6 +221,11 @@ animations = [ {
 "loop": true,
 "name": "Grind",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 49 ), ExtResource( 10 ), ExtResource( 7 ), ExtResource( 3 ), ExtResource( 9 ), ExtResource( 14 ), ExtResource( 5 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "Run4",
+"speed": 26.0
 } ]
 
 [sub_resource type="Gradient" id=28]
@@ -314,6 +314,7 @@ __meta__ = {
 [node name="PlayerSprites" type="AnimatedSprite" parent="."]
 frames = SubResource( 27 )
 animation = "idle"
+frame = 1
 playing = true
 flip_h = true
 
@@ -361,15 +362,15 @@ visible = false
 modulate = Color( 1, 1, 1, 0.78451 )
 light_mask = 0
 frames = SubResource( 29 )
-frame = 1
+frame = 3
 playing = true
 
-[node name="BoostSound" type="AudioStreamPlayer" parent="."]
+[node name="sound_boost" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )
 volume_db = -3.0
 bus = "SFX"
 
-[node name="RailSound" type="AudioStreamPlayer" parent="."]
+[node name="sound_rail" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 53 )
 volume_db = 3.438
 bus = "SFX"
@@ -382,7 +383,7 @@ randomness = 1.0
 local_coords = false
 process_material = SubResource( 34 )
 
-[node name="Voice" type="AudioStreamPlayer2D" parent="."]
+[node name="sound_voice" type="AudioStreamPlayer2D" parent="."]
 bus = "SFX"
 script = ExtResource( 58 )
 hurt = [ ExtResource( 61 ), ExtResource( 59 ), ExtResource( 67 ), ExtResource( 66 ), ExtResource( 63 ) ]
