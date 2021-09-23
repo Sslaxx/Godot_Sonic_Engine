@@ -11,5 +11,5 @@ dest_files=[ "res://.import/rail.ogg-eb8aebc1d3e8a648494e8cf681c84de0.oggstr" ]
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0

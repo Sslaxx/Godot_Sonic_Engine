@@ -29,6 +29,6 @@ func _process (_delta) -> void:
 	return
 
 func addRing () -> void:
-	"""add a single ring to the ring count"""
+	# add a single ring to the ring count
 	ringCount += 1
 	return
