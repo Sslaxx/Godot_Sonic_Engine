@@ -45,7 +45,9 @@ func _ready () -> void:
 	$"options_tabholder/Options/btn_fullscreencheck".pressed = OS.window_fullscreen
 	$"btn_goback".grab_focus ()
 	raise ()
-	get_tree ().paused = true	# Pause the rest of the game while the options screen is visible.
+	if (!has_node ("../menu_main")):	# Not being called from the main menu?
+		$"header_text".text = "PAUSED"	# Then it must be being used as pause.
+		get_tree ().paused = true	# Pause the rest of the game while the options screen is visible.
 	return
 
 # Returning to the previous. It saves any necessary changes.
