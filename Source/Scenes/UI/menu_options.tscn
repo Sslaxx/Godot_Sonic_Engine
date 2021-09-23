@@ -19,7 +19,7 @@ __meta__ = {
 "_editor_description_": "Options menu for the game/app."
 }
 
-[node name="Label" type="Label" parent="."]
+[node name="header_text" type="Label" parent="."]
 margin_top = 175.0
 margin_right = 900.0
 margin_bottom = 197.0
