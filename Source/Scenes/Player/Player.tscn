@@ -283,6 +283,7 @@ bounceRing = ExtResource( 55 )
 boostParticle = ExtResource( 57 )
 SKID_ACCEL = 0.1
 JUMP_VELOCITY = 4.0
+can_boost = true
 
 [node name="playerCollider" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

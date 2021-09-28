@@ -33,7 +33,10 @@ func _ready () -> void:
 func boostControl () -> void:
 	# handles the boosting controls
 
-	if Input.is_action_just_pressed ("boost") and boostBar.boostAmount > 0:
+	if (!can_boost):	# If the character can't boost, don't do anything here.
+		return
+
+	if (Input.is_action_just_pressed ("boost") && boostBar.boostAmount > 0):
 		# setup the boost when the player first presses the boost button
 
 		# set boosting to true
@@ -51,13 +54,13 @@ func boostControl () -> void:
 		cam.set_follow_smoothing (BOOST_CAM_LAG)
 
 		# stop moving vertically as much if you are in the air (air boost)
-		if state == -1 and player_velocity.x < ACCELERATION:
+		if (state == -1 && player_velocity.x < ACCELERATION):
 			player_velocity.x = BOOST_SPEED * (1 if player_sprite.flip_h else -1)
 			player_velocity.y = 0
 
 		voiceSound.play_effort ()
 
-	if Input.is_action_pressed ("boost") and boosting and boostBar.boostAmount > 0:
+	if (Input.is_action_pressed ("boost") && boosting && boostBar.boostAmount > 0):
 #		if boostSound.stream != boost_sfx:
 #			boostSound.stream = boost_sfx
 #			boostSound.play ()
@@ -65,13 +68,13 @@ func boostControl () -> void:
 		# linearly interpolate the camera's "boost lag" back down to the normal (non-boost) value
 		cam.set_follow_smoothing (lerp (cam.get_follow_smoothing (), DEFAULT_CAM_LAG, CAM_LAG_SLIDE))
 
-		if grinding:
+		if (grinding):
 			# apply boost to a grind
 			grindVel = BOOST_SPEED * (1 if player_sprite.flip_h else -1)
-		elif state == 0:
+		elif (state == 0):
 			# apply boost if you are on the ground
 			ground_velocity = BOOST_SPEED * (1 if player_sprite.flip_h else -1)
-		elif angleDist (player_velocity.angle (), 0) < PI/3 or angleDist (player_velocity.angle (), PI) < PI/3:
+		elif (angleDist (player_velocity.angle (), 0) < PI/3 || angleDist (player_velocity.angle (), PI) < PI/3):
 			# apply boost if you are in the air (and are not going straight up or down
 			player_velocity = player_velocity.normalized ()*BOOST_SPEED
 		else:
@@ -91,7 +94,7 @@ func boostControl () -> void:
 		cam.set_follow_smoothing (DEFAULT_CAM_LAG)
 
 		# stop the boost sound, if it is playing
-		if boostSound.stream == boost_sfx:
+		if (boostSound.stream == boost_sfx):
 			boostSound.stop ()
 
 		# disable all visual boost indicators

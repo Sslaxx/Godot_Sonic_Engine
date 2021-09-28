@@ -63,6 +63,11 @@ export(float, 1) var CAM_LAG_SLIDE = 0.01
 # how long is the player's boost/stomp trail?
 var TRAIL_LENGTH = 40
 
+# Capability flags.
+export(bool) var can_boost := false		# Sonic, Blaze, Shadow etc.
+export(bool) var can_fly := false		# Tails, Cream etc.
+export(bool) var can_glide := false		# Knuckles etc.
+
 # state flags
 var crouching := false
 var spindashing := false
