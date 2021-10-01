@@ -118,8 +118,8 @@ onready var player_sprite = find_node ("PlayerSprites")		# the player's sprite
 onready var boostSprite = find_node ("BoostSprite")			# the sprite that appears over the player while boosting
 onready var boostLine = find_node ("BoostLine")				# the line renderer for boosting and stomping
 
-onready var boostBar = get_node ("/root/Node2D/CanvasLayer/boostBar")		# holds a reference to the boost UI bar
-onready var ringCounter = get_node ("/root/Node2D/CanvasLayer/RingCounter")	# holds a reference to the ring counter UI item
+onready var boostBar = get_node ("/root/Level/CanvasLayer/boostBar")		# holds a reference to the boost UI bar
+onready var ringCounter = get_node ("/root/Level/CanvasLayer/RingCounter")	# holds a reference to the ring counter UI item
 
 onready var boostSound = find_node ("sound_boost")	# the audio stream player with the boost sound
 onready var RailSound = find_node ("sound_rail")	# the audio stream player with the rail grinding sound
@@ -151,7 +151,7 @@ var backLayer := false	# whether or not the player is currently on the "back" la
 # Generic input that all player character will use.
 func _input (_event: InputEvent) -> void:
 	if (Input.is_action_just_pressed ("toggle_pause")):	# Pause the game?
-		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Node2D/CanvasLayer")
+		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Level/CanvasLayer")
 	# Movement direction can be anywhere between -1 (left) to +1 (right).
 	movement_direction = (Input.get_action_strength ("move_right") - Input.get_action_strength ("move_left"))
 	return

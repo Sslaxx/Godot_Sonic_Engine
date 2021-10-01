@@ -122,7 +122,7 @@ colors = PoolColorArray( 0.00784314, 0.121569, 0.180392, 1, 0.207, 0, 0.46, 1, 0
 gradient = SubResource( 10 )
 width = 128
 
-[node name="Node2D" type="Node2D"]
+[node name="Level" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( -2289.76, -76.452 )

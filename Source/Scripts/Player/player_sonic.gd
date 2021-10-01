@@ -412,7 +412,7 @@ func _physics_process (_delta) -> void:
 				var part = boostParticle.instance ()
 				part.position = position
 				part.boostValue = 2
-				get_node ("/root/Node2D").add_child (part)
+				get_node ("/root/Level").add_child (part)
 		else:
 			player_sprite.animation = "Grind"
 
@@ -544,7 +544,7 @@ func hurt_player () -> void:
 			if t == 16:
 				speed = 2
 				angle = 101.25
-			get_node ("/root/Node2D").call_deferred ("add_child", currentRing)
+			get_node ("/root/Level").call_deferred ("add_child", currentRing)
 		ringCounter.ringCount = 0
 	return
 
