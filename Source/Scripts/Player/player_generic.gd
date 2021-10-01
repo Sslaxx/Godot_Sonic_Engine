@@ -158,6 +158,7 @@ func _input (_event: InputEvent) -> void:
 		is_boosting += (1 if boostBar.boostAmount > 0 else 0)
 	else:									# No boosting, so reset to zero.
 		is_boosting = 0
+	is_stomping = (Input.is_action_just_pressed ("stomp") && !is_stomping)
 	return
 
 ### limitAngle

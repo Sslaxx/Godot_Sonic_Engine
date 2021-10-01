@@ -2,7 +2,7 @@
 
 extends Path2D
 
-# line holds a reference to the Line2D  (line renderer) node
+# line holds a reference to the Line2D (line renderer) node
 onready var line = get_node ("Line2D")
 # coll holds a reference to the collision polygon
 onready var coll = get_node ("Area2D/CollisionPolygon2D")

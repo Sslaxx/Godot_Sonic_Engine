@@ -173,10 +173,9 @@ func process_air () -> void:
 	### STOMPING CONTROLS ###
 
 	# initiating a stomp
-	if Input.is_action_just_pressed ("stomp") and not is_stomping:
+	if is_stomping:
 
-		# set the stomping state, and animation state
-		is_stomping = true
+		# set the animation state
 		player_sprite.animation = "Roll"
 		rotation = 0
 		player_sprite.rotation = 0
