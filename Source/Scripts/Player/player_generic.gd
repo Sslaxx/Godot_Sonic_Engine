@@ -74,7 +74,7 @@ var is_spindashing := false
 var is_rolling := false
 var is_grinding := false
 var is_stomping := false
-var is_boosting := false
+var is_boosting := 0
 var is_tricking := false
 var stop_while_tricking := false
 
@@ -154,6 +154,10 @@ func _input (_event: InputEvent) -> void:
 		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Level/CanvasLayer")
 	# Movement direction can be anywhere between -1 (left) to +1 (right).
 	movement_direction = (Input.get_action_strength ("move_right") - Input.get_action_strength ("move_left"))
+	if (Input.is_action_pressed ("boost")):	# So long as boost is held down, increase the counter.
+		is_boosting += (1 if boostBar.boostAmount > 0 else 0)
+	else:									# No boosting, so reset to zero.
+		is_boosting = 0
 	return
 
 ### limitAngle

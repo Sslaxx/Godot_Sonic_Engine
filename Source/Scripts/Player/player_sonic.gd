@@ -36,11 +36,10 @@ func process_boost () -> void:
 	if (!can_boost):	# If the character can't boost, don't do anything here.
 		return
 
-	if (Input.is_action_just_pressed ("boost") && boostBar.boostAmount > 0):
+	if (is_boosting == 1 && boostBar.boostAmount > 0):
 		# setup the boost when the player first presses the boost button
 
-		# set boosting to true
-		is_boosting = true
+		is_boosting += 1
 
 		# reset the boost line points
 		for i in range (0, TRAIL_LENGTH):
@@ -61,7 +60,7 @@ func process_boost () -> void:
 		voiceSound.play_effort ()
 		return
 
-	if (Input.is_action_pressed ("boost") && is_boosting && boostBar.boostAmount > 0):
+	if (is_boosting > 1 && boostBar.boostAmount > 0):
 #		if boostSound.stream != boost_sfx:
 #			boostSound.stream = boost_sfx
 #			boostSound.play ()
@@ -80,7 +79,7 @@ func process_boost () -> void:
 			player_velocity = player_velocity.normalized ()*BOOST_SPEED
 		else:
 			# if none of these situations fit, you shouldn't be boosting here!
-			is_boosting = false
+			is_boosting = 0
 
 		# set the visibility and rotation of the boost line and sprite
 		boostSprite.visible = true
@@ -103,7 +102,7 @@ func process_boost () -> void:
 		boostLine.visible = false
 
 		# we're not boosting, so set boosting to false
-		is_boosting = false
+		is_boosting = 0
 	return
 
 func process_air () -> void:
@@ -212,11 +211,11 @@ func process_air () -> void:
 	if LSideCast.is_colliding () and LSideCast.get_collision_point ().distance_to (position+player_velocity) < 14 and player_velocity.x < 0:
 		player_velocity = Vector2 (0, player_velocity.y)
 		position = LSideCast.get_collision_point () + Vector2 (14, 0)
-		is_boosting = false
+		is_boosting = 0
 	if RSideCast.is_colliding () and RSideCast.get_collision_point ().distance_to (position+player_velocity) < 14 and player_velocity.x > 0:
 		player_velocity = Vector2 (0, player_velocity.y)
 		position = RSideCast.get_collision_point () - Vector2 (14, 0)
-		is_boosting = false
+		is_boosting = 0
 
 	# top collision
 	if avgTPoint.distance_to (position+player_velocity) < 21:
@@ -296,11 +295,11 @@ func process_ground () -> void:
 	if LSideCast.is_colliding () and LSideCast.get_collision_point ().distance_to (position) < 21 and ground_velocity < 0:
 		ground_velocity = 0
 		position = LSideCast.get_collision_point () + Vector2 (position.x-LSideCast.get_collision_point ().x, position.y-LSideCast.get_collision_point ().y).normalized ()*21
-		is_boosting = false
+		is_boosting = 0
 	if RSideCast.is_colliding () and RSideCast.get_collision_point ().distance_to (position) < 21 and ground_velocity > 0:
 		ground_velocity = 0
 		position = RSideCast.get_collision_point () + Vector2 (position.x-RSideCast.get_collision_point ().x, position.y-RSideCast.get_collision_point ().y).normalized ()*21
-		is_boosting = false
+		is_boosting = 0
 
 	# apply gravity if you are on a slope, and apply the ground velocity
 	ground_velocity += sin (rotation)*GRAVITY
@@ -360,7 +359,7 @@ func process_ground () -> void:
 	process_boost ()
 
 	# jumping
-	if Input.is_action_pressed ("jump") and not is_crouching:
+	if (Input.is_action_pressed ("jump") && !is_crouching && !is_boosting):
 		if not can_jump_short:
 			state = -1
 			player_velocity = Vector2 (player_velocity.x+sin (rotation)*JUMP_VELOCITY, player_velocity.y-cos (rotation)*JUMP_VELOCITY)
@@ -434,9 +433,9 @@ func _physics_process (_delta) -> void:
 		RailSound.pitch_scale = lerp (RAILSOUND_MINPITCH, RAILSOUND_MAXPITCH, abs (grindVel)/BOOST_SPEED)
 		grindVel += sin (rotation)*GRAVITY
 
-		if dirVec.length () < 0.5 or \
-			grindCurve.interpolate_baked (grindOffset-1) == \
-			grindCurve.interpolate_baked (grindOffset):
+		if (dirVec.length () < 0.5 or \
+			(grindCurve.interpolate_baked (grindOffset-1) == \
+			grindCurve.interpolate_baked (grindOffset))):
 			state = -1
 			is_grinding = false
 			is_tricking = false
@@ -514,7 +513,7 @@ func _on_Rail_area_entered (area, curve, origin) -> void:
 	return
 
 func isAttacking () -> bool:
-	return (is_stomping || is_boosting || is_rolling || (player_sprite.animation == "Roll" && state == -1))
+	return (is_stomping || is_boosting != 0 || is_rolling || (player_sprite.animation == "Roll" && state == -1))
 
 func hurt_player () -> void:
 	if not invincible > 0:
