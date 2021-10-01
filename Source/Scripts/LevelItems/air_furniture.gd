@@ -40,11 +40,11 @@ func _on_Area2D_area_entered (area) -> void:
 		# set sonic to the air state
 		area.state = -1
 		# Sonic didn't jump here...
-		area.canShort = false
+		area.can_jump_short = false
 		# set Sonic's position to this position
 		area.position = position
 		# if sonic stomped on it, he is no longer stomping
-		area.stomping = false
+		area.is_stomping = false
 
 		# set sonic's sprite rotation to Sonic's rotation
 		area.find_node ("PlayerSprites").rotation = area.rotation

@@ -25,7 +25,7 @@ var state = -1
 
 # can the player shorten the jump (aka was this -1 (air) state
 # initiated by a jump?)
-var canShort := false
+var can_jump_short := false
 
 # the player's gravity
 export(float) var GRAVITY = 0.3 / 4
@@ -69,23 +69,23 @@ export(bool) var can_fly := false		# Tails, Cream etc.
 export(bool) var can_glide := false		# Knuckles etc.
 
 # state flags
-var crouching := false
-var spindashing := false
-var rolling := false
-var grinding := false
-var stomping := false
-var boosting := false
-var tricking := false
-var trickingCanStop := false
+var is_crouching := false
+var is_spindashing := false
+var is_rolling := false
+var is_grinding := false
+var is_stomping := false
+var is_boosting := false
+var is_tricking := false
+var stop_while_tricking := false
 
 # Player's last position.
 var last_position := Vector2.ZERO
 
 # Speed thresholds for the player.
-export(float) var walk_threshold = 0.02
-export(float) var jog_threshold = 5/2
-export(float) var run_threshold = 10/2
-export(float) var fast_threshold = 12/2
+export(float) var threshold_walk = 0.02
+export(float) var threshold_jog = 5/2
+export(float) var threshold_run_slow = 10/2
+export(float) var threshold_run_fast = 12/2
 
 # flags and values for getting hurt
 var hurt := false

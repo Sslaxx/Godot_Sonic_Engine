@@ -1,0 +1,9 @@
+BOOSTING - HOW SHOULD IT WORK?
+
+1 - Player presses the boost key (_input, player_generic.gd). is_boosting = true
+
+2 - Boost counter starts increasing (_input, player_generic.gd). if is_boosting: boosting_counter ++
+
+3 - For boost counter being 1, set up the boost stuff (player_<name>.gd).
+
+4 - Reset boost counter to zero when the boost key is no longer pressed (player_<name>.gd). boosting_counter = 0 ; is_boosting = false
