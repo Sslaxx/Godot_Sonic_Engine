@@ -12,9 +12,6 @@ onready var sprite = get_node ("AnimatedSprite")
 # holds a referene to the AudioStreamPlayer for the ring
 onready var audio = get_node ("AudioStreamPlayer")
 
-# holds a reference to the boost bar
-#var boostBar
-
 # timer variable to keep track of when the ring disappears.
 var collectionStartTimer = 120
 

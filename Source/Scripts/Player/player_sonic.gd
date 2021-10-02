@@ -223,7 +223,7 @@ func process_air () -> void:
 
 	# Allow the player to change the duration of the jump by releasing the jump
 	# button early
-	if not Input.is_action_pressed ("jump") and can_jump_short:
+	if (!is_jumping && can_jump_short):
 		player_velocity = Vector2 (player_velocity.x, max (player_velocity.y, -JUMP_SHORT_LIMIT))
 
 	# ensure the proper speed of the animated sprites
@@ -358,7 +358,7 @@ func process_ground () -> void:
 	process_boost ()
 
 	# jumping
-	if (Input.is_action_pressed ("jump") && !is_crouching && !is_boosting):
+	if (is_jumping && !is_crouching && !is_boosting):
 		if not can_jump_short:
 			state = -1
 			player_velocity = Vector2 (player_velocity.x+sin (rotation)*JUMP_VELOCITY, player_velocity.y-cos (rotation)*JUMP_VELOCITY)
@@ -371,7 +371,7 @@ func process_ground () -> void:
 	else:
 		can_jump_short = false
 
-	if (Input.is_action_pressed ("jump") and is_crouching) or is_spindashing:
+	if ((is_jumping && is_crouching) || is_spindashing):
 		is_spindashing = true
 		player_sprite.animation = "Spindash"
 		player_sprite.speed_scale = 1

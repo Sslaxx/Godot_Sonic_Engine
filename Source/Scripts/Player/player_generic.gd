@@ -23,9 +23,6 @@ var text_label	# a little text label attached to the player for debugging
 # air. This is not a boolean because of legacy code and stuff.
 var state = -1
 
-# can the player shorten the jump (aka was this -1 (air) state
-# initiated by a jump?)
-var can_jump_short := false
 
 # the player's gravity
 export(float) var GRAVITY = 0.3 / 4
@@ -63,20 +60,24 @@ export(float, 1) var CAM_LAG_SLIDE = 0.01
 # how long is the player's boost/stomp trail?
 var TRAIL_LENGTH = 40
 
-# Capability flags.
-export(bool) var can_boost := false		# Sonic, Blaze, Shadow etc.
-export(bool) var can_fly := false		# Tails, Cream etc.
-export(bool) var can_glide := false		# Knuckles etc.
+# Capability flags. What can this character do?
+export(bool) var can_boost := false		# Sonic, Blaze, Shadow etc. can boost their speed.
+export(bool) var can_fly := false		# Tails, Cream etc. can fly.
+export(bool) var can_glide := false		# Knuckles etc. can glide.
 
 # state flags
-var is_crouching := false
-var is_spindashing := false
-var is_rolling := false
-var is_grinding := false
-var is_stomping := false
+var can_jump_short := false				# can the player shorten the jump?
 var is_boosting := 0
+var is_crouching := false
+var is_flying := false
+var is_gliding := false
+var is_grinding := false
+var is_jumping := false
+var is_rolling := false
+var is_spindashing := false
+var is_stomping := false
 var is_tricking := false
-var stop_while_tricking := false
+var stop_while_tricking := false		# Is/can the player stop while tricking.
 
 # Player's last position.
 var last_position := Vector2.ZERO
@@ -159,6 +160,7 @@ func _input (_event: InputEvent) -> void:
 	else:									# No boosting, so reset to zero.
 		is_boosting = 0
 	is_stomping = (Input.is_action_just_pressed ("stomp") && !is_stomping)
+	is_jumping = Input.is_action_pressed ("jump")
 	return
 
 ### limitAngle
