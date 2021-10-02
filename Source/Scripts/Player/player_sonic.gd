@@ -341,8 +341,7 @@ func process_ground () -> void:
 		ground_velocity = 0
 		is_rolling = false
 
-	if Input.is_action_pressed ("ui_down") and abs (ground_velocity) <= threshold_walk:
-		is_crouching = true
+	if (is_crouching && abs (ground_velocity) <= threshold_walk):
 		player_sprite.animation = "Crouch"
 		player_sprite.speed_scale = 1
 		if player_sprite.frame > 3:

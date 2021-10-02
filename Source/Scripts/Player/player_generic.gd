@@ -23,7 +23,6 @@ var text_label	# a little text label attached to the player for debugging
 # air. This is not a boolean because of legacy code and stuff.
 var state = -1
 
-
 # the player's gravity
 export(float) var GRAVITY = 0.3 / 4
 # the player's acceleration on his own
@@ -161,6 +160,7 @@ func _input (_event: InputEvent) -> void:
 		is_boosting = 0
 	is_stomping = (Input.is_action_just_pressed ("stomp") && !is_stomping)
 	is_jumping = Input.is_action_pressed ("jump")
+	is_crouching = Input.is_action_pressed ("ui_down")
 	return
 
 ### limitAngle
