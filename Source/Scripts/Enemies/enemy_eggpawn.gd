@@ -41,7 +41,7 @@ func _on_enemy_area_entered (area) -> void:
 		var newNode = boostParticle.instance ()
 		newNode.position = position
 		newNode.boostValue = 2
-		get_node ("/root/Node2D").add_child (newNode)
+		get_node ("/root/Level").add_child (newNode)
 
 		# set the velocity to match Sonic's speed, with a few constraints
 		explode_velocity = area.get ("player_velocity") * 1.5

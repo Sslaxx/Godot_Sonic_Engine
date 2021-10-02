@@ -23,10 +23,6 @@ var text_label	# a little text label attached to the player for debugging
 # air. This is not a boolean because of legacy code and stuff.
 var state = -1
 
-# can the player shorten the jump (aka was this -1 (air) state
-# initiated by a jump?)
-var canShort := false
-
 # the player's gravity
 export(float) var GRAVITY = 0.3 / 4
 # the player's acceleration on his own
@@ -63,24 +59,33 @@ export(float, 1) var CAM_LAG_SLIDE = 0.01
 # how long is the player's boost/stomp trail?
 var TRAIL_LENGTH = 40
 
+# Capability flags. What can this character do?
+export(bool) var can_boost := false		# Sonic, Blaze, Shadow etc. can boost their speed.
+export(bool) var can_fly := false		# Tails, Cream etc. can fly.
+export(bool) var can_glide := false		# Knuckles etc. can glide.
+
 # state flags
-var crouching := false
-var spindashing := false
-var rolling := false
-var grinding := false
-var stomping := false
-var boosting := false
-var tricking := false
-var trickingCanStop := false
+var can_jump_short := false				# can the player shorten the jump?
+var is_boosting := 0
+var is_crouching := false
+var is_flying := false
+var is_gliding := false
+var is_grinding := false
+var is_jumping := false
+var is_rolling := false
+var is_spindashing := false
+var is_stomping := false
+var is_tricking := false
+var stop_while_tricking := false		# Is/can the player stop while tricking.
 
 # Player's last position.
 var last_position := Vector2.ZERO
 
 # Speed thresholds for the player.
-export(float) var walk_threshold = 0.02
-export(float) var jog_threshold = 5/2
-export(float) var run_threshold = 10/2
-export(float) var fast_threshold = 12/2
+export(float) var threshold_walk = 0.02
+export(float) var threshold_jog = 5/2
+export(float) var threshold_run_slow = 10/2
+export(float) var threshold_run_fast = 12/2
 
 # flags and values for getting hurt
 var hurt := false
@@ -113,8 +118,8 @@ onready var player_sprite = find_node ("PlayerSprites")		# the player's sprite
 onready var boostSprite = find_node ("BoostSprite")			# the sprite that appears over the player while boosting
 onready var boostLine = find_node ("BoostLine")				# the line renderer for boosting and stomping
 
-onready var boostBar = get_node ("/root/Node2D/CanvasLayer/boostBar")		# holds a reference to the boost UI bar
-onready var ringCounter = get_node ("/root/Node2D/CanvasLayer/RingCounter")	# holds a reference to the ring counter UI item
+onready var boostBar = get_node ("/root/Level/CanvasLayer/boostBar")		# holds a reference to the boost UI bar
+onready var ringCounter = get_node ("/root/Level/CanvasLayer/RingCounter")	# holds a reference to the ring counter UI item
 
 onready var boostSound = find_node ("sound_boost")	# the audio stream player with the boost sound
 onready var RailSound = find_node ("sound_rail")	# the audio stream player with the rail grinding sound
@@ -146,9 +151,19 @@ var backLayer := false	# whether or not the player is currently on the "back" la
 # Generic input that all player character will use.
 func _input (_event: InputEvent) -> void:
 	if (Input.is_action_just_pressed ("toggle_pause")):	# Pause the game?
-		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Node2D/CanvasLayer")
+		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Level/CanvasLayer")
 	# Movement direction can be anywhere between -1 (left) to +1 (right).
 	movement_direction = (Input.get_action_strength ("move_right") - Input.get_action_strength ("move_left"))
+	if (Input.is_action_pressed ("boost")):	# So long as boost is held down, increase the counter.
+		is_boosting += (1 if boostBar.boostAmount > 0 else 0)
+	else:									# No boosting, so reset to zero.
+		is_boosting = 0
+	is_stomping = (Input.is_action_just_pressed ("stomp") && !is_stomping)
+	is_jumping = Input.is_action_pressed ("jump")
+	is_crouching = Input.is_action_pressed ("ui_down")
+	# reset using the dedicated reset button
+	if Input.is_action_pressed ('restart'):
+		reset_game ()
 	return
 
 ### limitAngle
@@ -213,4 +228,19 @@ func _layer1 (area) -> void:
 
 func _setVelocity (vel) -> void:
 	player_velocity = vel
+	return
+
+func reset_game () -> void:
+	reset_character ()
+	if get_tree ().reload_current_scene () != OK:
+		printerr ("ERROR: Could not reload current scene!")
+		get_tree ().quit ()
+	return
+
+func reset_character () -> void:
+	# reset your position and state if you pull a dimps (fall out of the world)
+	player_velocity = Vector2.ZERO
+	state = -1
+	position = start_position
+	setCollisionLayer (false)
 	return

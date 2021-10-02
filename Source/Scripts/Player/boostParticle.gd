@@ -5,16 +5,16 @@ var cVel := initialVel
 
 export(float) var boostValue = 2
 
-onready var player = get_node ("/root/Node2D/Player")
-onready var boostBar = get_node ("/root/Node2D/CanvasLayer/boostBar")
+onready var player = get_node ("/root/Level/Player")
+onready var boostBar = get_node ("/root/Level/CanvasLayer/boostBar")
 
 onready var line = get_node ("Line2D")
-var lineLength = 30
+var lineLength := 30
 
-var speed = 10
+var speed := 10.0
 
-var oPos
-var lPos
+var oPos := Vector2.ZERO
+var lPos := Vector2.ZERO
 
 var timer := 0.0
 

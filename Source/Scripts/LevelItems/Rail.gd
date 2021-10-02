@@ -2,7 +2,7 @@
 
 extends Path2D
 
-# line holds a reference to the Line2D  (line renderer) node
+# line holds a reference to the Line2D (line renderer) node
 onready var line = get_node ("Line2D")
 # coll holds a reference to the collision polygon
 onready var coll = get_node ("Area2D/CollisionPolygon2D")
@@ -29,9 +29,9 @@ func _ready () -> void:
 	return
 
 func _on_Area2D_area_entered (area) -> void:
-	# if the player collides with this rail, call "_on_Railgrind" to let it
+	# if the player collides with this rail, call "_on_Rail_area_entered" to let it
 	# know it should be grinding now.
 	if (area.name == "Player"):
-		area._on_Railgrind (area, curve, global_position)
+		area._on_Rail_area_entered (area, curve, global_position)
 		area.rotation = 0.0
 	return

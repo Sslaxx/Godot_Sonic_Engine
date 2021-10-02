@@ -12,9 +12,6 @@ onready var sprite = get_node ("AnimatedSprite")
 # holds a referene to the AudioStreamPlayer for the ring
 onready var audio = get_node ("AudioStreamPlayer")
 
-# holds a reference to the boost bar
-#var boostBar
-
 # timer variable to keep track of when the ring disappears.
 var collectionStartTimer = 120
 
@@ -59,5 +56,5 @@ func _on_Ring_area_entered (area) -> void:
 		collected = true					# set collected to true
 		sprite.animation = "Sparkle"		# set the animation to the sparkle
 		audio.play ()						# play the ring sfx
-		get_node ("/root/Node2D/CanvasLayer/RingCounter").addRing ()	# add a ring to the total
+		get_node ("/root/Level/CanvasLayer/RingCounter").addRing ()	# add a ring to the total
 	return

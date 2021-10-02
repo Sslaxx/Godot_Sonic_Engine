@@ -11,11 +11,8 @@ func _ready () -> void:
 # Something has entered the death plane, deal with it.
 func _on_DeathPlane_area_entered (area) -> void:
 	if area.name == "Player":
-		area.resetGame ()
-		if get_tree ().reload_current_scene () != OK:
-			printerr ("ERROR: Could not reload current scene!")
-			get_tree ().quit ()
+		area.reset_character ()
 	else:
-		print (area.name, " has entered the death plane.")
+		print_debug (area.name, " has entered the death plane.")
 		area.queue_free ()
 	return
