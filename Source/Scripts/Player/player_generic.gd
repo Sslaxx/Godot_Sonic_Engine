@@ -161,6 +161,9 @@ func _input (_event: InputEvent) -> void:
 	is_stomping = (Input.is_action_just_pressed ("stomp") && !is_stomping)
 	is_jumping = Input.is_action_pressed ("jump")
 	is_crouching = Input.is_action_pressed ("ui_down")
+	# reset using the dedicated reset button
+	if Input.is_action_pressed ('restart'):
+		reset_game ()
 	return
 
 ### limitAngle
@@ -225,4 +228,19 @@ func _layer1 (area) -> void:
 
 func _setVelocity (vel) -> void:
 	player_velocity = vel
+	return
+
+func reset_game () -> void:
+	reset_character ()
+	if get_tree ().reload_current_scene () != OK:
+		printerr ("ERROR: Could not reload current scene!")
+		get_tree ().quit ()
+	return
+
+func reset_character () -> void:
+	# reset your position and state if you pull a dimps (fall out of the world)
+	player_velocity = Vector2.ZERO
+	state = -1
+	position = start_position
+	setCollisionLayer (false)
 	return

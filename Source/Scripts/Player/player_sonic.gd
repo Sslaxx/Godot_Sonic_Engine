@@ -374,7 +374,7 @@ func process_ground () -> void:
 		is_spindashing = true
 		player_sprite.animation = "Spindash"
 		player_sprite.speed_scale = 1
-		if not Input.is_action_pressed ("ui_down"):
+		if !is_crouching:
 			ground_velocity = 15*(1 if player_sprite.flip_h else -1)
 			is_spindashing = false
 			is_rolling = true
@@ -391,9 +391,6 @@ func _physics_process (_delta) -> void:
 		player_sprite.modulate = Color (1, 1, 1, 1-(invincible % 30)/30.0)
 	else:
 		hurt = false
-	# reset using the dedicated reset button
-	if Input.is_action_pressed ('restart'):
-		reset_game ()
 
 	grindParticles.emitting = is_grinding
 
@@ -413,7 +410,7 @@ func _physics_process (_delta) -> void:
 		else:
 			player_sprite.animation = "Grind"
 
-		if Input.is_action_just_pressed ("stomp") and not is_tricking:
+		if (is_stomping && !is_tricking):
 			is_tricking = true
 			stop_while_tricking = false
 			voiceSound.play_effort ()
@@ -442,7 +439,7 @@ func _physics_process (_delta) -> void:
 		else:
 			player_velocity = dirVec*grindVel
 
-		if Input.is_action_pressed ("jump") and not is_crouching:
+		if (is_jumping && !is_crouching):
 			if not can_jump_short:
 				state = -1
 				player_velocity = Vector2 (player_velocity.x+sin (rotation)*JUMP_VELOCITY, player_velocity.y-cos (rotation)*JUMP_VELOCITY)
@@ -543,19 +540,4 @@ func hurt_player () -> void:
 				angle = 101.25
 			get_node ("/root/Level").call_deferred ("add_child", currentRing)
 		ringCounter.ringCount = 0
-	return
-
-func reset_game () -> void:
-	reset_character ()
-	if get_tree ().reload_current_scene () != OK:
-		printerr ("ERROR: Could not reload current scene!")
-		get_tree ().quit ()
-	return
-
-func reset_character () -> void:
-	# reset your position and state if you pull a dimps (fall out of the world)
-	player_velocity = Vector2.ZERO
-	state = -1
-	position = start_position
-	setCollisionLayer (false)
 	return
