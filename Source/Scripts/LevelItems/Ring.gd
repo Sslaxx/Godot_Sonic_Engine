@@ -24,5 +24,6 @@ func _on_Ring_area_entered (area) -> void:
 		ring_sprite.animation = "Sparkle"
 		sound_player.play_sound ("ring_get")
 		game_space.rings_collected += 1
+		game_space.score += 100
 		game_space.change_boost_value (2)
 	return

@@ -38,6 +38,7 @@ func _on_enemy_area_entered (area) -> void:
 
 		# this robot is dead...
 		alive = false
+		game_space.score += 100
 		var newNode = boostParticle.instance ()
 		newNode.position = position
 		newNode.boostValue = 2
