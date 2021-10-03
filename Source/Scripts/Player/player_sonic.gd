@@ -85,7 +85,7 @@ func process_boost () -> void:
 		boostLine.rotation = -rotation
 
 		# decrease boost value while boosting
-		hud_boost.value = hud_boost.value - 0.05
+		game_space.change_boost_value (-0.05)
 	else:
 		# the camera lag should be normal while not boosting
 		cam.set_follow_smoothing (DEFAULT_CAM_LAG)

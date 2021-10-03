@@ -48,7 +48,7 @@ func _process (delta) -> void:
 	line.points [0] = Vector2.ZERO
 
 	if (timer >= 1 && position.distance_to (player.position) <= speed):
-		hud_boost.value += boostValue
+		game_space.change_boost_value (boostValue)
 		queue_free ()
 
 	lPos = position

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Graphics/Tiles/SkyTiles.tres" type="TileSet" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://Assets/Graphics/Backgrounds/Festival/Villa.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/LevelItems/FallingParticles.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/LevelItems/DeathPlane.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/UI/HUD/RingCounter.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scripts/AudioPlayer.gd" type="Script" id=9]
 [ext_resource path="res://Scenes/UI/HUD/game_hud.tscn" type="PackedScene" id=11]
 
@@ -233,5 +232,3 @@ texture = SubResource( 11 )
 [node name="DeathPlane" parent="." instance=ExtResource( 7 )]
 
 [node name="game_hud" parent="." instance=ExtResource( 11 )]
-
-[node name="RingCounter" parent="game_hud" instance=ExtResource( 8 )]

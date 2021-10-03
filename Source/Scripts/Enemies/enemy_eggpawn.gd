@@ -4,10 +4,10 @@
 extends "res://Scripts/Enemies/enemy_generic.gd"
 
 # The basic pawn is updated every frame.
-func _process (delta) -> void:
+func _process (_delta) -> void:
 	if (alive):
 		# a stupid simple AI routine. Simply move x by pixels per frame
-		position.x -= abs (random_helpers.RNG.randf_range (delta, 0.1))
+		position.x -= abs (random_helpers.RNG.randf_range (0.1, 0.5))
 	else:
 		# calculations for the explosion animation. 
 		# Applies velocity, rotates, and then applies gravity

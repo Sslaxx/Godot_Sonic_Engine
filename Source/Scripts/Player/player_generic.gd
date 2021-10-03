@@ -79,6 +79,7 @@ var is_rolling := false
 var is_spindashing := false
 var is_stomping := false
 var is_tricking := false
+var is_unmoveable := false				# Used for cutscenes and other situations where the player shouldn't move.
 var stop_while_tricking := false		# Is/can the player stop while tricking.
 
 # Player's last position.
@@ -122,7 +123,6 @@ onready var boostSprite = find_node ("BoostSprite")			# the sprite that appears 
 onready var boostLine = find_node ("BoostLine")				# the line renderer for boosting and stomping
 
 onready var hud_boost = get_node ("/root/Level/game_hud/hud_boost")		# holds a reference to the boost UI bar
-onready var ringCounter = get_node ("/root/Level/game_hud/RingCounter")	# holds a reference to the ring counter UI item
 
 onready var boostSound = find_node ("sound_boost")	# the audio stream player with the boost sound
 onready var RailSound = find_node ("sound_rail")	# the audio stream player with the rail grinding sound
@@ -153,6 +153,8 @@ var backLayer := false	# whether or not the player is currently on the "back" la
 
 # Generic input that all player character will use.
 func _input (_event: InputEvent) -> void:
+	if (is_unmoveable):	# No player input right now...
+		return
 	if (Input.is_action_just_pressed ("toggle_pause")):	# Pause the game?
 		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Level/CanvasLayer")
 	# Movement direction can be anywhere between -1 (left) to +1 (right).
@@ -267,18 +269,22 @@ func hurt_player () -> void:
 		var n := false
 		var speed = 4
 
-		while t < min (ringCounter.ringCount, 32):
+		while (t < min (game_space.rings_collected, 32)):
 			var currentRing = bounceRing.instance ()
 			currentRing.ring_velocity = Vector2 (-sin (angle) * speed, cos (angle) * speed)/2
 			currentRing.position = position
-			if n:
+			if (n):
 				currentRing.ring_velocity.x *= -1
 				angle += 22.5
-			n = not n
+			n = !n
 			t += 1
-			if t == 16:
+			if (t == 16):
 				speed = 2
 				angle = 101.25
 			get_node ("/root/Level").call_deferred ("add_child", currentRing)
-		ringCounter.ringCount = 0
+		if (game_space.rings_collected > 0):
+			game_space.rings_collected = 0
+			sound_player.play_sound ("lose_rings")
+		else:
+			reset_character ()
 	return
