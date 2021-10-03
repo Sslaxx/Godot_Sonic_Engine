@@ -241,6 +241,7 @@ func _setVelocity (vel) -> void:
 
 func reset_game () -> void:
 	reset_character ()
+	game_space.reset_game_space ()
 	if get_tree ().reload_current_scene () != OK:
 		printerr ("ERROR: Could not reload current scene!")
 		get_tree ().quit ()
@@ -290,5 +291,5 @@ func hurt_player () -> void:
 			game_space.rings_collected = 0
 			sound_player.play_sound ("lose_rings")
 		else:
-			reset_character ()
+			game_space.lives -= 1
 	return
