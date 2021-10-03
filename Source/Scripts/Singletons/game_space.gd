@@ -34,6 +34,9 @@ func set_rings (value:int) -> void:
 		print ("GAIN RINGS")
 	rings_collected = value
 	real_rings_collected = value
+	while (real_rings_collected > 100):
+		game_space.lives += 1
+		real_rings_collected -= 100
 	$"/root/Level/game_hud/hud_rings/count".text = var2str (rings_collected)
 	return
 
@@ -55,6 +58,8 @@ func set_score (value):
 func set_lives (value:int) -> void:
 	if (value < lives):
 		$"/root/Level/Player".reset_character ()
+	elif (value > lives):
+		print ("EXTRA LIFE STUFF HERE")
 	lives = value
 	if (lives < 0):
 		$"/root/Level/Player".reset_game ()
