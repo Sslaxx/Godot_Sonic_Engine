@@ -56,5 +56,5 @@ func _on_Ring_area_entered (area) -> void:
 		collected = true					# set collected to true
 		sprite.animation = "Sparkle"		# set the animation to the sparkle
 		audio.play ()						# play the ring sfx
-		get_node ("/root/Level/CanvasLayer/RingCounter").addRing ()	# add a ring to the total
+		get_node ("/root/Level/game_hud/RingCounter").addRing ()	# add a ring to the total
 	return

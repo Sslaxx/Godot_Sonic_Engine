@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Graphics/Tiles/SkyTiles.tres" type="TileSet" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://Scenes/LevelItems/DeathPlane.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/UI/HUD/RingCounter.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scripts/AudioPlayer.gd" type="Script" id=9]
-[ext_resource path="res://Scenes/UI/HUD/BoostBar.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/UI/HUD/game_hud.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Curve" id=1]
@@ -234,7 +233,5 @@ texture = SubResource( 11 )
 [node name="DeathPlane" parent="." instance=ExtResource( 7 )]
 
 [node name="game_hud" parent="." instance=ExtResource( 11 )]
-
-[node name="boostBar" parent="game_hud" instance=ExtResource( 10 )]
 
 [node name="RingCounter" parent="game_hud" instance=ExtResource( 8 )]

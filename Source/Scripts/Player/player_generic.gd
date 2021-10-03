@@ -59,6 +59,9 @@ export(float, 1) var CAM_LAG_SLIDE = 0.01
 # how long is the player's boost/stomp trail?
 var TRAIL_LENGTH = 40
 
+# Cheating flags!
+export(bool) var infinite_boost_cheat = false
+
 # Capability flags. What can this character do?
 export(bool) var can_boost := false		# Sonic, Blaze, Shadow etc. can boost their speed.
 export(bool) var can_fly := false		# Tails, Cream etc. can fly.
@@ -118,7 +121,7 @@ onready var player_sprite = find_node ("PlayerSprites")		# the player's sprite
 onready var boostSprite = find_node ("BoostSprite")			# the sprite that appears over the player while boosting
 onready var boostLine = find_node ("BoostLine")				# the line renderer for boosting and stomping
 
-onready var boostBar = get_node ("/root/Level/game_hud/boostBar")		# holds a reference to the boost UI bar
+onready var hud_boost = get_node ("/root/Level/game_hud/hud_boost")		# holds a reference to the boost UI bar
 onready var ringCounter = get_node ("/root/Level/game_hud/RingCounter")	# holds a reference to the ring counter UI item
 
 onready var boostSound = find_node ("sound_boost")	# the audio stream player with the boost sound
@@ -155,7 +158,7 @@ func _input (_event: InputEvent) -> void:
 	# Movement direction can be anywhere between -1 (left) to +1 (right).
 	movement_direction = (Input.get_action_strength ("move_right") - Input.get_action_strength ("move_left"))
 	if (Input.is_action_pressed ("boost") && can_boost):	# So long as boost is held down, increase the counter.
-		is_boosting += (1 if boostBar.boostAmount > 0 else 0)
+		is_boosting += (1 if hud_boost.value > 0 else 0)
 	else:									# No boosting, so reset to zero.
 		is_boosting = 0
 	is_stomping = (Input.is_action_just_pressed ("stomp") && !is_stomping)

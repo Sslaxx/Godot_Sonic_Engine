@@ -30,6 +30,7 @@ sound_player="*res://Scenes/Singletons/sound_player.tscn"
 music_player="*res://Scenes/Singletons/music_player.tscn"
 jingle_player="*res://Scenes/Singletons/jingle_player.tscn"
 config_helper="*res://Scenes/Singletons/config_helper.tscn"
+game_space="*res://Scenes/Singletons/game_space.tscn"
 
 [debug]
 

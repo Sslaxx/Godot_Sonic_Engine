@@ -24,5 +24,5 @@ func _on_Ring_area_entered (area) -> void:
 		ring_sprite.animation = "Sparkle"
 		sound_player.play_sound ("ring_get")
 		get_node ("/root/Level/game_hud/RingCounter").addRing ()
-		get_node ("/root/Level/game_hud/boostBar").changeBy (2)
+		get_node ("/root/Level/game_hud/hud_boost").value += 2
 	return

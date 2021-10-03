@@ -33,7 +33,7 @@ func _ready () -> void:
 func process_boost () -> void:
 	# handles the boosting controls
 
-	if (is_boosting == 1 && boostBar.boostAmount > 0):
+	if (is_boosting == 1 && hud_boost.value > 0):
 		# setup the boost when the player first presses the boost button
 
 		is_boosting += 1
@@ -57,7 +57,7 @@ func process_boost () -> void:
 		voiceSound.play_effort ()
 		return
 
-	if (is_boosting > 1 && boostBar.boostAmount > 0):
+	if (is_boosting > 1 && hud_boost.value > 0):
 #		if boostSound.stream != boost_sfx:
 #			boostSound.stream = boost_sfx
 #			boostSound.play ()
@@ -85,7 +85,7 @@ func process_boost () -> void:
 		boostLine.rotation = -rotation
 
 		# decrease boost value while boosting
-		boostBar.changeBy (-0.06)
+		hud_boost.value = hud_boost.value - 0.05
 	else:
 		# the camera lag should be normal while not boosting
 		cam.set_follow_smoothing (DEFAULT_CAM_LAG)
