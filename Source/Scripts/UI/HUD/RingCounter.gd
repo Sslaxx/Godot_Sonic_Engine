@@ -26,6 +26,7 @@ func _process (_delta) -> void:
 
 		# change the display to reflect the given value
 		i.rect_position.x = -24*value
+		$"/root/Level/game_hud/hud_rings/count".text = var2str (ringCount)
 	return
 
 func addRing () -> void:

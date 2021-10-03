@@ -29,6 +29,7 @@ func _process (_delta) -> void:
 
 	# Make sure boost amount is kept within 0 to 60. If infinite boost is enabled, keep boost amount at maximum.
 	boostAmount = (60.0 if infiniteBoost else clamp (boostAmount, 0.0, 60.0))
+	$"/root/Level/game_hud/hud_boost".value = boostAmount
 
 	var index := 0
 	for i in barItems:

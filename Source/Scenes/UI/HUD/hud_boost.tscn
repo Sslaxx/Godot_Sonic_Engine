@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Assets/Graphics/UI/HUD/boost_bar_backing.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Graphics/UI/HUD/boost_bar.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Graphics/UI/HUD/boost_bar_under.png" type="Texture" id=3]
+
+[node name="hud_boost" type="TextureProgress"]
+margin_right = 40.0
+margin_bottom = 40.0
+max_value = 60.0
+value = 60.0
+texture_under = ExtResource( 3 )
+texture_progress = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -16, -16 )
+scale = Vector2( 0.94, 0.95 )
+texture = ExtResource( 1 )
+centered = false

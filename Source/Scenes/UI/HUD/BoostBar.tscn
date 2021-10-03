@@ -4,6 +4,7 @@
 [ext_resource path="res://Scenes/UI/HUD/BarUnit.tscn" type="PackedScene" id=2]
 
 [node name="boostBar" type="Control"]
+visible = false
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 25.2035

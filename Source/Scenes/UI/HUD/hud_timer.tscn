@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Assets/Graphics/UI/HUD/Time.svg" type="Texture" id=1]
+[ext_resource path="res://Assets/Fonts/NiseSegaSonic-Regular-30.tres" type="DynamicFont" id=2]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id=3]
 resource_name = "default"
 
 [sub_resource type="Animation" id=2]
@@ -21,8 +22,19 @@ tracks/0/keys = {
 
 [node name="hud_timer" type="Sprite"]
 texture = ExtResource( 1 )
+centered = false
 hframes = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/default = SubResource( 1 )
+anims/default = SubResource( 3 )
 anims/time_running_out = SubResource( 2 )
+
+[node name="count" type="Label" parent="."]
+margin_left = 184.0
+margin_right = 284.0
+margin_bottom = 31.0
+custom_fonts/font = ExtResource( 2 )
+text = "XX:XX"
+__meta__ = {
+"_edit_use_anchors_": false
+}

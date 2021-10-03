@@ -5,6 +5,7 @@
 [ext_resource path="res://Scripts/UI/HUD/RingCounter.gd" type="Script" id=3]
 
 [node name="RingCounter" type="TextureRect"]
+visible = false
 margin_left = 30.0
 margin_top = 22.0
 margin_right = 87.0
