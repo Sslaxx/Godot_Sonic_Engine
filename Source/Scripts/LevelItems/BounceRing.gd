@@ -9,8 +9,6 @@ var collected := false
 onready var downCast = get_node ("DownCast")
 # holds a reference to the AnimatedSprite node for the ring
 onready var sprite = get_node ("AnimatedSprite")
-# holds a referene to the AudioStreamPlayer for the ring
-onready var audio = get_node ("AudioStreamPlayer")
 
 # timer variable to keep track of when the ring disappears.
 var collectionStartTimer = 120
@@ -55,6 +53,6 @@ func _on_Ring_area_entered (area) -> void:
 	if not collected and area.name == "Player" and collectionStartTimer <= 0:
 		collected = true					# set collected to true
 		sprite.animation = "Sparkle"		# set the animation to the sparkle
-		audio.play ()						# play the ring sfx
-		get_node ("/root/Level/CanvasLayer/RingCounter").addRing ()	# add a ring to the total
+		sound_player.play_sound ("ring_get")						# play the ring sfx
+		game_space.rings_collected += 1	# add a ring to the total
 	return

@@ -6,7 +6,7 @@ var cVel := initialVel
 export(float) var boostValue = 2
 
 onready var player = get_node ("/root/Level/Player")
-onready var boostBar = get_node ("/root/Level/CanvasLayer/boostBar")
+onready var hud_boost = get_node ("/root/Level/game_hud/hud_boost")
 
 onready var line = get_node ("Line2D")
 var lineLength := 30
@@ -48,7 +48,7 @@ func _process (delta) -> void:
 	line.points [0] = Vector2.ZERO
 
 	if (timer >= 1 && position.distance_to (player.position) <= speed):
-		boostBar.changeBy (boostValue)
+		game_space.change_boost_value (boostValue)
 		queue_free ()
 
 	lPos = position

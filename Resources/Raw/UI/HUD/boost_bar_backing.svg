@@ -13,7 +13,10 @@
    version="1.1"
    id="svg902"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="boost_bar_backing.svg">
+   sodipodi:docname="boost_bar_backing.svg"
+   inkscape:export-filename="/home/stuart/tmp/boost_bar_backing.png"
+   inkscape:export-xdpi="384"
+   inkscape:export-ydpi="384">
   <defs
      id="defs896" />
   <sodipodi:namedview
@@ -27,7 +30,7 @@
      inkscape:cx="105.85371"
      inkscape:cy="24.776903"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g15"
      inkscape:document-rotation="0"
      showgrid="false"
      borderlayer="true"
@@ -53,31 +56,25 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <rect
-       style="fill:#aca4ce;fill-opacity:1;stroke-width:8.43616;stroke-linecap:round"
-       id="rect939"
-       width="52.916664"
-       height="12.7"
-       x="0"
-       y="-8.8817842e-16" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.26782px;line-height:200%;font-family:Vipnagorgialla;-inkscape-font-specification:'Vipnagorgialla, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.266738"
-       x="7.8718176"
-       y="12.200619"
-       id="text1504"
-       transform="scale(1.0020964,0.99790798)"><tspan
-         sodipodi:role="line"
-         id="tspan1502"
+    <g
+       id="g15">
+      <path
+         id="rect939"
+         style="fill:#aca4ce;fill-opacity:1;stroke-width:31.8847;stroke-linecap:round"
+         d="M 0 0 L 0 48 L 200 48 L 200 0 L 0 0 z M 4 4 L 196 4 L 196 36 L 4 36 L 4 4 z "
+         transform="scale(0.26458333)" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.26782px;line-height:200%;font-family:Vipnagorgialla;-inkscape-font-specification:'Vipnagorgialla, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;stroke-width:0.266738"
          x="7.8718176"
          y="12.200619"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.26782px;font-family:Vipnagorgialla;-inkscape-font-specification:'Vipnagorgialla, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;stroke-width:0.266738">BOOST</tspan></text>
-    <rect
-       style="fill:#ff00ff;stroke-width:8.0175;stroke-linecap:round;fill-opacity:1"
-       id="rect10"
-       width="50.799999"
-       height="8.4666662"
-       x="1.0583333"
-       y="1.0583333" />
+         id="text1504"
+         transform="scale(1.0020964,0.99790798)"><tspan
+           sodipodi:role="line"
+           id="tspan1502"
+           x="7.8718176"
+           y="12.200619"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.26782px;font-family:Vipnagorgialla;-inkscape-font-specification:'Vipnagorgialla, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;stroke-width:0.266738">BOOST</tspan></text>
+    </g>
   </g>
 </svg>

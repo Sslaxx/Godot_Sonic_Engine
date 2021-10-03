@@ -59,6 +59,9 @@ export(float, 1) var CAM_LAG_SLIDE = 0.01
 # how long is the player's boost/stomp trail?
 var TRAIL_LENGTH = 40
 
+# Cheating flags!
+export(bool) var infinite_boost_cheat = false
+
 # Capability flags. What can this character do?
 export(bool) var can_boost := false		# Sonic, Blaze, Shadow etc. can boost their speed.
 export(bool) var can_fly := false		# Tails, Cream etc. can fly.
@@ -76,6 +79,7 @@ var is_rolling := false
 var is_spindashing := false
 var is_stomping := false
 var is_tricking := false
+var is_unmoveable := false				# Used for cutscenes and other situations where the player shouldn't move.
 var stop_while_tricking := false		# Is/can the player stop while tricking.
 
 # Player's last position.
@@ -118,8 +122,7 @@ onready var player_sprite = find_node ("PlayerSprites")		# the player's sprite
 onready var boostSprite = find_node ("BoostSprite")			# the sprite that appears over the player while boosting
 onready var boostLine = find_node ("BoostLine")				# the line renderer for boosting and stomping
 
-onready var boostBar = get_node ("/root/Level/CanvasLayer/boostBar")		# holds a reference to the boost UI bar
-onready var ringCounter = get_node ("/root/Level/CanvasLayer/RingCounter")	# holds a reference to the ring counter UI item
+onready var hud_boost = get_node ("/root/Level/game_hud/hud_boost")		# holds a reference to the boost UI bar
 
 onready var boostSound = find_node ("sound_boost")	# the audio stream player with the boost sound
 onready var RailSound = find_node ("sound_rail")	# the audio stream player with the rail grinding sound
@@ -148,14 +151,20 @@ var previous_ground_velocity := 0.0	# the ground velocity during the previous fr
 
 var backLayer := false	# whether or not the player is currently on the "back" layer
 
+func _ready () -> void:
+	$"/root/game_space/level_timer".start ()
+	return
+
 # Generic input that all player character will use.
 func _input (_event: InputEvent) -> void:
+	if (is_unmoveable):	# No player input right now...
+		return
 	if (Input.is_action_just_pressed ("toggle_pause")):	# Pause the game?
 		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Level/CanvasLayer")
 	# Movement direction can be anywhere between -1 (left) to +1 (right).
 	movement_direction = (Input.get_action_strength ("move_right") - Input.get_action_strength ("move_left"))
-	if (Input.is_action_pressed ("boost")):	# So long as boost is held down, increase the counter.
-		is_boosting += (1 if boostBar.boostAmount > 0 else 0)
+	if (Input.is_action_pressed ("boost") && can_boost):	# So long as boost is held down, increase the counter.
+		is_boosting += (1 if hud_boost.value > 0 else 0)
 	else:									# No boosting, so reset to zero.
 		is_boosting = 0
 	is_stomping = (Input.is_action_just_pressed ("stomp") && !is_stomping)
@@ -232,6 +241,7 @@ func _setVelocity (vel) -> void:
 
 func reset_game () -> void:
 	reset_character ()
+	game_space.reset_game_space ()
 	if get_tree ().reload_current_scene () != OK:
 		printerr ("ERROR: Could not reload current scene!")
 		get_tree ().quit ()
@@ -243,4 +253,43 @@ func reset_character () -> void:
 	state = -1
 	position = start_position
 	setCollisionLayer (false)
+	return
+
+func isAttacking () -> bool:
+	return (is_stomping || is_boosting != 0 || is_rolling || (player_sprite.animation == "Roll" && state == -1))
+
+func hurt_player () -> void:
+	if not invincible > 0:
+		invincible = 120*5
+		state = -1
+		player_velocity = Vector2 (-player_velocity.x+sin (rotation) * JUMP_VELOCITY, player_velocity.y-cos (rotation) * JUMP_VELOCITY)
+		rotation = 0
+		position += player_velocity*2
+		player_sprite.animation = "hurt"
+
+		voiceSound.play_hurt ()
+
+		var t = 0
+		var angle := 101.25
+		var n := false
+		var speed = 4
+
+		while (t < min (game_space.rings_collected, 32)):
+			var currentRing = bounceRing.instance ()
+			currentRing.ring_velocity = Vector2 (-sin (angle) * speed, cos (angle) * speed)/2
+			currentRing.position = position
+			if (n):
+				currentRing.ring_velocity.x *= -1
+				angle += 22.5
+			n = !n
+			t += 1
+			if (t == 16):
+				speed = 2
+				angle = 101.25
+			get_node ("/root/Level").call_deferred ("add_child", currentRing)
+		if (game_space.rings_collected > 0):
+			game_space.rings_collected = 0
+			sound_player.play_sound ("lose_rings")
+		else:
+			game_space.lives -= 1
 	return

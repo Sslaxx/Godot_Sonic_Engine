@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/RingCount.png-4ba7dd5ba7004de6e28b207f3cd2bcb6.stex"
+path="res://.import/Rings.svg-7d96b71cd0ae4b5d1fd29e956068faa5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/UI/HUD/RingCount.png"
-dest_files=[ "res://.import/RingCount.png-4ba7dd5ba7004de6e28b207f3cd2bcb6.stex" ]
+source_file="res://Assets/Graphics/UI/HUD/Rings.svg"
+dest_files=[ "res://.import/Rings.svg-7d96b71cd0ae4b5d1fd29e956068faa5.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

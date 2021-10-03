@@ -8,7 +8,7 @@
 [ext_resource path="res://Scenes/LevelItems/FallingParticles.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/LevelItems/DeathPlane.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scripts/AudioPlayer.gd" type="Script" id=9]
-[ext_resource path="res://Scenes/UI/HUD/LevelUILayout.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/UI/HUD/game_hud.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0790698, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
@@ -229,6 +229,6 @@ rotation = -1.5708
 scale = Vector2( 2.5, 1000 )
 texture = SubResource( 11 )
 
-[node name="CanvasLayer" parent="." instance=ExtResource( 15 )]
-
 [node name="DeathPlane" parent="." instance=ExtResource( 7 )]
+
+[node name="game_hud" parent="." instance=ExtResource( 11 )]
