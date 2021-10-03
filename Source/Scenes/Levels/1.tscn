@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scenes/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/LevelItems/LayerSwitch.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Scenes/UI/HUD/BoostBar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/LevelItems/Rail.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/LevelItems/DeathPlane.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/UI/HUD/game_hud.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/Graphics/Tiles/leafStorm.tres" type="TileSet" id=50]
 [ext_resource path="res://Assets/Audio/Music/JehJehRocket.ogg" type="AudioStream" id=51]
 [ext_resource path="res://Assets/Graphics/Backgrounds/back.png" type="Texture" id=52]
@@ -278,15 +279,14 @@ curve = SubResource( 8 )
 position = Vector2( 3845.88, -7.41382 )
 curve = SubResource( 9 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="RingCounter" parent="CanvasLayer" instance=ExtResource( 4 )]
-
-[node name="boostBar" parent="CanvasLayer" instance=ExtResource( 5 )]
-infiniteBoost = true
-
 [node name="DeathPlane" parent="." instance=ExtResource( 7 )]
 position = Vector2( 4024.73, 1986.99 )
+
+[node name="game_hud" parent="." instance=ExtResource( 8 )]
+
+[node name="boostBar" parent="game_hud" instance=ExtResource( 5 )]
+
+[node name="RingCounter" parent="game_hud" instance=ExtResource( 4 )]
 
 [connection signal="area_entered" from="LayerSwitches/Flipper-2" to="Player" method="_flipLayer"]
 [connection signal="area_entered" from="LayerSwitches/Flipper-3" to="Player" method="_flipLayer"]

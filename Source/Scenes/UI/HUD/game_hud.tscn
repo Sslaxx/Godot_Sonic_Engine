@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/UI/HUD/game_hud.gd" type="Script" id=1]
+
+[node name="game_hud" type="CanvasLayer"]
+layer = 32
+script = ExtResource( 1 )

@@ -33,9 +33,6 @@ func _ready () -> void:
 func process_boost () -> void:
 	# handles the boosting controls
 
-	if (!can_boost):	# If the character can't boost, don't do anything here.
-		return
-
 	if (is_boosting == 1 && boostBar.boostAmount > 0):
 		# setup the boost when the player first presses the boost button
 
@@ -207,11 +204,11 @@ func process_air () -> void:
 	player_sprite.rotation = lerp (player_sprite.rotation, 0, 0.1)
 
 	# handle left and right sideways collision (respectively)
-	if LSideCast.is_colliding () and LSideCast.get_collision_point ().distance_to (position+player_velocity) < 14 and player_velocity.x < 0:
+	if LSideCast.is_colliding () && LSideCast.get_collision_point ().distance_to (position+player_velocity) < 14 && player_velocity.x < 0:
 		player_velocity = Vector2 (0, player_velocity.y)
 		position = LSideCast.get_collision_point () + Vector2 (14, 0)
 		is_boosting = 0
-	if RSideCast.is_colliding () and RSideCast.get_collision_point ().distance_to (position+player_velocity) < 14 and player_velocity.x > 0:
+	if RSideCast.is_colliding () && RSideCast.get_collision_point ().distance_to (position+player_velocity) < 14 && player_velocity.x > 0:
 		player_velocity = Vector2 (0, player_velocity.y)
 		position = RSideCast.get_collision_point () - Vector2 (14, 0)
 		is_boosting = 0
@@ -233,10 +230,8 @@ func process_air () -> void:
 func process_ground () -> void:
 	# caluclate the ground rotation for the left and right raycast colliders,
 	# respectively
-	langle = -atan2 (LeftCast.get_collision_normal ().x, LeftCast.get_collision_normal ().y)-PI
-	langle = limitAngle (langle)
-	rangle = -atan2 (RightCast.get_collision_normal ().x, RightCast.get_collision_normal ().y)-PI
-	rangle = limitAngle (rangle)
+	langle = limitAngle (-atan2 (LeftCast.get_collision_normal ().x, LeftCast.get_collision_normal ().y)-PI)
+	rangle = limitAngle (-atan2 (RightCast.get_collision_normal ().x, RightCast.get_collision_normal ().y)-PI)
 
 	# calculate the average ground rotation
 	if abs (langle-rangle) < PI:
@@ -353,7 +348,7 @@ func process_ground () -> void:
 			player_sprite.speed_scale = 1
 			is_crouching = false
 
-	# run boost controls
+	# Process boost.
 	process_boost ()
 
 	# jumping
@@ -505,39 +500,4 @@ func _on_Rail_area_entered (area, curve, origin) -> void:
 			boostSound.stream = stomp_land_sfx
 			boostSound.play ()
 			is_stomping = false
-	return
-
-func isAttacking () -> bool:
-	return (is_stomping || is_boosting != 0 || is_rolling || (player_sprite.animation == "Roll" && state == -1))
-
-func hurt_player () -> void:
-	if not invincible > 0:
-		invincible = 120*5
-		state = -1
-		player_velocity = Vector2 (-player_velocity.x+sin (rotation) * JUMP_VELOCITY, player_velocity.y-cos (rotation) * JUMP_VELOCITY)
-		rotation = 0
-		position += player_velocity*2
-		player_sprite.animation = "hurt"
-
-		voiceSound.play_hurt ()
-
-		var t = 0
-		var angle := 101.25
-		var n := false
-		var speed = 4
-
-		while t < min (ringCounter.ringCount, 32):
-			var currentRing = bounceRing.instance ()
-			currentRing.ring_velocity = Vector2 (-sin (angle) * speed, cos (angle) * speed)/2
-			currentRing.position = position
-			if n:
-				currentRing.ring_velocity.x *= -1
-				angle += 22.5
-			n = not n
-			t += 1
-			if t == 16:
-				speed = 2
-				angle = 101.25
-			get_node ("/root/Level").call_deferred ("add_child", currentRing)
-		ringCounter.ringCount = 0
 	return

@@ -118,8 +118,8 @@ onready var player_sprite = find_node ("PlayerSprites")		# the player's sprite
 onready var boostSprite = find_node ("BoostSprite")			# the sprite that appears over the player while boosting
 onready var boostLine = find_node ("BoostLine")				# the line renderer for boosting and stomping
 
-onready var boostBar = get_node ("/root/Level/CanvasLayer/boostBar")		# holds a reference to the boost UI bar
-onready var ringCounter = get_node ("/root/Level/CanvasLayer/RingCounter")	# holds a reference to the ring counter UI item
+onready var boostBar = get_node ("/root/Level/game_hud/boostBar")		# holds a reference to the boost UI bar
+onready var ringCounter = get_node ("/root/Level/game_hud/RingCounter")	# holds a reference to the ring counter UI item
 
 onready var boostSound = find_node ("sound_boost")	# the audio stream player with the boost sound
 onready var RailSound = find_node ("sound_rail")	# the audio stream player with the rail grinding sound
@@ -154,7 +154,7 @@ func _input (_event: InputEvent) -> void:
 		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Level/CanvasLayer")
 	# Movement direction can be anywhere between -1 (left) to +1 (right).
 	movement_direction = (Input.get_action_strength ("move_right") - Input.get_action_strength ("move_left"))
-	if (Input.is_action_pressed ("boost")):	# So long as boost is held down, increase the counter.
+	if (Input.is_action_pressed ("boost") && can_boost):	# So long as boost is held down, increase the counter.
 		is_boosting += (1 if boostBar.boostAmount > 0 else 0)
 	else:									# No boosting, so reset to zero.
 		is_boosting = 0
@@ -243,4 +243,39 @@ func reset_character () -> void:
 	state = -1
 	position = start_position
 	setCollisionLayer (false)
+	return
+
+func isAttacking () -> bool:
+	return (is_stomping || is_boosting != 0 || is_rolling || (player_sprite.animation == "Roll" && state == -1))
+
+func hurt_player () -> void:
+	if not invincible > 0:
+		invincible = 120*5
+		state = -1
+		player_velocity = Vector2 (-player_velocity.x+sin (rotation) * JUMP_VELOCITY, player_velocity.y-cos (rotation) * JUMP_VELOCITY)
+		rotation = 0
+		position += player_velocity*2
+		player_sprite.animation = "hurt"
+
+		voiceSound.play_hurt ()
+
+		var t = 0
+		var angle := 101.25
+		var n := false
+		var speed = 4
+
+		while t < min (ringCounter.ringCount, 32):
+			var currentRing = bounceRing.instance ()
+			currentRing.ring_velocity = Vector2 (-sin (angle) * speed, cos (angle) * speed)/2
+			currentRing.position = position
+			if n:
+				currentRing.ring_velocity.x *= -1
+				angle += 22.5
+			n = not n
+			t += 1
+			if t == 16:
+				speed = 2
+				angle = 101.25
+			get_node ("/root/Level").call_deferred ("add_child", currentRing)
+		ringCounter.ringCount = 0
 	return
