@@ -151,6 +151,10 @@ var previous_ground_velocity := 0.0	# the ground velocity during the previous fr
 
 var backLayer := false	# whether or not the player is currently on the "back" layer
 
+func _ready () -> void:
+	$"/root/game_space/level_timer".start ()
+	return
+
 # Generic input that all player character will use.
 func _input (_event: InputEvent) -> void:
 	if (is_unmoveable):	# No player input right now...

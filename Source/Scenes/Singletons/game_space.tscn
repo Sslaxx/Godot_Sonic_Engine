@@ -4,3 +4,5 @@
 
 [node name="game_space" type="Node"]
 script = ExtResource( 1 )
+
+[node name="level_timer" type="Timer" parent="."]
