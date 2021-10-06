@@ -21,9 +21,9 @@ func _process (_delta) -> void:
 ### _on_enemy_area_entered
 # Something has collided with this, what is it and what happens next?
 func _on_enemy_area_entered (area) -> void:
-	if (area.name == "Player" and alive):	# Hitting the egg pawn...
-		# if the player isn't attacking (boosting or jumping), hurt the player
-		if (!area.is_player_attacking ()):
+	if (area.name == "Player" and alive):	# The player is hitting the egg pawn...
+		# If the player isn't attacking, hurt the player.
+		if (not area.is_player_attacking ()):
 			area.hurt_player ()
 			return
 		elif (area.state == -1):	# Bounce a bit back into the air if attacking from above.

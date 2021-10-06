@@ -10,9 +10,9 @@ func _ready () -> void:
 ### _on_DeathPlane_area_entered
 # Something has entered the death plane, deal with it.
 func _on_DeathPlane_area_entered (area) -> void:
-	if (area.name == "Player"):
+	if (area.name == "Player"):	# If the player has entered the death plane, they lose a life.
 		game_space.lives -= 1
-	else:
+	else:						# Anything else gets destroyed.
 		print_debug (area.name, " has entered the death plane.")
 		area.queue_free ()
 	return

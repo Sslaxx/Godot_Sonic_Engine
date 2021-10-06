@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Time.svg-051b8ab0a745f2e243ca1d3ad16f5ac2.stex"
+path="res://.import/hud_boost_bar_over.png-92554cd90230c4e7fa8c7177d88b0161.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/UI/HUD/Time.svg"
-dest_files=[ "res://.import/Time.svg-051b8ab0a745f2e243ca1d3ad16f5ac2.stex" ]
+source_file="res://Assets/Graphics/UI/HUD/hud_boost_bar_over.png"
+dest_files=[ "res://.import/hud_boost_bar_over.png-92554cd90230c4e7fa8c7177d88b0161.stex" ]
 
 [params]
 

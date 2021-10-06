@@ -1,10 +1,22 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Assets/Graphics/UI/HUD/Rings.svg" type="Texture" id=1]
+[ext_resource path="res://Assets/Graphics/UI/HUD/hud_rings.svg" type="Texture" id=1]
 [ext_resource path="res://Assets/Fonts/NiseSegaSonic-Regular-30.tres" type="DynamicFont" id=2]
 
 [sub_resource type="Animation" id=1]
 resource_name = "default"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "no_rings"
@@ -26,6 +38,7 @@ tracks/0/keys = {
 texture = ExtResource( 1 )
 centered = false
 hframes = 2
+frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/default = SubResource( 1 )

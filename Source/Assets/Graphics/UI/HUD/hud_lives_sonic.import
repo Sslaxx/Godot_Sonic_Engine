@@ -9,7 +9,7 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Graphics/UI/HUD/Lives_Icon.svg"
+source_file="res://Assets/Graphics/UI/HUD/hud_lives_sonic.svg"
 dest_files=[ "res://.import/Lives_Icon.svg-3939b5baae6b8469a8143dbdee78c690.stex" ]
 
 [params]

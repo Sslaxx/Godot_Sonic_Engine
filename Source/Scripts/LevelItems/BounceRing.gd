@@ -17,8 +17,7 @@ var collectionStartTimer := 120
 export(Vector2) var ring_velocity := Vector2.ZERO
 
 func _process (_delta) -> void:
-	# make the sprite invisible once the ring has been collected and
-	# the sparkle animation is over
+	# Remove the sprite once the ring has been collected and the sparkle animation is over.
 	if (collected and sprite.animation == "Sparkle" and sprite.frame >= 6):
 		queue_free ()
 	return
@@ -27,7 +26,7 @@ func _physics_process (_delta) -> void:
 	# count down the timer
 	collectionStartTimer -= 1
 
-	if not collected:
+	if (not collected):
 		# bounce on relevent ground nodes
 		if (downCast.is_colliding () and downCast.get_collision_point ().y < position.y + 16):
 			ring_velocity.y *= -1
@@ -49,7 +48,7 @@ func _physics_process (_delta) -> void:
 
 func _on_Ring_area_entered (area) -> void:
 	# if the ring hasn't been collected and the player collides...
-	if ((not collected) and area.name == "Player" and collectionStartTimer <= 0):
+	if (not collected and area.name == "Player" and collectionStartTimer <= 0):
 		collected = true					# set collected to true
 		sprite.animation = "Sparkle"		# set the animation to the sparkle
 		sound_player.play_sound ("ring_get")						# play the ring sfx

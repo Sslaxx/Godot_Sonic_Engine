@@ -18,15 +18,14 @@ func _ready () -> void:
 	return
 
 func _on_Area2D_area_entered (area) -> void:
-	# if the player collides
-	if area.name == "Player":
+	if (area.name == "Player"):	# The player is colliding.
 
-		# calculate what vector to launch Sonic in
+		# calculate what vector to launch the player in
 		var launchVector := Vector2 (0, -STRENGTH).rotated (rotation)
 
 		# calculate how fast sonic is moving perpendicularly to the spring
-		var sideVector = (Vector2.ZERO if DIRECTED else area.player_velocity.dot (launchVector.normalized ().rotated (PI/2))\
-				*launchVector.normalized ().rotated (PI/2))
+		var sideVector = (Vector2.ZERO if DIRECTED else area.player_velocity.dot (launchVector.normalized ().rotated (PI / 2))\
+				*launchVector.normalized ().rotated (PI / 2))
 
 		# calculate the final vector to throw sonic in. Ignore sideVector if 
 		# the spring is directed

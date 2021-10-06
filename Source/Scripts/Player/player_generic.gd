@@ -244,7 +244,7 @@ func hurt_player () -> void:
 		player_velocity = Vector2 (-player_velocity.x+sin (rotation) * JUMP_VELOCITY, player_velocity.y-cos (rotation) * JUMP_VELOCITY)
 		rotation = 0
 		position += player_velocity*2
-		player_sprite.animation = "hurt"
+		change_player_animation ("hurt")
 
 		voiceSound.play_hurt ()
 
@@ -272,4 +272,12 @@ func hurt_player () -> void:
 			sound_player.play_sound ("lose_rings")
 		else:									# No rings, so lose a life.
 			game_space.lives -= 1
+	return
+
+### change_player_animation
+# Changes the player character's animation.
+func change_player_animation (new_anim) -> void:
+	if (new_anim == player_sprite.animation):	# Don't "switch" to the same sprite.
+		return
+	player_sprite.animation = new_anim
 	return

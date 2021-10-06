@@ -1,10 +1,22 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Assets/Graphics/UI/HUD/Time.svg" type="Texture" id=1]
+[ext_resource path="res://Assets/Graphics/UI/HUD/hud_time.svg" type="Texture" id=1]
 [ext_resource path="res://Assets/Fonts/NiseSegaSonic-Regular-30.tres" type="DynamicFont" id=2]
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=1]
 resource_name = "default"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "time_running_out"
@@ -26,7 +38,7 @@ centered = false
 hframes = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/default = SubResource( 3 )
+anims/default = SubResource( 1 )
 anims/time_running_out = SubResource( 2 )
 
 [node name="count" type="Label" parent="."]

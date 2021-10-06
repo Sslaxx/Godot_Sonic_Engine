@@ -173,7 +173,7 @@ func process_air () -> void:
 	if is_stomping:
 
 		# set the animation state
-		player_sprite.animation = "Roll"
+		change_player_animation ("Roll")
 		rotation = 0
 		player_sprite.rotation = 0
 
@@ -307,7 +307,7 @@ func process_ground () -> void:
 		rotation = 0
 		is_rolling = false
 
-	# fall off of walls if you aren't going fast enough
+	# If your speed isn't high enough you'll fall off walls.
 	if abs (rotation) >= PI/3 and (abs (ground_velocity) < 0.2 or (not ground_velocity == 0 and not previous_ground_velocity == 0 and not ground_velocity/abs (ground_velocity) == previous_ground_velocity/abs (previous_ground_velocity))):
 		state = -1
 		player_sprite.rotation = rotation
@@ -316,19 +316,19 @@ func process_ground () -> void:
 		is_rolling = false
 
 	# set the player's sprite based on his ground velocity
-	if not is_rolling:
-		if abs (ground_velocity) > threshold_run_fast:
-			player_sprite.animation = "Run4"
-		elif abs (ground_velocity) > threshold_run_slow:
-			player_sprite.animation = "Run3"
-		elif abs (ground_velocity) > threshold_jog:
-			player_sprite.animation = "Run2"
-		elif abs (ground_velocity) > threshold_walk:
-			player_sprite.animation = "Walk"
-		elif not is_crouching:
-			player_sprite.animation = "idle"
+	if (not is_rolling):
+		if (abs (ground_velocity) > threshold_run_fast):
+			change_player_animation ("Run4")
+		elif (abs (ground_velocity) > threshold_run_slow):
+			change_player_animation ("Run3")
+		elif (abs (ground_velocity) > threshold_jog):
+			change_player_animation ("Run2")
+		elif (abs (ground_velocity) > threshold_walk):
+			change_player_animation ("Walk")
+		elif (not is_crouching):
+			change_player_animation ("idle")
 	else:
-		player_sprite.animation = "Roll"
+		change_player_animation ("Roll")
 
 	if abs (ground_velocity) > threshold_walk:
 		is_crouching = false
@@ -338,12 +338,12 @@ func process_ground () -> void:
 		is_rolling = false
 
 	if (is_crouching and abs (ground_velocity) <= threshold_walk):
-		player_sprite.animation = "Crouch"
+		change_player_animation ("Crouch")
 		player_sprite.speed_scale = 1
 		if player_sprite.frame > 3:
 			player_sprite.speed_scale = 0
 	elif is_crouching:
-		player_sprite.animation = "Crouch"
+		change_player_animation ("Crouch")
 		player_sprite.speed_scale = 1
 		if player_sprite.frame >= 6:
 			player_sprite.speed_scale = 1
@@ -359,7 +359,7 @@ func process_ground () -> void:
 			player_velocity = Vector2 (player_velocity.x+sin (rotation)*JUMP_VELOCITY, player_velocity.y-cos (rotation)*JUMP_VELOCITY)
 			player_sprite.rotation = rotation
 			rotation = 0
-			player_sprite.animation = "Roll"
+			change_player_animation ("Roll")
 			can_jump_short = true
 			is_rolling = false
 			sound_player.play_sound ("player_jump")
@@ -368,7 +368,7 @@ func process_ground () -> void:
 
 	if ((is_jumping and is_crouching) or is_spindashing):
 		is_spindashing = true
-		player_sprite.animation = "Spindash"
+		change_player_animation ("Spindash")
 		player_sprite.speed_scale = 1
 		if !is_crouching:
 			ground_velocity = 15*(1 if player_sprite.flip_h else -1)
@@ -393,18 +393,18 @@ func _physics_process (_delta) -> void:
 	# run the correct function based on the current air/ground state
 	if is_grinding:
 		if is_tricking:
-			player_sprite.animation = "railTrick"
+			change_player_animation ("railTrick")
 			player_sprite.speed_scale = 1
-			if player_sprite.frame > 0:
+			if (player_sprite.frame > 0):
 				stop_while_tricking = true
-			if player_sprite.frame <= 0 and stop_while_tricking:
+			if (player_sprite.frame <= 0 and stop_while_tricking):
 				is_tricking = false
 				var part = boostParticle.instance ()
 				part.position = position
 				part.boostValue = 2
 				get_node ("/root/Level").add_child (part)
 		else:
-			player_sprite.animation = "Grind"
+			change_player_animation ("Grind")
 
 		if (is_stomping and (not is_tricking)):
 			is_tricking = true
@@ -441,7 +441,7 @@ func _physics_process (_delta) -> void:
 				player_velocity = Vector2 (player_velocity.x+sin (rotation)*JUMP_VELOCITY, player_velocity.y-cos (rotation)*JUMP_VELOCITY)
 				player_sprite.rotation = rotation
 				rotation = 0
-				player_sprite.animation = "Roll"
+				change_player_animation ("Roll")
 				can_jump_short = true
 				is_rolling = false
 				is_grinding = false

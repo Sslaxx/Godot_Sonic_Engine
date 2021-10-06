@@ -44,6 +44,11 @@ func set_rings (value:int) -> void:
 	if (real_rings_collected >= 100):	# Over 100 rings means you get an extra life!
 		real_rings_collected -= 100
 		game_space.lives += 1
+	# Ensure the "no rings" animation plays when required.
+	if (rings_collected < 1 and not $"/root/Level/game_hud/hud_rings/AnimationPlayer".current_animation == "no_rings"):
+		$"/root/Level/game_hud/hud_rings/AnimationPlayer".play ("no_rings")
+	elif (rings_collected > 0 and not $"/root/Level/game_hud/hud_rings/AnimationPlayer".current_animation == "default"):
+		$"/root/Level/game_hud/hud_rings/AnimationPlayer".play ("default")
 	return
 
 ### on_level_timer_timeout
@@ -83,11 +88,11 @@ func set_lives (value:int) -> void:
 # Returns the given angle as an angle (in radians) between -PI and PI
 func angle_limit (ang:float) -> float:
 	var sign1 := 1.0
-	if not ang == 0:
-		sign1 = ang/abs (ang)
-	ang = fmod (ang, PI*2)
-	if abs (ang) > PI:
-		ang = (2*PI-abs (ang))*sign1*-1
+	if (not ang == 0):
+		sign1 = ang / abs (ang)
+	ang = fmod (ang, PI * 2)
+	if (abs (ang) > PI):
+		ang = (2 * PI - abs (ang)) * sign1 * -1
 	return (ang)
 
 ### angle_distance
@@ -97,8 +102,8 @@ func angle_distance (rot1:float, rot2:float) -> float:
 	rot1 = angle_limit (rot1)
 	rot2 = angle_limit (rot2)
 	if abs (rot1-rot2) > PI and rot1>rot2:
-		return (abs (angle_limit (rot1)-(angle_limit (rot2)+PI*2)))
-	elif abs (rot1-rot2) > PI and rot1<rot2:
-		return (abs ((angle_limit (rot1)+PI*2)-(angle_limit (rot2))))
+		return (abs (angle_limit (rot1) - (angle_limit (rot2) + PI * 2)))
+	elif abs (rot1 - rot2) > PI and rot1 < rot2:
+		return (abs ((angle_limit (rot1) + PI * 2)-(angle_limit (rot2))))
 	else:
-		return abs (rot1-rot2)
+		return abs (rot1 - rot2)
