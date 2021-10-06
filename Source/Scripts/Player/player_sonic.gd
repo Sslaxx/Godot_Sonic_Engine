@@ -33,7 +33,7 @@ func _ready () -> void:
 func process_boost () -> void:
 	# handles the boosting controls
 
-	if (is_boosting == 1 && hud_boost.value > 0):
+	if (is_boosting == 1 and hud_boost.value > 0):
 		# setup the boost when the player first presses the boost button
 
 		is_boosting += 1
@@ -50,14 +50,14 @@ func process_boost () -> void:
 		cam.set_follow_smoothing (BOOST_CAM_LAG)
 
 		# stop moving vertically as much if you are in the air (air boost)
-		if (state == -1 && player_velocity.x < ACCELERATION):
+		if (state == -1 and player_velocity.x < ACCELERATION):
 			player_velocity.x = BOOST_SPEED * (1 if player_sprite.flip_h else -1)
 			player_velocity.y = 0
 
 		voiceSound.play_effort ()
 		return
 
-	if (is_boosting > 1 && hud_boost.value > 0):
+	if (is_boosting > 1 and hud_boost.value > 0):
 #		if boostSound.stream != boost_sfx:
 #			boostSound.stream = boost_sfx
 #			boostSound.play ()
@@ -71,7 +71,7 @@ func process_boost () -> void:
 		elif (state == 0):
 			# apply boost if you are on the ground
 			ground_velocity = BOOST_SPEED * (1 if player_sprite.flip_h else -1)
-		elif (angleDist (player_velocity.angle (), 0) < PI/3 || angleDist (player_velocity.angle (), PI) < PI/3):
+		elif (game_space.angle_distance (player_velocity.angle (), 0) < PI/3 or game_space.angle_distance (player_velocity.angle (), PI) < PI/3):
 			# apply boost if you are in the air (and are not going straight up or down
 			player_velocity = player_velocity.normalized ()*BOOST_SPEED
 		else:
@@ -109,8 +109,8 @@ func process_air () -> void:
 	player_velocity = Vector2 (player_velocity.x, player_velocity.y+GRAVITY)
 
 	# get the angle of the point for the left and right floor raycasts
-	langle = limitAngle (-atan2 (LeftCast.get_collision_normal ().x, LeftCast.get_collision_normal ().y)-PI)
-	rangle = limitAngle (-atan2 (RightCast.get_collision_normal ().x, RightCast.get_collision_normal ().y)-PI)
+	langle = game_space.angle_limit (-atan2 (LeftCast.get_collision_normal ().x, LeftCast.get_collision_normal ().y)-PI)
+	rangle = game_space.angle_limit (-atan2 (RightCast.get_collision_normal ().x, RightCast.get_collision_normal ().y)-PI)
 
 	# calculate the average ground rotation (averaged between the points)
 	avgGRot = (langle+rangle)/2
@@ -204,11 +204,11 @@ func process_air () -> void:
 	player_sprite.rotation = lerp (player_sprite.rotation, 0, 0.1)
 
 	# handle left and right sideways collision (respectively)
-	if LSideCast.is_colliding () && LSideCast.get_collision_point ().distance_to (position+player_velocity) < 14 && player_velocity.x < 0:
+	if LSideCast.is_colliding () and LSideCast.get_collision_point ().distance_to (position+player_velocity) < 14 and player_velocity.x < 0:
 		player_velocity = Vector2 (0, player_velocity.y)
 		position = LSideCast.get_collision_point () + Vector2 (14, 0)
 		is_boosting = 0
-	if RSideCast.is_colliding () && RSideCast.get_collision_point ().distance_to (position+player_velocity) < 14 && player_velocity.x > 0:
+	if RSideCast.is_colliding () and RSideCast.get_collision_point ().distance_to (position+player_velocity) < 14 and player_velocity.x > 0:
 		player_velocity = Vector2 (0, player_velocity.y)
 		position = RSideCast.get_collision_point () - Vector2 (14, 0)
 		is_boosting = 0
@@ -220,7 +220,7 @@ func process_air () -> void:
 
 	# Allow the player to change the duration of the jump by releasing the jump
 	# button early
-	if (!is_jumping && can_jump_short):
+	if ((not is_jumping) and can_jump_short):
 		player_velocity = Vector2 (player_velocity.x, max (player_velocity.y, -JUMP_SHORT_LIMIT))
 
 	# ensure the proper speed of the animated sprites
@@ -230,23 +230,24 @@ func process_air () -> void:
 func process_ground () -> void:
 	# caluclate the ground rotation for the left and right raycast colliders,
 	# respectively
-	langle = limitAngle (-atan2 (LeftCast.get_collision_normal ().x, LeftCast.get_collision_normal ().y)-PI)
-	rangle = limitAngle (-atan2 (RightCast.get_collision_normal ().x, RightCast.get_collision_normal ().y)-PI)
+	langle = game_space.angle_limit (-atan2 (LeftCast.get_collision_normal ().x, LeftCast.get_collision_normal ().y)-PI)
+	rangle = game_space.angle_limit (-atan2 (RightCast.get_collision_normal ().x, RightCast.get_collision_normal ().y)-PI)
 
 	# calculate the average ground rotation
 	if abs (langle-rangle) < PI:
-		avgGRot = limitAngle ((langle+rangle)/2)
+		avgGRot = game_space.angle_limit ((langle+rangle)/2)
 	else:
-		avgGRot = limitAngle ((langle+rangle+PI*2)/2)
+		avgGRot = game_space.angle_limit ((langle+rangle+PI*2)/2)
 
-	# caluculate the average ground level based on the available colliders
-	if (LeftCast.is_colliding () and RightCast.is_colliding ()):
+	# Calculate the average ground level based on the available colliders. Rotation is set if left/right colliders are
+	# colliding, but not both.
+	if (LeftCast.is_colliding () and RightCast.is_colliding ()):	# Both colliders are colliding.
 		avgGPoint = Vector2 ((LeftCast.get_collision_point ().x+RightCast.get_collision_point ().x)/2, (LeftCast.get_collision_point ().y+RightCast.get_collision_point ().y)/2)
 		# ((acos (LeftCast.get_collision_normal ().y/1)+PI)+(acos (RightCast.get_collision_normal ().y/1)+PI))/2
-	elif LeftCast.is_colliding ():
+	elif LeftCast.is_colliding ():	# Left collider only.
 		avgGPoint = Vector2 (LeftCast.get_collision_point ().x+cos (rotation)*8, LeftCast.get_collision_point ().y+sin (rotation)*8)
 		avgGRot = langle
-	elif RightCast.is_colliding ():
+	elif RightCast.is_colliding ():	# Right collider only.
 		avgGPoint = Vector2 (RightCast.get_collision_point ().x-cos (rotation)*8, RightCast.get_collision_point ().y-sin (rotation)*8)
 		avgGRot = rangle
 
@@ -254,7 +255,7 @@ func process_ground () -> void:
 	rotation = avgGRot
 	position = Vector2 (avgGPoint.x+20*sin (rotation), avgGPoint.y-20*cos (rotation))
 
-	if not is_rolling:
+	if (not is_rolling):
 		# handle rightward acceleration
 		if movement_direction > 0 and ground_velocity < MAX_SPEED:
 			ground_velocity = ground_velocity + ACCELERATION
@@ -281,8 +282,8 @@ func process_ground () -> void:
 		# general deceleration and stopping if no key is pressed
 		# declines at a constant rate
 		if not ground_velocity == 0:
-			ground_velocity -= SPEED_DECAY * (ground_velocity/abs (ground_velocity)) * 0.3
-		if abs (ground_velocity) < (SPEED_DECAY * 1.5):
+			ground_velocity -= (SPEED_DECAY * (ground_velocity/abs (ground_velocity)) * 0.3)
+		if (abs (ground_velocity) < (SPEED_DECAY * 1.5)):
 			ground_velocity = 0
 
 	# left and right wall collision, respectively
@@ -336,7 +337,7 @@ func process_ground () -> void:
 		ground_velocity = 0
 		is_rolling = false
 
-	if (is_crouching && abs (ground_velocity) <= threshold_walk):
+	if (is_crouching and abs (ground_velocity) <= threshold_walk):
 		player_sprite.animation = "Crouch"
 		player_sprite.speed_scale = 1
 		if player_sprite.frame > 3:
@@ -352,7 +353,7 @@ func process_ground () -> void:
 	process_boost ()
 
 	# jumping
-	if (is_jumping && !is_crouching && !is_boosting):
+	if (is_jumping and !is_crouching and (not is_boosting)):
 		if not can_jump_short:
 			state = -1
 			player_velocity = Vector2 (player_velocity.x+sin (rotation)*JUMP_VELOCITY, player_velocity.y-cos (rotation)*JUMP_VELOCITY)
@@ -365,7 +366,7 @@ func process_ground () -> void:
 	else:
 		can_jump_short = false
 
-	if ((is_jumping && is_crouching) || is_spindashing):
+	if ((is_jumping and is_crouching) or is_spindashing):
 		is_spindashing = true
 		player_sprite.animation = "Spindash"
 		player_sprite.speed_scale = 1
@@ -405,7 +406,7 @@ func _physics_process (_delta) -> void:
 		else:
 			player_sprite.animation = "Grind"
 
-		if (is_stomping && !is_tricking):
+		if (is_stomping and (not is_tricking)):
 			is_tricking = true
 			stop_while_tricking = false
 			voiceSound.play_effort ()
@@ -434,7 +435,7 @@ func _physics_process (_delta) -> void:
 		else:
 			player_velocity = dirVec*grindVel
 
-		if (is_jumping && !is_crouching):
+		if (is_jumping and (not is_crouching)):
 			if not can_jump_short:
 				state = -1
 				player_velocity = Vector2 (player_velocity.x+sin (rotation)*JUMP_VELOCITY, player_velocity.y-cos (rotation)*JUMP_VELOCITY)
@@ -474,7 +475,7 @@ func _physics_process (_delta) -> void:
 			i.rotation = -rotation
 
 	# ensure the player is facing the right direction
-	player_sprite.flip_h = (false if movement_direction < 0 && player_velocity.x < 0.0 else (true if movement_direction > 0 && player_velocity.x > 0.0 else player_sprite.flip_h))
+	player_sprite.flip_h = (false if movement_direction < 0 and player_velocity.x < 0.0 else (true if movement_direction > 0 and player_velocity.x > 0.0 else player_sprite.flip_h))
 
 	return
 

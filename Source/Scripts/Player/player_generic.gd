@@ -59,9 +59,6 @@ export(float, 1) var CAM_LAG_SLIDE = 0.01
 # how long is the player's boost/stomp trail?
 var TRAIL_LENGTH = 40
 
-# Cheating flags!
-export(bool) var infinite_boost_cheat = false
-
 # Capability flags. What can this character do?
 export(bool) var can_boost := false		# Sonic, Blaze, Shadow etc. can boost their speed.
 export(bool) var can_fly := false		# Tails, Cream etc. can fly.
@@ -163,41 +160,17 @@ func _input (_event: InputEvent) -> void:
 		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Level/CanvasLayer")
 	# Movement direction can be anywhere between -1 (left) to +1 (right).
 	movement_direction = (Input.get_action_strength ("move_right") - Input.get_action_strength ("move_left"))
-	if (Input.is_action_pressed ("boost") && can_boost):	# So long as boost is held down, increase the counter.
+	if (Input.is_action_pressed ("boost") and can_boost):	# So long as boost is held down, increase the counter.
 		is_boosting += (1 if hud_boost.value > 0 else 0)
 	else:									# No boosting, so reset to zero.
 		is_boosting = 0
-	is_stomping = (Input.is_action_just_pressed ("stomp") && !is_stomping)
+	is_stomping = (Input.is_action_just_pressed ("stomp") and (not is_stomping))
 	is_jumping = Input.is_action_pressed ("jump")
 	is_crouching = Input.is_action_pressed ("ui_down")
 	# reset using the dedicated reset button
 	if Input.is_action_pressed ('restart'):
 		reset_game ()
 	return
-
-### limitAngle
-# Returns the given angle as an angle (in radians) between -PI and PI
-func limitAngle (ang:float) -> float:
-	var sign1 := 1.0
-	if not ang == 0:
-		sign1 = ang/abs (ang)
-	ang = fmod (ang, PI*2)
-	if abs (ang) > PI:
-		ang = (2*PI-abs (ang))*sign1*-1
-	return (ang)
-
-### angleDist
-# Returns the angle distance between rot1 and rot2, even over the 360deg mark.
-# (i.e. 350 and 10 will be 20 degrees apart)
-func angleDist (rot1:float, rot2:float) -> float:
-	rot1 = limitAngle (rot1)
-	rot2 = limitAngle (rot2)
-	if abs (rot1-rot2) > PI and rot1>rot2:
-		return (abs (limitAngle (rot1)-(limitAngle (rot2)+PI*2)))
-	elif abs (rot1-rot2) > PI and rot1<rot2:
-		return (abs ((limitAngle (rot1)+PI*2)-(limitAngle (rot2))))
-	else:
-		return abs (rot1-rot2)
 
 ### setCollisionLayer
 # shortcut to change the collision mask for every raycast node connected to
@@ -247,17 +220,23 @@ func reset_game () -> void:
 		get_tree ().quit ()
 	return
 
+### reset_character
+# Resets your character ready for use. Sets rings to 0, speed to zero etc.
 func reset_character () -> void:
-	# reset your position and state if you pull a dimps (fall out of the world)
+	game_space.rings_collected = 0
 	player_velocity = Vector2.ZERO
 	state = -1
 	position = start_position
 	setCollisionLayer (false)
 	return
 
-func isAttacking () -> bool:
-	return (is_stomping || is_boosting != 0 || is_rolling || (player_sprite.animation == "Roll" && state == -1))
+### is_player_attacking
+# Is the player attacking something?
+func is_player_attacking () -> bool:
+	return (is_stomping or is_boosting != 0 or is_rolling or (player_sprite.animation == "Roll" and state == -1))
 
+### hurt_player
+# The player has been harmed, react accordingly.
 func hurt_player () -> void:
 	if not invincible > 0:
 		invincible = 120*5
@@ -269,13 +248,14 @@ func hurt_player () -> void:
 
 		voiceSound.play_hurt ()
 
-		var t = 0
+		var t := 0
 		var angle := 101.25
 		var n := false
-		var speed = 4
+		var speed := 4.0
+		var currentRing = null
 
-		while (t < min (game_space.rings_collected, 32)):
-			var currentRing = bounceRing.instance ()
+		while (t < min (game_space.rings_collected, 32)):	# Up to 32 rings get thrown into the air if hurt.
+			currentRing = bounceRing.instance ()
 			currentRing.ring_velocity = Vector2 (-sin (angle) * speed, cos (angle) * speed)/2
 			currentRing.position = position
 			if (n):
@@ -287,9 +267,9 @@ func hurt_player () -> void:
 				speed = 2
 				angle = 101.25
 			get_node ("/root/Level").call_deferred ("add_child", currentRing)
-		if (game_space.rings_collected > 0):
+		if (game_space.rings_collected > 0):	# Lose any rings collected.
 			game_space.rings_collected = 0
 			sound_player.play_sound ("lose_rings")
-		else:
+		else:									# No rings, so lose a life.
 			game_space.lives -= 1
 	return

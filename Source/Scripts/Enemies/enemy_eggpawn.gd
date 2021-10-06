@@ -18,25 +18,22 @@ func _process (_delta) -> void:
 			queue_free ()
 	return
 
-# Something has hit the pawn?
+### _on_enemy_area_entered
+# Something has collided with this, what is it and what happens next?
 func _on_enemy_area_entered (area) -> void:
-	# if the player collides with this egg pawn
-	if (area.name == "Player" && alive):
-		# if the player isn't attacking (boosting or jumping) hurt the player
-		if (not area.isAttacking ()):
+	if (area.name == "Player" and alive):	# Hitting the egg pawn...
+		# if the player isn't attacking (boosting or jumping), hurt the player
+		if (!area.is_player_attacking ()):
 			area.hurt_player ()
 			return
-		elif (area.state == -1):
-			# if it is attacking from the air, bounce it back up a bit 
+		elif (area.state == -1):	# Bounce a bit back into the air if attacking from above.
 			area.player_velocity.y = -5
-		if (area.isAttacking ()):
-			# Been hit, take damage.
-#			get_node ("/root/Node2D/CanvasLayer/boostBar").changeBy (2)
+		if (area.is_player_attacking ()):	# Carry out the attack.
 			hits_left = hits_left - 1
-			if (hits_left > 0):	# More than one hit remaining means the enemy survives.
+			if (hits_left > 0):	# More than one hit remaining means the enemy survives for now.
 				return
 
-		# this robot is dead...
+		# This robot is dead...
 		alive = false
 		game_space.score += 100
 		var newNode = boostParticle.instance ()
@@ -44,11 +41,11 @@ func _on_enemy_area_entered (area) -> void:
 		newNode.boostValue = 2
 		get_node ("/root/Level").add_child (newNode)
 
-		# set the velocity to match Sonic's speed, with a few constraints
+		# Set the velocity to match Sonic's speed, with a few constraints.
 		explode_velocity = area.get ("player_velocity") * 1.5
 		explode_velocity.y = min (explode_velocity.y, 10)
 		explode_velocity.y -= 7
 
-		# play the explosion sfx
+		# Play the explosion sfx.
 		sound_player.play_sound ("enemy_boom")
 	return

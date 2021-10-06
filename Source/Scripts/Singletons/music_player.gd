@@ -17,7 +17,7 @@ onready var bus_volume := AudioServer.get_bus_volume_db (bus_index) setget set_b
 # Returns true if it plays something, otherwise false.
 func play_music (path_to_music = "", play_from = 0.0) -> void:
 	var play_me = null		# This will be used to set the stream data.
-	if (!ResourceLoader.exists (path_to_music)):	# The music file doesn't actually exist.
+	if (not ResourceLoader.exists (path_to_music)):	# The music file doesn't actually exist.
 		printerr ("ERROR: music_player has no music to play! ", path_to_music, " does not exist.")
 		return
 	play_me = load (path_to_music) as AudioStream

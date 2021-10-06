@@ -26,14 +26,14 @@ func placeRings () -> void:
 # place rings once the script is run in play mode
 func _ready () -> void:
 	placeRings ()
-	if (not Engine.editor_hint):
+	if (!Engine.editor_hint):
 		for i in posList:
 			var currentRing = ringSource.instance ()
 			currentRing.position = i
 			add_child (currentRing)
 	return
 
-# place ring circle hints inside the editor
+# Place ring circle hints inside the editor, otherwise free the spawner if it has no children.
 func _process (_delta) -> void:
 	if (Engine.editor_hint):
 		var pposList = posList

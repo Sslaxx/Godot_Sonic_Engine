@@ -20,7 +20,7 @@ onready var config_file = ConfigFile.new ()	# New instance for a config file if 
 # Loads and saves configuration info (fullscreen, volume, etc) for any app.
 func load_config () -> void:
 	var config_ok = config_file.load (CONFIG_FILENAME)
-	if (config_ok != OK):	# Can't open a config file. May not be an error, note!
+	if (not config_ok == OK):	# Can't open a config file. May not be an error, note!
 		printerr ("WARNING: load_config couldn't open a config file, code ", config_ok, " - may not be created yet.")
 	# A config file exists (or probably will exist), read from it.
 	OS.window_fullscreen = config_file.get_value ("Graphics", "fullscreen", false)
@@ -38,6 +38,6 @@ func save_config () -> void:
 	config_file.set_value ("Audio", "music", db2linear (music_player.bus_volume))
 	config_file.set_value ("Audio", "sound", db2linear (sound_player.bus_volume))
 	config_ok = config_file.save (CONFIG_FILENAME)	# Save the config.
-	if (config_ok != OK):	# If something does go wrong, though, say so.
+	if (not config_ok == OK):	# If something does go wrong, though, say so.
 		printerr ("ERROR: save_config couldn't save the config file! Error code ", config_ok, ".")
 	return
