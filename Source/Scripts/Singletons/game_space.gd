@@ -75,6 +75,7 @@ func set_score (value):
 # If none, game over.
 func set_lives (value:int) -> void:
 	if (value < lives):	# Lost a life!
+		sound_player.play_sound ("player_death")
 		$"/root/Level/Player".reset_character ()
 	elif (value > lives):	# Extra life time...
 		print ("EXTRA LIFE STUFF HERE")

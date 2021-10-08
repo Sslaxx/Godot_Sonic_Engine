@@ -58,7 +58,7 @@ func process_boost () -> void:
 		return
 
 	if (is_boosting > 1 and hud_boost.value > 0):
-#		if boostSound.stream != boost_sfx:
+#		if (not boostSound.stream == boost_sfx):
 #			boostSound.stream = boost_sfx
 #			boostSound.play ()
 
@@ -353,8 +353,8 @@ func process_ground () -> void:
 	process_boost ()
 
 	# jumping
-	if (is_jumping and !is_crouching and (not is_boosting)):
-		if not can_jump_short:
+	if (is_jumping and not is_crouching and (not is_boosting)):
+		if (not can_jump_short):
 			state = -1
 			player_velocity = Vector2 (player_velocity.x+sin (rotation)*JUMP_VELOCITY, player_velocity.y-cos (rotation)*JUMP_VELOCITY)
 			player_sprite.rotation = rotation
@@ -370,7 +370,7 @@ func process_ground () -> void:
 		is_spindashing = true
 		change_player_animation ("Spindash")
 		player_sprite.speed_scale = 1
-		if !is_crouching:
+		if (not is_crouching):
 			ground_velocity = 15*(1 if player_sprite.flip_h else -1)
 			is_spindashing = false
 			is_rolling = true
@@ -382,7 +382,7 @@ func process_ground () -> void:
 
 func _physics_process (_delta) -> void:
 	# calculate the player's physics, controls, and all that fun stuff
-	if invincible > 0:	# Invincible? If so, run the counter down.
+	if (invincible > 0):	# Invincible? If so, run the counter down.
 		invincible -= 1
 		player_sprite.modulate = Color (1, 1, 1, 1-(invincible % 30)/30.0)
 	else:
@@ -482,12 +482,10 @@ func _physics_process (_delta) -> void:
 func _on_Rail_area_entered (area, curve, origin) -> void:
 	# this function is run whenever the player hits a rail.
 
-	# stick to the current rail if you're already grinding
-	if (is_grinding):
+	if (is_grinding):	# If you're already grinding, continue with that.
 		return
 
-	# activate grind, if you are going downward
-	if (self == area and player_velocity.y > 0):
+	if (self == area and player_velocity.y > 0):	# Start grinding.
 		is_grinding = true
 		grindCurve = curve
 		grindPos = origin
@@ -496,8 +494,7 @@ func _on_Rail_area_entered (area, curve, origin) -> void:
 
 		RailSound.play ()
 
-		# play the sound if you were stomping
-		if is_stomping:
+		if (is_stomping):	# Landing after stomping.
 			boostSound.stream = stomp_land_sfx
 			boostSound.play ()
 			is_stomping = false

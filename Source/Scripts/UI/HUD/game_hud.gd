@@ -1,8 +1,12 @@
+### game_hud.gd
+# Controls the in-game HUD.
+
 extends CanvasLayer
 
-# Called when the node enters the scene tree for the first time.
+# When entering the scene tree, connect signals for the boost bar.
 func _ready() -> void:
 	helper_functions._whocares = $"hud_boost".connect ("value_changed", self, "on_boost_hud_value_changed")
+	on_boost_hud_value_changed ($"hud_boost".value)
 	return
 
 ### on_boost_hud_value_changed

@@ -16,21 +16,21 @@ export(PackedScene) var ringSource
 # stores a list of positions at which to spawn rings
 var posList = []
 
-# Generates the positions for all rings and stores them in posList
-func placeRings () -> void:
-	posList.append (Vector2.ZERO)
-	for i in range (1, count):
-		posList.append ((posList[i-1])+offset.rotated (rotationalOffset*i))
-	return
-
 # place rings once the script is run in play mode
 func _ready () -> void:
-	placeRings ()
-	if (!Engine.editor_hint):
+	place_rings ()
+	if (not Engine.editor_hint):
 		for i in posList:
 			var currentRing = ringSource.instance ()
 			currentRing.position = i
 			add_child (currentRing)
+	return
+
+# Generates the positions for all rings and stores them in posList
+func place_rings () -> void:
+	posList.append (Vector2.ZERO)
+	for i in range (1, count):
+		posList.append ((posList[i-1])+offset.rotated (rotationalOffset*i))
 	return
 
 # Place ring circle hints inside the editor, otherwise free the spawner if it has no children.
@@ -38,7 +38,7 @@ func _process (_delta) -> void:
 	if (Engine.editor_hint):
 		var pposList = posList
 		posList = []
-		placeRings ()
+		place_rings ()
 		if (not pposList == posList):
 			update ()
 	else:
@@ -47,7 +47,7 @@ func _process (_delta) -> void:
 			queue_free ()
 	return
 
-# draw the circles for the rings
+# Draw placeholder circles if in the editor.
 func _draw () -> void:
 	if (Engine.editor_hint):
 		for i in posList:

@@ -31,7 +31,7 @@ func _ready () -> void:
 func _on_Area2D_area_entered (area) -> void:
 	# if the player collides with this rail, call "_on_Rail_area_entered" to let it
 	# know it should be grinding now.
-	if (area.name == "Player"):
+	if (area is preload ("res://Scripts/Player/player_generic.gd")):
 		area._on_Rail_area_entered (area, curve, global_position)
 		area.rotation = 0.0
 	return

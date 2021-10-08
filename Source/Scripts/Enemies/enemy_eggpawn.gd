@@ -21,7 +21,7 @@ func _process (_delta) -> void:
 ### _on_enemy_area_entered
 # Something has collided with this, what is it and what happens next?
 func _on_enemy_area_entered (area) -> void:
-	if (area.name == "Player" and alive):	# The player is hitting the egg pawn...
+	if (area is preload ("res://Scripts/Player/player_generic.gd") and alive):	# The player is hitting the egg pawn...
 		# If the player isn't attacking, hurt the player.
 		if (not area.is_player_attacking ()):
 			area.hurt_player ()

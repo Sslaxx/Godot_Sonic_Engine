@@ -1,4 +1,4 @@
-# flips sonic between the two available collision layers
+# flips the player between two available collision layers
 
 extends Area2D
 
@@ -9,8 +9,8 @@ func _ready () -> void:
 	return
 
 func _on_LayerSwitch_area_entered (area) -> void:
-	if (area.name == "Player"):
-		match (function):
+	if (area is preload ("res://Scripts/Player/player_generic.gd")):
+		match (function):	# Switch layers.
 			"layer 0":
 				area._layer0 (area)
 			"layer 1":

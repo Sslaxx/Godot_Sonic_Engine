@@ -32,7 +32,7 @@ func _ready () -> void:
 func _input (_event) -> void:
 	if (Input.is_action_just_pressed ("toggle_full_screen")):	# Toggle full-screen mode.
 		print_debug ("Toggling fullscreen ", ("off" if OS.window_fullscreen else "on"), ".")
-		OS.window_fullscreen = !OS.window_fullscreen
+		OS.window_fullscreen = not OS.window_fullscreen
 	return
 
 ### add_child_to_node
@@ -97,7 +97,7 @@ func value_in_range (check_value, range_start, range_end) -> bool:
 	if (range_start >= range_end):
 		printerr ("ERROR: value_in_range cannot use ", range_start, "; it must be less than ", range_end, ".")
 		return (false)
-	return (check_value >= range_start && check_value <= range_end)
+	return (check_value >= range_start and check_value <= range_end)
 
 # Adjusts the master bus volume.
 func set_master_bus_volume (value) -> void:

@@ -66,7 +66,7 @@ export(bool) var can_glide := false		# Knuckles etc. can glide.
 
 # state flags
 var can_jump_short := false				# can the player shorten the jump?
-var is_boosting := 0
+var is_boosting := 0					# How long has the player been boosting?
 var is_crouching := false
 var is_flying := false
 var is_gliding := false
@@ -132,21 +132,21 @@ var RAILSOUND_MAXPITCH = 2.0
 onready var cam = find_node ("Camera2D")
 onready var grindParticles = find_node ("GrindParticles")	# a reference to the particle node for griding
 
-var avgGPoint := Vector2.ZERO	#average Ground position between the two foot raycasts
-var avgTPoint := Vector2.ZERO	#average top position between the two head raycasts
-var avgGRot := 0.0					# average ground rotation between the two foot raycasts
-var langle := 0.0					# the angle of the left foot raycast
-var rangle := 0.0					# the angle of the right foot raycast
-var lRot := 0.0						# the player's rotation during the last frame
+var avgGPoint := Vector2.ZERO			#average Ground position between the two foot raycasts
+var avgTPoint := Vector2.ZERO			#average top position between the two head raycasts
+var avgGRot := 0.0						# average ground rotation between the two foot raycasts
+var langle := 0.0						# the angle of the left foot raycast
+var rangle := 0.0						# the angle of the right foot raycast
+var lRot := 0.0							# the player's rotation during the last frame
 var start_position := Vector2.ZERO		# the position at which the player starts the level
-var startLayer := 0.0				# the layer on which the player starts
+var startLayer := 0.0					# the layer on which the player starts
 
-var player_velocity := Vector2.ZERO	# the player's current velocity
+var player_velocity := Vector2.ZERO		# the player's current velocity
 
-var ground_velocity := 0.0		# the ground velocity
-var previous_ground_velocity := 0.0	# the ground velocity during the previous frame
+var ground_velocity := 0.0				# the ground velocity
+var previous_ground_velocity := 0.0		# the ground velocity during the previous frame
 
-var backLayer := false	# whether or not the player is currently on the "back" layer
+var backLayer := false					# whether or not the player is currently on the "back" layer
 
 func _ready () -> void:
 	$"/root/game_space/level_timer".start ()
@@ -154,22 +154,22 @@ func _ready () -> void:
 
 # Generic input that all player character will use.
 func _input (_event: InputEvent) -> void:
-	if (is_unmoveable):	# No player input right now...
+	if (is_unmoveable):	# No player input wanted right now...
 		return
 	if (Input.is_action_just_pressed ("toggle_pause")):	# Pause the game?
-		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Level/CanvasLayer")
+		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Level/game_hud")
 	# Movement direction can be anywhere between -1 (left) to +1 (right).
 	movement_direction = (Input.get_action_strength ("move_right") - Input.get_action_strength ("move_left"))
 	if (Input.is_action_pressed ("boost") and can_boost):	# So long as boost is held down, increase the counter.
 		is_boosting += (1 if hud_boost.value > 0 else 0)
 	else:									# No boosting, so reset to zero.
 		is_boosting = 0
-	is_stomping = (Input.is_action_just_pressed ("stomp") and (not is_stomping))
+	is_stomping = (Input.is_action_just_pressed ("stomp") and not is_stomping)
 	is_jumping = Input.is_action_pressed ("jump")
-	is_crouching = Input.is_action_pressed ("ui_down")
-	# reset using the dedicated reset button
-	if Input.is_action_pressed ('restart'):
-		reset_game ()
+	is_crouching = Input.is_action_pressed ("crouch")
+	if (OS.is_debug_build ()):	# DEBUGGING CONTROLS.
+		if (Input.is_action_pressed ("restart")):	# Restart the game?
+			reset_game ()
 	return
 
 ### setCollisionLayer
@@ -215,7 +215,7 @@ func _setVelocity (vel) -> void:
 func reset_game () -> void:
 	reset_character ()
 	game_space.reset_game_space ()
-	if get_tree ().reload_current_scene () != OK:
+	if (not get_tree ().reload_current_scene () == OK):
 		printerr ("ERROR: Could not reload current scene!")
 		get_tree ().quit ()
 	return
@@ -233,7 +233,7 @@ func reset_character () -> void:
 ### is_player_attacking
 # Is the player attacking something?
 func is_player_attacking () -> bool:
-	return (is_stomping or is_boosting != 0 or is_rolling or (player_sprite.animation == "Roll" and state == -1))
+	return (is_stomping or (not is_boosting == 0) or is_rolling or (player_sprite.animation == "Roll" and state == -1))
 
 ### hurt_player
 # The player has been harmed, react accordingly.
@@ -261,7 +261,7 @@ func hurt_player () -> void:
 			if (n):
 				currentRing.ring_velocity.x *= -1
 				angle += 22.5
-			n = !n
+			n = not n
 			t += 1
 			if (t == 16):
 				speed = 2
@@ -277,7 +277,7 @@ func hurt_player () -> void:
 ### change_player_animation
 # Changes the player character's animation.
 func change_player_animation (new_anim) -> void:
-	if (new_anim == player_sprite.animation):	# Don't "switch" to the same sprite.
+	if (new_anim == player_sprite.animation):	# Don't "switch" to the same animation.
 		return
 	player_sprite.animation = new_anim
 	return

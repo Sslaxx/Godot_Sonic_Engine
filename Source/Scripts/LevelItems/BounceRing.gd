@@ -48,9 +48,9 @@ func _physics_process (_delta) -> void:
 
 func _on_Ring_area_entered (area) -> void:
 	# if the ring hasn't been collected and the player collides...
-	if (not collected and area.name == "Player" and collectionStartTimer <= 0):
-		collected = true					# set collected to true
-		sprite.animation = "Sparkle"		# set the animation to the sparkle
+	if (not collected and area is preload ("res://Scripts/Player/player_generic.gd") and collectionStartTimer <= 0):
+		collected = true											# set collected to true
+		sprite.animation = "Sparkle"								# set the animation to the sparkle
 		sound_player.play_sound ("ring_get")						# play the ring sfx
-		game_space.rings_collected += 1	# add a ring to the total
+		game_space.rings_collected += 1								# add a ring to the total
 	return

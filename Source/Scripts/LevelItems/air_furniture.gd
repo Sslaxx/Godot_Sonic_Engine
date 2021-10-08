@@ -18,7 +18,7 @@ func _ready () -> void:
 	return
 
 func _on_Area2D_area_entered (area) -> void:
-	if (area.name == "Player"):	# The player is colliding.
+	if (area is preload ("res://Scripts/Player/player_generic.gd")):	# The player is colliding.
 
 		# calculate what vector to launch the player in
 		var launchVector := Vector2 (0, -STRENGTH).rotated (rotation)
@@ -47,12 +47,12 @@ func _on_Area2D_area_entered (area) -> void:
 
 		# set sonic's sprite rotation to Sonic's rotation
 		area.find_node ("PlayerSprites").rotation = area.rotation
-		# reset sonic's rotation (this is typically how sonic works in the air)
+		# reset the player's rotation (this is typically how the player works in the air)
 		area.rotation = 0
 
 		# set the current animation frame to 0
 		animation.frame = 0
-		# play the sound
+		# play the attached sound
 		sound.play ()
 		# scale it (only applies if "ringScale" is enabled)
 		scaling = 2
