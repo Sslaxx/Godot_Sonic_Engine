@@ -4,11 +4,12 @@
 
 extends Node
 
-var lives:int = 3 setget set_lives				# How many lives until game over?
-var rings_collected:int = 0 setget set_rings	# Rings (collectibles) the player has.
-var real_rings_collected:int = 0				# Collectibles the player REALLY has. Used for lives purposes.
-var score:int = 0 setget set_score				# What's the score?
-var timer:Vector2 = Vector2.ZERO				# x represents seconds, y minutes.
+var lives:int = 3 setget set_lives						# How many lives until game over?
+var rings_collected:int = 0 setget set_rings			# Rings (collectibles) the player has.
+var real_rings_collected:int = 0						# Collectibles the player REALLY has.
+var score:int = 0 setget set_score						# What's the score?
+var timer:Vector2 = Vector2.ZERO						# x represents seconds, y minutes.
+onready var last_checkpoint:Vector2 = Vector2.ZERO		# What is the last checkpoint position.
 
 onready var player_class = preload ("res://Scripts/Player/player_generic.gd")	# Convenience for checking player stuff.
 onready var enemy_class = preload ("res://Scripts/Enemies/enemy_generic.gd")	# Convenience for checking enemies.
@@ -84,7 +85,7 @@ func set_lives (value:int) -> void:
 		sound_player.play_sound ("player_death")
 		player_node.reset_character ()
 	elif (value > lives):	# Extra life time...
-		print ("EXTRA LIFE STUFF HERE")
+		jingle_player.play_jingle ("res://Assets/Audio/Jingles/Extra_Life.ogg")
 	lives = value
 	if (lives < 0):	# No lives left? It's game over.
 		player_node.reset_game ()

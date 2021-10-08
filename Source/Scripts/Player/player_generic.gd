@@ -222,8 +222,10 @@ func reset_character () -> void:
 	game_space.rings_collected = 0
 	player_velocity = Vector2.ZERO
 	state = -1
-	position = start_position
+	position = game_space.last_checkpoint
 	setCollisionLayer (false)
+	game_space.change_boost_value (-60)
+	game_space.change_boost_value (20)
 	return
 
 ### is_player_attacking
