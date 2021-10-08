@@ -15,9 +15,6 @@ func _ready () -> void:
 		if i is Particles2D and not i == grindParticles:
 			parts.append (i)
 
-	# get the debug label
-	text_label = find_node ("RichTextLabel")
-
 	# set the start position and layer
 	start_position = position
 	startLayer = collision_layer
@@ -33,7 +30,7 @@ func _ready () -> void:
 func process_boost () -> void:
 	# handles the boosting controls
 
-	if (is_boosting == 1 && hud_boost.value > 0):
+	if (is_boosting == 1 and hud_boost.value > 0):
 		# setup the boost when the player first presses the boost button
 
 		is_boosting += 1
@@ -50,18 +47,14 @@ func process_boost () -> void:
 		cam.set_follow_smoothing (BOOST_CAM_LAG)
 
 		# stop moving vertically as much if you are in the air (air boost)
-		if (state == -1 && player_velocity.x < ACCELERATION):
+		if (state == -1 and player_velocity.x < ACCELERATION):
 			player_velocity.x = BOOST_SPEED * (1 if player_sprite.flip_h else -1)
 			player_velocity.y = 0
 
 		voiceSound.play_effort ()
 		return
 
-	if (is_boosting > 1 && hud_boost.value > 0):
-#		if boostSound.stream != boost_sfx:
-#			boostSound.stream = boost_sfx
-#			boostSound.play ()
-
+	if (is_boosting > 1 and hud_boost.value > 0):
 		# linearly interpolate the camera's "boost lag" back down to the normal (non-boost) value
 		cam.set_follow_smoothing (lerp (cam.get_follow_smoothing (), DEFAULT_CAM_LAG, CAM_LAG_SLIDE))
 
@@ -71,7 +64,7 @@ func process_boost () -> void:
 		elif (state == 0):
 			# apply boost if you are on the ground
 			ground_velocity = BOOST_SPEED * (1 if player_sprite.flip_h else -1)
-		elif (angleDist (player_velocity.angle (), 0) < PI/3 || angleDist (player_velocity.angle (), PI) < PI/3):
+		elif (game_space.angle_distance (player_velocity.angle (), 0) < PI/3 or game_space.angle_distance (player_velocity.angle (), PI) < PI/3):
 			# apply boost if you are in the air (and are not going straight up or down
 			player_velocity = player_velocity.normalized ()*BOOST_SPEED
 		else:
@@ -85,7 +78,7 @@ func process_boost () -> void:
 		boostLine.rotation = -rotation
 
 		# decrease boost value while boosting
-		game_space.change_boost_value (-0.05)
+		game_space.change_boost_value (-0.06)
 	else:
 		# the camera lag should be normal while not boosting
 		cam.set_follow_smoothing (DEFAULT_CAM_LAG)
@@ -98,7 +91,7 @@ func process_boost () -> void:
 		boostSprite.visible = false
 		boostLine.visible = false
 
-		# we're not boosting, so set boosting to false
+		# We're not boosting, so set boosting counter to zero.
 		is_boosting = 0
 	return
 
@@ -109,8 +102,8 @@ func process_air () -> void:
 	player_velocity = Vector2 (player_velocity.x, player_velocity.y+GRAVITY)
 
 	# get the angle of the point for the left and right floor raycasts
-	langle = limitAngle (-atan2 (LeftCast.get_collision_normal ().x, LeftCast.get_collision_normal ().y)-PI)
-	rangle = limitAngle (-atan2 (RightCast.get_collision_normal ().x, RightCast.get_collision_normal ().y)-PI)
+	langle = game_space.angle_limit (-atan2 (LeftCast.get_collision_normal ().x, LeftCast.get_collision_normal ().y)-PI)
+	rangle = game_space.angle_limit (-atan2 (RightCast.get_collision_normal ().x, RightCast.get_collision_normal ().y)-PI)
 
 	# calculate the average ground rotation (averaged between the points)
 	avgGRot = (langle+rangle)/2
@@ -118,47 +111,42 @@ func process_air () -> void:
 	# set a default avgGPoint
 	avgGPoint = Vector2.INF
 
-	# calculate the average ground point (the elifs are for cases where one
-	# raycast cannot find a collider)
-	if (LeftCast.is_colliding () and RightCast.is_colliding ()):
-		text_label.text += "Left & Right Collision"
+	# Calculate the average ground point.
+	if (LeftCast.is_colliding () and RightCast.is_colliding ()):	# Both colliders hitting something.
 		var LeftCastPt = Vector2 (
-			LeftCast.get_collision_point ().x+cos (rotation)*8,
-			LeftCast.get_collision_point ().y+sin (rotation)*8)
+			LeftCast.get_collision_point ().x + cos (rotation) * 8,
+			LeftCast.get_collision_point ().y + sin (rotation) * 8)
 		var RightCastPt = Vector2 (
-			RightCast.get_collision_point ().x-cos (rotation)*8,
-			RightCast.get_collision_point ().y-sin (rotation)*8)
+			RightCast.get_collision_point ().x - cos (rotation) * 8,
+			RightCast.get_collision_point ().y - sin (rotation) * 8)
 		avgGPoint = (LeftCastPt if position.distance_to (LeftCastPt) < position.distance_to (RightCastPt) else RightCastPt)
-	elif LeftCast.is_colliding ():
-		text_label.text += "Left Collision"
+	elif LeftCast.is_colliding ():	# Left collider only is hitting something.
 		avgGPoint = Vector2 (LeftCast.get_collision_point ().x+cos (rotation)*8, LeftCast.get_collision_point ().y+sin (rotation)*8)
 		avgGRot = langle
-	elif RightCast.is_colliding ():
-		text_label.text += "Right Collision"
+	elif RightCast.is_colliding ():	# Right collider only is hitting something.
 		avgGPoint = Vector2 (RightCast.get_collision_point ().x-cos (rotation)*8, RightCast.get_collision_point ().y-sin (rotation)*8)
 		avgGRot = rangle
 
-	# calculate the average ceiling height based on the collision raycasts
-	# (again, elifs are for cases where only one raycast is successful)
-	if (LeftCastTop.is_colliding () and RightCastTop.is_colliding ()):
+	# calculate the average ceiling height based on the collision raycasts.
+	if (LeftCastTop.is_colliding () and RightCastTop.is_colliding ()):	# Both colliders hitting something.
 		avgTPoint = Vector2 (
 			(LeftCastTop.get_collision_point ().x+RightCastTop.get_collision_point ().x)/2,
 			(LeftCastTop.get_collision_point ().y+RightCastTop.get_collision_point ().y)/2)
-	elif LeftCastTop.is_colliding ():
+	elif LeftCastTop.is_colliding ():	# Left collider only.
 		avgTPoint = Vector2 (LeftCastTop.get_collision_point ().x+cos (rotation)*8, LeftCastTop.get_collision_point ().y+sin (rotation)*8)
-	elif RightCastTop.is_colliding ():
+	elif RightCastTop.is_colliding ():	# Right collider only.
 		avgTPoint = Vector2 (RightCastTop.get_collision_point ().x-cos (rotation)*8, RightCastTop.get_collision_point ().y-sin (rotation)*8)
 
 	# handle collision with the ground
-	if abs (avgGPoint.y-position.y) < 21: #-player_velocity.y
+	if (abs (avgGPoint.y-position.y) < 21):
 		print_debug ("Ground hit at ", position)
 		state = 0
 		rotation = avgGRot
 		player_sprite.rotation = 0
 		ground_velocity = sin (rotation) * (player_velocity.y+0.5) + cos (rotation) * player_velocity.x
 
-		# play the stomp sound if you were stomping
-		if is_stomping:
+		# If you were stomping, play the sound and stop stomping.
+		if (is_stomping):
 			boostSound.stream = stomp_land_sfx
 			boostSound.play ()
 			is_stomping = false
@@ -170,10 +158,10 @@ func process_air () -> void:
 	### STOMPING CONTROLS ###
 
 	# initiating a stomp
-	if is_stomping:
+	if (is_stomping):
 
 		# set the animation state
-		player_sprite.animation = "Roll"
+		change_player_animation ("Roll")
 		rotation = 0
 		player_sprite.rotation = 0
 
@@ -186,7 +174,7 @@ func process_air () -> void:
 		boostSound.play ()
 
 	# for every frame while a stomp is occuring...
-	if is_stomping:
+	if (is_stomping):
 		player_velocity = Vector2 (max (-MAX_STOMP_XVEL, min (MAX_STOMP_XVEL, player_velocity.x)), STOMP_SPEED)
 
 		# make sure that the boost sprite is not visible
@@ -195,32 +183,29 @@ func process_air () -> void:
 		# manage the boost line
 		boostLine.visible = true
 		boostLine.rotation = -rotation
-
-		# don't run the boost code when stomping
 	else:
-		process_boost ()
+		process_boost ()	# Boost is only processed when not stomping.
 
 	# slowly slide the player's rotation back to zero as you fly through the air
 	player_sprite.rotation = lerp (player_sprite.rotation, 0, 0.1)
 
 	# handle left and right sideways collision (respectively)
-	if LSideCast.is_colliding () && LSideCast.get_collision_point ().distance_to (position+player_velocity) < 14 && player_velocity.x < 0:
+	if LSideCast.is_colliding () and LSideCast.get_collision_point ().distance_to (position+player_velocity) < 14 and player_velocity.x < 0:
 		player_velocity = Vector2 (0, player_velocity.y)
 		position = LSideCast.get_collision_point () + Vector2 (14, 0)
 		is_boosting = 0
-	if RSideCast.is_colliding () && RSideCast.get_collision_point ().distance_to (position+player_velocity) < 14 && player_velocity.x > 0:
+	if RSideCast.is_colliding () and RSideCast.get_collision_point ().distance_to (position+player_velocity) < 14 and player_velocity.x > 0:
 		player_velocity = Vector2 (0, player_velocity.y)
 		position = RSideCast.get_collision_point () - Vector2 (14, 0)
 		is_boosting = 0
 
 	# top collision
 	if avgTPoint.distance_to (position+player_velocity) < 21:
-#		Vector2 (avgTPoint.x-20*sin (rotation), avgTPoint.y+20*cos (rotation))
 		player_velocity = Vector2 (player_velocity.x, 0)
 
 	# Allow the player to change the duration of the jump by releasing the jump
 	# button early
-	if (!is_jumping && can_jump_short):
+	if ((not is_jumping) and can_jump_short):
 		player_velocity = Vector2 (player_velocity.x, max (player_velocity.y, -JUMP_SHORT_LIMIT))
 
 	# ensure the proper speed of the animated sprites
@@ -228,33 +213,32 @@ func process_air () -> void:
 	return
 
 func process_ground () -> void:
-	# caluclate the ground rotation for the left and right raycast colliders,
-	# respectively
-	langle = limitAngle (-atan2 (LeftCast.get_collision_normal ().x, LeftCast.get_collision_normal ().y)-PI)
-	rangle = limitAngle (-atan2 (RightCast.get_collision_normal ().x, RightCast.get_collision_normal ().y)-PI)
+	# caluclate the ground rotation for the left and right raycast colliders, respectively
+	langle = game_space.angle_limit (-atan2 (LeftCast.get_collision_normal ().x, LeftCast.get_collision_normal ().y)-PI)
+	rangle = game_space.angle_limit (-atan2 (RightCast.get_collision_normal ().x, RightCast.get_collision_normal ().y)-PI)
 
 	# calculate the average ground rotation
 	if abs (langle-rangle) < PI:
-		avgGRot = limitAngle ((langle+rangle)/2)
+		avgGRot = game_space.angle_limit ((langle+rangle)/2)
 	else:
-		avgGRot = limitAngle ((langle+rangle+PI*2)/2)
+		avgGRot = game_space.angle_limit ((langle+rangle+PI*2)/2)
 
-	# caluculate the average ground level based on the available colliders
-	if (LeftCast.is_colliding () and RightCast.is_colliding ()):
+	# Calculate the average ground level based on the available colliders. Rotation is set if left/right colliders are
+	# colliding, but not both.
+	if (LeftCast.is_colliding () and RightCast.is_colliding ()):	# Both colliders are colliding.
 		avgGPoint = Vector2 ((LeftCast.get_collision_point ().x+RightCast.get_collision_point ().x)/2, (LeftCast.get_collision_point ().y+RightCast.get_collision_point ().y)/2)
-		# ((acos (LeftCast.get_collision_normal ().y/1)+PI)+(acos (RightCast.get_collision_normal ().y/1)+PI))/2
-	elif LeftCast.is_colliding ():
+	elif LeftCast.is_colliding ():	# Left collider only.
 		avgGPoint = Vector2 (LeftCast.get_collision_point ().x+cos (rotation)*8, LeftCast.get_collision_point ().y+sin (rotation)*8)
 		avgGRot = langle
-	elif RightCast.is_colliding ():
+	elif RightCast.is_colliding ():	# Right collider only.
 		avgGPoint = Vector2 (RightCast.get_collision_point ().x-cos (rotation)*8, RightCast.get_collision_point ().y-sin (rotation)*8)
 		avgGRot = rangle
 
 	# set the rotation and position of the player to snap to the ground.
 	rotation = avgGRot
-	position = Vector2 (avgGPoint.x+20*sin (rotation), avgGPoint.y-20*cos (rotation))
+	position = Vector2 (avgGPoint.x + 20 * sin (rotation), avgGPoint.y - 20 * cos (rotation))
 
-	if not is_rolling:
+	if (not is_rolling):
 		# handle rightward acceleration
 		if movement_direction > 0 and ground_velocity < MAX_SPEED:
 			ground_velocity = ground_velocity + ACCELERATION
@@ -281,8 +265,8 @@ func process_ground () -> void:
 		# general deceleration and stopping if no key is pressed
 		# declines at a constant rate
 		if not ground_velocity == 0:
-			ground_velocity -= SPEED_DECAY * (ground_velocity/abs (ground_velocity)) * 0.3
-		if abs (ground_velocity) < (SPEED_DECAY * 1.5):
+			ground_velocity -= (SPEED_DECAY * (ground_velocity/abs (ground_velocity)) * 0.3)
+		if (abs (ground_velocity) < (SPEED_DECAY * 1.5)):
 			ground_velocity = 0
 
 	# left and right wall collision, respectively
@@ -306,7 +290,7 @@ func process_ground () -> void:
 		rotation = 0
 		is_rolling = false
 
-	# fall off of walls if you aren't going fast enough
+	# If your speed isn't high enough you'll fall off walls.
 	if abs (rotation) >= PI/3 and (abs (ground_velocity) < 0.2 or (not ground_velocity == 0 and not previous_ground_velocity == 0 and not ground_velocity/abs (ground_velocity) == previous_ground_velocity/abs (previous_ground_velocity))):
 		state = -1
 		player_sprite.rotation = rotation
@@ -315,19 +299,19 @@ func process_ground () -> void:
 		is_rolling = false
 
 	# set the player's sprite based on his ground velocity
-	if not is_rolling:
-		if abs (ground_velocity) > threshold_run_fast:
-			player_sprite.animation = "Run4"
-		elif abs (ground_velocity) > threshold_run_slow:
-			player_sprite.animation = "Run3"
-		elif abs (ground_velocity) > threshold_jog:
-			player_sprite.animation = "Run2"
-		elif abs (ground_velocity) > threshold_walk:
-			player_sprite.animation = "Walk"
-		elif not is_crouching:
-			player_sprite.animation = "idle"
+	if (not is_rolling):
+		if (abs (ground_velocity) > threshold_run_fast):
+			change_player_animation ("Run4")
+		elif (abs (ground_velocity) > threshold_run_slow):
+			change_player_animation ("Run3")
+		elif (abs (ground_velocity) > threshold_jog):
+			change_player_animation ("Run2")
+		elif (abs (ground_velocity) > threshold_walk):
+			change_player_animation ("Walk")
+		elif (not is_crouching):
+			change_player_animation ("idle")
 	else:
-		player_sprite.animation = "Roll"
+		change_player_animation ("Roll")
 
 	if abs (ground_velocity) > threshold_walk:
 		is_crouching = false
@@ -336,13 +320,13 @@ func process_ground () -> void:
 		ground_velocity = 0
 		is_rolling = false
 
-	if (is_crouching && abs (ground_velocity) <= threshold_walk):
-		player_sprite.animation = "Crouch"
+	if (is_crouching and abs (ground_velocity) <= threshold_walk):
+		change_player_animation ("Crouch")
 		player_sprite.speed_scale = 1
 		if player_sprite.frame > 3:
 			player_sprite.speed_scale = 0
 	elif is_crouching:
-		player_sprite.animation = "Crouch"
+		change_player_animation ("Crouch")
 		player_sprite.speed_scale = 1
 		if player_sprite.frame >= 6:
 			player_sprite.speed_scale = 1
@@ -352,25 +336,25 @@ func process_ground () -> void:
 	process_boost ()
 
 	# jumping
-	if (is_jumping && !is_crouching && !is_boosting):
-		if not can_jump_short:
+	if (is_jumping and not is_crouching and (not is_boosting)):
+		if (not can_jump_short):
 			state = -1
 			player_velocity = Vector2 (player_velocity.x+sin (rotation)*JUMP_VELOCITY, player_velocity.y-cos (rotation)*JUMP_VELOCITY)
 			player_sprite.rotation = rotation
 			rotation = 0
-			player_sprite.animation = "Roll"
+			change_player_animation ("Roll")
 			can_jump_short = true
 			is_rolling = false
 			sound_player.play_sound ("player_jump")
 	else:
 		can_jump_short = false
 
-	if ((is_jumping && is_crouching) || is_spindashing):
+	if ((is_jumping and is_crouching) or is_spindashing):
 		is_spindashing = true
-		player_sprite.animation = "Spindash"
+		change_player_animation ("Spindash")
 		player_sprite.speed_scale = 1
-		if !is_crouching:
-			ground_velocity = 15*(1 if player_sprite.flip_h else -1)
+		if (not is_crouching):
+			ground_velocity = 15 * (1 if player_sprite.flip_h else -1)
 			is_spindashing = false
 			is_rolling = true
 
@@ -381,7 +365,7 @@ func process_ground () -> void:
 
 func _physics_process (_delta) -> void:
 	# calculate the player's physics, controls, and all that fun stuff
-	if invincible > 0:	# Invincible? If so, run the counter down.
+	if (invincible > 0):	# Invincible? If so, run the counter down.
 		invincible -= 1
 		player_sprite.modulate = Color (1, 1, 1, 1-(invincible % 30)/30.0)
 	else:
@@ -390,22 +374,22 @@ func _physics_process (_delta) -> void:
 	grindParticles.emitting = is_grinding
 
 	# run the correct function based on the current air/ground state
-	if is_grinding:
-		if is_tricking:
-			player_sprite.animation = "railTrick"
+	if (is_grinding):
+		if (is_tricking):
+			change_player_animation ("railTrick")
 			player_sprite.speed_scale = 1
-			if player_sprite.frame > 0:
+			if (player_sprite.frame > 0):
 				stop_while_tricking = true
-			if player_sprite.frame <= 0 and stop_while_tricking:
+			if (player_sprite.frame <= 0 and stop_while_tricking):
 				is_tricking = false
 				var part = boostParticle.instance ()
 				part.position = position
 				part.boostValue = 2
 				get_node ("/root/Level").add_child (part)
 		else:
-			player_sprite.animation = "Grind"
+			change_player_animation ("Grind")
 
-		if (is_stomping && !is_tricking):
+		if (is_stomping and (not is_tricking)):
 			is_tricking = true
 			stop_while_tricking = false
 			voiceSound.play_effort ()
@@ -414,7 +398,6 @@ func _physics_process (_delta) -> void:
 
 		grindOffset += grindVel
 		var dirVec = grindCurve.interpolate_baked (grindOffset+1)-grindCurve.interpolate_baked (grindOffset)
-#		grindVel = player_velocity.dot (dirVec)
 		rotation = dirVec.angle ()
 		position = grindCurve.interpolate_baked (grindOffset)\
 			+Vector2.UP*grindHeight*cos (rotation)+Vector2.RIGHT*grindHeight*sin (rotation)\
@@ -434,13 +417,13 @@ func _physics_process (_delta) -> void:
 		else:
 			player_velocity = dirVec*grindVel
 
-		if (is_jumping && !is_crouching):
+		if (is_jumping and (not is_crouching)):
 			if not can_jump_short:
 				state = -1
 				player_velocity = Vector2 (player_velocity.x+sin (rotation)*JUMP_VELOCITY, player_velocity.y-cos (rotation)*JUMP_VELOCITY)
 				player_sprite.rotation = rotation
 				rotation = 0
-				player_sprite.animation = "Roll"
+				change_player_animation ("Roll")
 				can_jump_short = true
 				is_rolling = false
 				is_grinding = false
@@ -474,19 +457,17 @@ func _physics_process (_delta) -> void:
 			i.rotation = -rotation
 
 	# ensure the player is facing the right direction
-	player_sprite.flip_h = (false if movement_direction < 0 && player_velocity.x < 0.0 else (true if movement_direction > 0 && player_velocity.x > 0.0 else player_sprite.flip_h))
+	player_sprite.flip_h = (false if movement_direction < 0 and player_velocity.x < 0.0 else (true if movement_direction > 0 and player_velocity.x > 0.0 else player_sprite.flip_h))
 
 	return
 
+### _on_Rail_area_entered
+# This function is run whenever the player hits a rail. Starts or continues grinding on the rail.
 func _on_Rail_area_entered (area, curve, origin) -> void:
-	# this function is run whenever the player hits a rail.
-
-	# stick to the current rail if you're already grinding
-	if (is_grinding):
+	if (is_grinding):	# If you're already grinding, continue with that.
 		return
 
-	# activate grind, if you are going downward
-	if (self == area and player_velocity.y > 0):
+	if (self == area and player_velocity.y > 0):	# Start grinding.
 		is_grinding = true
 		grindCurve = curve
 		grindPos = origin
@@ -495,8 +476,7 @@ func _on_Rail_area_entered (area, curve, origin) -> void:
 
 		RailSound.play ()
 
-		# play the sound if you were stomping
-		if is_stomping:
+		if (is_stomping):	# Landing after stomping.
 			boostSound.stream = stomp_land_sfx
 			boostSound.play ()
 			is_stomping = false

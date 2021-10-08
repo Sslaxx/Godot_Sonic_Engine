@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Score.svg-d4813e31e5f27ddbdd18c477c462a629.stex"
+path="res://.import/hud_rings.svg-64c5e047145e9121b65dec2a8d055990.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/UI/HUD/Score.svg"
-dest_files=[ "res://.import/Score.svg-d4813e31e5f27ddbdd18c477c462a629.stex" ]
+source_file="res://Assets/Graphics/UI/HUD/hud_rings.svg"
+dest_files=[ "res://.import/hud_rings.svg-64c5e047145e9121b65dec2a8d055990.stex" ]
 
 [params]
 

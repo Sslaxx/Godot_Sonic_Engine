@@ -17,8 +17,6 @@ export(PackedScene) var boostParticle
 # used for the confetti in the carnival level, or the falling leaves in leaf storm
 var parts = []
 
-var text_label	# a little text label attached to the player for debugging
-
 # the player's ground state. 0 means he's on the ground, and -1 means he's in the
 # air. This is not a boolean because of legacy code and stuff.
 var state = -1
@@ -34,7 +32,7 @@ export(float) var AIR_ACCEL = 0.1 / 4
 # maximum speed under the player's own power
 export(float) var MAX_SPEED = 20 / 2
 # the speed of the player's boost. Generally just a tad higher than MAX_SPEED
-export(float) var BOOST_SPEED = 25 /2
+export(float) var BOOST_SPEED = 25 / 2
 
 # used to dampen the player's movement a little bit. Basically poor man's friction
 export(float, 1) var SPEED_DECAY = 0.2 /2
@@ -59,17 +57,14 @@ export(float, 1) var CAM_LAG_SLIDE = 0.01
 # how long is the player's boost/stomp trail?
 var TRAIL_LENGTH = 40
 
-# Cheating flags!
-export(bool) var infinite_boost_cheat = false
-
 # Capability flags. What can this character do?
 export(bool) var can_boost := false		# Sonic, Blaze, Shadow etc. can boost their speed.
 export(bool) var can_fly := false		# Tails, Cream etc. can fly.
-export(bool) var can_glide := false		# Knuckles etc. can glide.
+export(bool) var can_glide := false		# Knuckles, Ray etc. can glide.
 
 # state flags
 var can_jump_short := false				# can the player shorten the jump?
-var is_boosting := 0
+var is_boosting := 0					# How long has the player been boosting?
 var is_crouching := false
 var is_flying := false
 var is_gliding := false
@@ -135,69 +130,46 @@ var RAILSOUND_MAXPITCH = 2.0
 onready var cam = find_node ("Camera2D")
 onready var grindParticles = find_node ("GrindParticles")	# a reference to the particle node for griding
 
-var avgGPoint := Vector2.ZERO	#average Ground position between the two foot raycasts
-var avgTPoint := Vector2.ZERO	#average top position between the two head raycasts
-var avgGRot := 0.0					# average ground rotation between the two foot raycasts
-var langle := 0.0					# the angle of the left foot raycast
-var rangle := 0.0					# the angle of the right foot raycast
-var lRot := 0.0						# the player's rotation during the last frame
+var avgGPoint := Vector2.ZERO			#average Ground position between the two foot raycasts
+var avgTPoint := Vector2.ZERO			#average top position between the two head raycasts
+var avgGRot := 0.0						# average ground rotation between the two foot raycasts
+var langle := 0.0						# the angle of the left foot raycast
+var rangle := 0.0						# the angle of the right foot raycast
+var lRot := 0.0							# the player's rotation during the last frame
 var start_position := Vector2.ZERO		# the position at which the player starts the level
-var startLayer := 0.0				# the layer on which the player starts
+var startLayer := 0.0					# the layer on which the player starts
 
-var player_velocity := Vector2.ZERO	# the player's current velocity
+var player_velocity := Vector2.ZERO		# the player's current velocity
 
-var ground_velocity := 0.0		# the ground velocity
-var previous_ground_velocity := 0.0	# the ground velocity during the previous frame
+var ground_velocity := 0.0				# the ground velocity
+var previous_ground_velocity := 0.0		# the ground velocity during the previous frame
 
-var backLayer := false	# whether or not the player is currently on the "back" layer
+var backLayer := false					# whether or not the player is currently on the "back" layer
 
 func _ready () -> void:
 	$"/root/game_space/level_timer".start ()
+	game_space.player_node = $"."	# Set the player_node in game_space to the ID of this node.
 	return
 
 # Generic input that all player character will use.
 func _input (_event: InputEvent) -> void:
-	if (is_unmoveable):	# No player input right now...
+	if (is_unmoveable):	# No player input wanted right now...
 		return
 	if (Input.is_action_just_pressed ("toggle_pause")):	# Pause the game?
-		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Level/CanvasLayer")
+		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Level/game_hud")
 	# Movement direction can be anywhere between -1 (left) to +1 (right).
 	movement_direction = (Input.get_action_strength ("move_right") - Input.get_action_strength ("move_left"))
-	if (Input.is_action_pressed ("boost") && can_boost):	# So long as boost is held down, increase the counter.
+	if (Input.is_action_pressed ("boost") and can_boost):	# So long as boost is held down, increase the counter.
 		is_boosting += (1 if hud_boost.value > 0 else 0)
 	else:									# No boosting, so reset to zero.
 		is_boosting = 0
-	is_stomping = (Input.is_action_just_pressed ("stomp") && !is_stomping)
+	is_stomping = (Input.is_action_just_pressed ("stomp") and not is_stomping)
 	is_jumping = Input.is_action_pressed ("jump")
-	is_crouching = Input.is_action_pressed ("ui_down")
-	# reset using the dedicated reset button
-	if Input.is_action_pressed ('restart'):
-		reset_game ()
+	is_crouching = Input.is_action_pressed ("crouch")
+	if (OS.is_debug_build ()):	# DEBUGGING CONTROLS.
+		if (Input.is_action_pressed ("restart")):	# Restart the game?
+			reset_game ()
 	return
-
-### limitAngle
-# Returns the given angle as an angle (in radians) between -PI and PI
-func limitAngle (ang:float) -> float:
-	var sign1 := 1.0
-	if not ang == 0:
-		sign1 = ang/abs (ang)
-	ang = fmod (ang, PI*2)
-	if abs (ang) > PI:
-		ang = (2*PI-abs (ang))*sign1*-1
-	return (ang)
-
-### angleDist
-# Returns the angle distance between rot1 and rot2, even over the 360deg mark.
-# (i.e. 350 and 10 will be 20 degrees apart)
-func angleDist (rot1:float, rot2:float) -> float:
-	rot1 = limitAngle (rot1)
-	rot2 = limitAngle (rot2)
-	if abs (rot1-rot2) > PI and rot1>rot2:
-		return (abs (limitAngle (rot1)-(limitAngle (rot2)+PI*2)))
-	elif abs (rot1-rot2) > PI and rot1<rot2:
-		return (abs ((limitAngle (rot1)+PI*2)-(limitAngle (rot2))))
-	else:
-		return abs (rot1-rot2)
 
 ### setCollisionLayer
 # shortcut to change the collision mask for every raycast node connected to
@@ -235,61 +207,77 @@ func _layer1 (area) -> void:
 	setCollisionLayer (true)
 	return
 
-func _setVelocity (vel) -> void:
-	player_velocity = vel
-	return
-
+### reset_game
+# Resets the game, returns to the main menu.
 func reset_game () -> void:
 	reset_character ()
 	game_space.reset_game_space ()
-	if get_tree ().reload_current_scene () != OK:
-		printerr ("ERROR: Could not reload current scene!")
-		get_tree ().quit ()
+	game_space.get_node ("level_timer").stop ()
+	helper_functions._whocares = helper_functions.change_scene ("res://Scenes/UI/main_menu.tscn")
 	return
 
+### reset_character
+# Resets your character ready for use. Sets rings to 0, speed to zero etc.
 func reset_character () -> void:
-	# reset your position and state if you pull a dimps (fall out of the world)
+	game_space.rings_collected = 0
 	player_velocity = Vector2.ZERO
 	state = -1
 	position = start_position
 	setCollisionLayer (false)
 	return
 
-func isAttacking () -> bool:
-	return (is_stomping || is_boosting != 0 || is_rolling || (player_sprite.animation == "Roll" && state == -1))
+### is_player_attacking
+# Is the player attacking something?
+func is_player_attacking () -> bool:
+	return (is_stomping or is_boosting > 0 or is_rolling or (player_sprite.animation == "Roll" and state == -1))
 
+### hurt_player
+# The player has been harmed, react accordingly.
 func hurt_player () -> void:
-	if not invincible > 0:
-		invincible = 120*5
+	if (game_space.invincibility_cheat):	# Invincibility cheat is enabled, no harm no foul.
+		return
+	if (not invincible > 0):	# Set up being hurt!
+		invincible = 120*5		# Counter for "blinking" temporary invunerability state.
+		# Launch the player backwards.
 		state = -1
 		player_velocity = Vector2 (-player_velocity.x+sin (rotation) * JUMP_VELOCITY, player_velocity.y-cos (rotation) * JUMP_VELOCITY)
 		rotation = 0
 		position += player_velocity*2
-		player_sprite.animation = "hurt"
 
+		# Make the hurt state obvious.
+		change_player_animation ("hurt")
 		voiceSound.play_hurt ()
 
-		var t = 0
+		# If the player has any rings, bounce up to 32 of them.
+		var t := 0
 		var angle := 101.25
 		var n := false
-		var speed = 4
-
+		var speed := 4.0
+		var currentRing = null
 		while (t < min (game_space.rings_collected, 32)):
-			var currentRing = bounceRing.instance ()
+			currentRing = bounceRing.instance ()
 			currentRing.ring_velocity = Vector2 (-sin (angle) * speed, cos (angle) * speed)/2
 			currentRing.position = position
 			if (n):
 				currentRing.ring_velocity.x *= -1
 				angle += 22.5
-			n = !n
+			n = not n
 			t += 1
 			if (t == 16):
 				speed = 2
 				angle = 101.25
 			get_node ("/root/Level").call_deferred ("add_child", currentRing)
-		if (game_space.rings_collected > 0):
+		if (game_space.rings_collected > 0):	# Lose any rings collected.
 			game_space.rings_collected = 0
 			sound_player.play_sound ("lose_rings")
-		else:
+		else:									# No rings, so lose a life.
 			game_space.lives -= 1
+	return
+
+### change_player_animation
+# Changes the player character's animation.
+func change_player_animation (new_anim) -> void:
+	if (new_anim == player_sprite.animation):	# Don't "switch" to the same animation.
+		return
+	player_sprite.animation = new_anim
 	return

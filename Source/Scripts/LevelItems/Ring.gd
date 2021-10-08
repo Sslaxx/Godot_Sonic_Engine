@@ -1,25 +1,24 @@
-# controls a typical (non-flying) ring
+### Ring.gd
+# Controls a typical (non-flying) ring
 
 extends Area2D
 
-# true if the ring has been collected 
-var ring_collected := false
+var ring_collected := false	# Has the ring been collected?
 
 # holds a reference to the AnimatedSprite node for the ring
-onready var ring_sprite = get_node ("AnimatedSprite")
-
-var boostBar
+onready var ring_sprite := get_node ("AnimatedSprite")
 
 # if the sprite has been collected, remove once the sparkle animation finishes
 func _process (_delta) -> void:
 	if (ring_collected and ring_sprite.animation == "Sparkle" and ring_sprite.frame >= 6):
-		visible = false
 		queue_free ()
 	return
 
+### _on_Ring_area_entered
+# Deals with things colliding with rings and what to do.
 func _on_Ring_area_entered (area) -> void:
-	# collide with the player, if the ring has not yet been collected
-	if (not ring_collected and area.name == "Player"):
+	if (not ring_collected and area is game_space.player_class):
+		# The player has collided with the ring, collect it.
 		ring_collected = true
 		ring_sprite.animation = "Sparkle"
 		sound_player.play_sound ("ring_get")

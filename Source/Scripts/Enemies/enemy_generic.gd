@@ -1,15 +1,15 @@
 ### enemy_generic.gd
-# Generic script for all enemies.
+# Generic script for all enemies. Contains the variables and any functions that all enemies rely upon.
 
 extends Area2D
 
 export(PackedScene) var boostParticle
 
-# is the enemy alive?
-var alive := true
-
 # How many hits does the enemy have left before being destroyed?
 export(int) var hits_left = 1
+
+# How much is this enemy worth in points?
+export(int) var points_value = 100
 
 # keeps track of the pawn's velocity once it has "exploded"
 var explode_velocity := Vector2.ZERO

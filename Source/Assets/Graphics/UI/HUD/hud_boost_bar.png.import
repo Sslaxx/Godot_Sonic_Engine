@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Lives_Icon.svg-3939b5baae6b8469a8143dbdee78c690.stex"
+path="res://.import/hud_boost_bar.png-7705ff5f9f65c854cae9f718bfd02b5d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/UI/HUD/Lives_Icon.svg"
-dest_files=[ "res://.import/Lives_Icon.svg-3939b5baae6b8469a8143dbdee78c690.stex" ]
+source_file="res://Assets/Graphics/UI/HUD/hud_boost_bar.png"
+dest_files=[ "res://.import/hud_boost_bar.png-7705ff5f9f65c854cae9f718bfd02b5d.stex" ]
 
 [params]
 

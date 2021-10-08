@@ -35,7 +35,7 @@ func _ready () -> void:
 func play_jingle (path_to_jingle = "", music_unmute = true) -> bool:
 	var play_me = null			# This will hold the stream for the jingle.
 	unmute_music = music_unmute	# Make sure music will be muted/unmuted after this jingle is done.
-	if (!ResourceLoader.exists (path_to_jingle)):	# The file doesn't exist, so say so.
+	if (not ResourceLoader.exists (path_to_jingle)):	# The file doesn't exist, so say so.
 		printerr ("ERROR: jingle_player has no jingle to play! ", path_to_jingle, " does not exist!")
 		return (false)
 	play_me = load (path_to_jingle) as AudioStream

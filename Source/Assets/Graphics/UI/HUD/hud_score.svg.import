@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/boost_bar_backing.png-0646f58c9f53500ade1aab6bc88c77f7.stex"
+path="res://.import/hud_score.svg-d606daa2d9fa39f0348a3b9afa189589.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/UI/HUD/boost_bar_backing.png"
-dest_files=[ "res://.import/boost_bar_backing.png-0646f58c9f53500ade1aab6bc88c77f7.stex" ]
+source_file="res://Assets/Graphics/UI/HUD/hud_score.svg"
+dest_files=[ "res://.import/hud_score.svg-d606daa2d9fa39f0348a3b9afa189589.stex" ]
 
 [params]
 
