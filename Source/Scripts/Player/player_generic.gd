@@ -17,8 +17,6 @@ export(PackedScene) var boostParticle
 # used for the confetti in the carnival level, or the falling leaves in leaf storm
 var parts = []
 
-var text_label	# a little text label attached to the player for debugging
-
 # the player's ground state. 0 means he's on the ground, and -1 means he's in the
 # air. This is not a boolean because of legacy code and stuff.
 var state = -1
@@ -34,7 +32,7 @@ export(float) var AIR_ACCEL = 0.1 / 4
 # maximum speed under the player's own power
 export(float) var MAX_SPEED = 20 / 2
 # the speed of the player's boost. Generally just a tad higher than MAX_SPEED
-export(float) var BOOST_SPEED = 25 /2
+export(float) var BOOST_SPEED = 25 / 2
 
 # used to dampen the player's movement a little bit. Basically poor man's friction
 export(float, 1) var SPEED_DECAY = 0.2 /2
@@ -62,7 +60,7 @@ var TRAIL_LENGTH = 40
 # Capability flags. What can this character do?
 export(bool) var can_boost := false		# Sonic, Blaze, Shadow etc. can boost their speed.
 export(bool) var can_fly := false		# Tails, Cream etc. can fly.
-export(bool) var can_glide := false		# Knuckles etc. can glide.
+export(bool) var can_glide := false		# Knuckles, Ray etc. can glide.
 
 # state flags
 var can_jump_short := false				# can the player shorten the jump?
@@ -150,6 +148,7 @@ var backLayer := false					# whether or not the player is currently on the "back
 
 func _ready () -> void:
 	$"/root/game_space/level_timer".start ()
+	game_space.player_node = $"."	# Set the player_node in game_space to the ID of this node.
 	return
 
 # Generic input that all player character will use.
@@ -208,16 +207,13 @@ func _layer1 (area) -> void:
 	setCollisionLayer (true)
 	return
 
-func _setVelocity (vel) -> void:
-	player_velocity = vel
-	return
-
+### reset_game
+# Resets the game, returns to the main menu.
 func reset_game () -> void:
 	reset_character ()
 	game_space.reset_game_space ()
-	if (not get_tree ().reload_current_scene () == OK):
-		printerr ("ERROR: Could not reload current scene!")
-		get_tree ().quit ()
+	game_space.get_node ("level_timer").stop ()
+	helper_functions._whocares = helper_functions.change_scene ("res://Scenes/UI/main_menu.tscn")
 	return
 
 ### reset_character
@@ -233,28 +229,32 @@ func reset_character () -> void:
 ### is_player_attacking
 # Is the player attacking something?
 func is_player_attacking () -> bool:
-	return (is_stomping or (not is_boosting == 0) or is_rolling or (player_sprite.animation == "Roll" and state == -1))
+	return (is_stomping or is_boosting > 0 or is_rolling or (player_sprite.animation == "Roll" and state == -1))
 
 ### hurt_player
 # The player has been harmed, react accordingly.
 func hurt_player () -> void:
-	if not invincible > 0:
-		invincible = 120*5
+	if (game_space.invincibility_cheat):	# Invincibility cheat is enabled, no harm no foul.
+		return
+	if (not invincible > 0):	# Set up being hurt!
+		invincible = 120*5		# Counter for "blinking" temporary invunerability state.
+		# Launch the player backwards.
 		state = -1
 		player_velocity = Vector2 (-player_velocity.x+sin (rotation) * JUMP_VELOCITY, player_velocity.y-cos (rotation) * JUMP_VELOCITY)
 		rotation = 0
 		position += player_velocity*2
-		change_player_animation ("hurt")
 
+		# Make the hurt state obvious.
+		change_player_animation ("hurt")
 		voiceSound.play_hurt ()
 
+		# If the player has any rings, bounce up to 32 of them.
 		var t := 0
 		var angle := 101.25
 		var n := false
 		var speed := 4.0
 		var currentRing = null
-
-		while (t < min (game_space.rings_collected, 32)):	# Up to 32 rings get thrown into the air if hurt.
+		while (t < min (game_space.rings_collected, 32)):
 			currentRing = bounceRing.instance ()
 			currentRing.ring_velocity = Vector2 (-sin (angle) * speed, cos (angle) * speed)/2
 			currentRing.position = position

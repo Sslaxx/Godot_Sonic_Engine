@@ -70,6 +70,7 @@ func change_scene (scene_path) -> int:
 	if (new_scene == null):									# ...check that the path/scene is valid...
 		printerr ("ERROR: change_scene cannot use ", scene_path, "; it is not a valid or existing scene file!")
 		return (ERR_FILE_NOT_FOUND)
+	get_tree ().current_scene.queue_free ()
 	return (get_tree ().change_scene_to (new_scene))		# ...change to the new scene (or not...).
 
 ### do_once_only

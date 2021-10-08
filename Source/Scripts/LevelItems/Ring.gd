@@ -17,7 +17,7 @@ func _process (_delta) -> void:
 ### _on_Ring_area_entered
 # Deals with things colliding with rings and what to do.
 func _on_Ring_area_entered (area) -> void:
-	if (not ring_collected and area is preload ("res://Scripts/Player/player_generic.gd")):
+	if (not ring_collected and area is game_space.player_class):
 		# The player has collided with the ring, collect it.
 		ring_collected = true
 		ring_sprite.animation = "Sparkle"

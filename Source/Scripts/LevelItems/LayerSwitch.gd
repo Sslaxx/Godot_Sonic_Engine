@@ -9,7 +9,7 @@ func _ready () -> void:
 	return
 
 func _on_LayerSwitch_area_entered (area) -> void:
-	if (area is preload ("res://Scripts/Player/player_generic.gd")):
+	if (area is game_space.player_class):
 		match (function):	# Switch layers.
 			"layer 0":
 				area._layer0 (area)

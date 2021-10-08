@@ -11,7 +11,7 @@ onready var downCast = get_node ("DownCast")
 onready var sprite = get_node ("AnimatedSprite")
 
 # timer variable to keep track of when the ring disappears.
-var collectionStartTimer := 120
+var collection_time_remaining := 120
 
 # represents the current velocity of the ring.
 export(Vector2) var ring_velocity := Vector2.ZERO
@@ -24,7 +24,7 @@ func _process (_delta) -> void:
 
 func _physics_process (_delta) -> void:
 	# count down the timer
-	collectionStartTimer -= 1
+	collection_time_remaining -= 1
 
 	if (not collected):
 		# bounce on relevent ground nodes
@@ -37,18 +37,18 @@ func _physics_process (_delta) -> void:
 		# apply velocity 
 		position += ring_velocity
 
-	# once the timer gets to a certain point, start flashing the ring sprite
-	if (collectionStartTimer < -900):
-		sprite.modulate = Color (1,1,1,1- (-collectionStartTimer%30)/30.0)
+	# once the timer gets to a certain point, start "blinking" the ring sprite
+	if (collection_time_remaining < -900):
+		sprite.modulate = Color (1, 1, 1, 1 - (-collection_time_remaining % 30) / 30.0)
 
 	# remove the ring node once the timer is up
-	if (collectionStartTimer < -1080):
+	if (collection_time_remaining < -1080):
 		queue_free ()
 	return
 
 func _on_Ring_area_entered (area) -> void:
 	# if the ring hasn't been collected and the player collides...
-	if (not collected and area is preload ("res://Scripts/Player/player_generic.gd") and collectionStartTimer <= 0):
+	if (not collected and area is game_space.player_class and collection_time_remaining <= 0):
 		collected = true											# set collected to true
 		sprite.animation = "Sparkle"								# set the animation to the sparkle
 		sound_player.play_sound ("ring_get")						# play the ring sfx

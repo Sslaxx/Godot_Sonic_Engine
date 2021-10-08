@@ -10,7 +10,7 @@ func _ready () -> void:
 ### _on_DeathPlane_area_entered
 # Something has entered the death plane, deal with it.
 func _on_DeathPlane_area_entered (area) -> void:
-	if (area is preload ("res://Scripts/Player/player_generic.gd")):
+	if (area is game_space.player_class):
 		# If the player has entered the death plane, they lose a life.
 		game_space.lives -= 1
 	else:						# Anything else gets destroyed.

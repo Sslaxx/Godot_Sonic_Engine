@@ -10,8 +10,14 @@ var real_rings_collected:int = 0				# Collectibles the player REALLY has. Used f
 var score:int = 0 setget set_score				# What's the score?
 var timer:Vector2 = Vector2.ZERO				# x represents seconds, y minutes.
 
+onready var player_class = preload ("res://Scripts/Player/player_generic.gd")	# Convenience for checking player stuff.
+onready var enemy_class = preload ("res://Scripts/Enemies/enemy_generic.gd")	# Convenience for checking enemies.
+# Used for when the actual physical node of the player, rather than the player class, is required.
+var player_node = null	# Set up by player_generic.gd - trying to use this before then will result in bad things happening!
+
 # Cheating flags!
-export(bool) var infinite_boost_cheat = false
+export(bool) var infinite_boost_cheat = false	# Can boost forever?
+export(bool) var invincibility_cheat = false	# Can never take damage?
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -76,12 +82,12 @@ func set_score (value):
 func set_lives (value:int) -> void:
 	if (value < lives):	# Lost a life!
 		sound_player.play_sound ("player_death")
-		$"/root/Level/Player".reset_character ()
+		player_node.reset_character ()
 	elif (value > lives):	# Extra life time...
 		print ("EXTRA LIFE STUFF HERE")
 	lives = value
 	if (lives < 0):	# No lives left? It's game over.
-		$"/root/Level/Player".reset_game ()
+		player_node.reset_game ()
 	$"/root/Level/game_hud/hud_lives/count".text = var2str (lives)
 	return
 
