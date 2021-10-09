@@ -1,5 +1,6 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
+[ext_resource path="res://Scenes/LevelItems/Checkpoint.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/LevelItems/LayerSwitch.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/Levels/level_generic.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/LevelItems/Rail.tscn" type="PackedScene" id=6]
@@ -28,7 +29,6 @@ _data = {
 [node name="Level" type="Node2D"]
 script = ExtResource( 4 )
 music_file = "res://Assets/Audio/Music/JehJehRocket.ogg"
-starting_position = Vector2( 120, -46 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 50 )
@@ -188,3 +188,7 @@ curve = SubResource( 4 )
 position = Vector2( 4024.73, 1986.99 )
 
 [node name="game_hud" parent="." instance=ExtResource( 8 )]
+
+[node name="start_point" parent="." instance=ExtResource( 1 )]
+visible = false
+position = Vector2( 256, -15.5 )

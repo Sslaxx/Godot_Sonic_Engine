@@ -8,6 +8,10 @@ var ring_collected := false	# Has the ring been collected?
 # holds a reference to the AnimatedSprite node for the ring
 onready var ring_sprite := get_node ("AnimatedSprite")
 
+func _ready () -> void:
+	helper_functions._whocares = self.connect ("area_entered", self, "_on_Ring_area_entered")
+	return
+
 # if the sprite has been collected, remove once the sparkle animation finishes
 func _process (_delta) -> void:
 	if (ring_collected and ring_sprite.animation == "Sparkle" and ring_sprite.frame >= 6):

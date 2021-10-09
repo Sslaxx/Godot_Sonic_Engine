@@ -9,7 +9,7 @@ var rings_collected:int = 0 setget set_rings			# Rings (collectibles) the player
 var real_rings_collected:int = 0						# Collectibles the player REALLY has.
 var score:int = 0 setget set_score						# What's the score?
 var timer:Vector2 = Vector2.ZERO						# x represents seconds, y minutes.
-onready var last_checkpoint:Vector2 = Vector2.ZERO		# What is the last checkpoint position.
+onready var last_checkpoint = null						# What is the last checkpoint.
 
 onready var player_class = preload ("res://Scripts/Player/player_generic.gd")	# Convenience for checking player stuff.
 onready var enemy_class = preload ("res://Scripts/Enemies/enemy_generic.gd")	# Convenience for checking enemies.
@@ -34,6 +34,7 @@ func reset_game_space () -> void:
 	real_rings_collected = 0
 	score = 0
 	timer = Vector2.ZERO
+	last_checkpoint = null
 	return
 
 ### change_boost_value
@@ -85,7 +86,7 @@ func set_lives (value:int) -> void:
 		sound_player.play_sound ("player_death")
 		player_node.reset_character ()
 	elif (value > lives):	# Extra life time...
-		jingle_player.play_jingle ("res://Assets/Audio/Jingles/Extra_Life.ogg")
+		helper_functions._whocares = jingle_player.play_jingle ("res://Assets/Audio/Jingles/Extra_Life.ogg")
 	lives = value
 	if (lives < 0):	# No lives left? It's game over.
 		player_node.reset_game ()

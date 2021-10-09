@@ -214,6 +214,7 @@ func reset_game () -> void:
 	game_space.reset_game_space ()
 	game_space.get_node ("level_timer").stop ()
 	helper_functions._whocares = helper_functions.change_scene ("res://Scenes/UI/main_menu.tscn")
+	music_player.stop_music ()
 	return
 
 ### reset_character
@@ -222,10 +223,16 @@ func reset_character () -> void:
 	game_space.rings_collected = 0
 	player_velocity = Vector2.ZERO
 	state = -1
-	position = game_space.last_checkpoint
+	if (not game_space.last_checkpoint == null):	# Passed a valid checkpoint, so go back to it.
+		position = game_space.last_checkpoint.position
+		game_space.timer = game_space.last_checkpoint.last_time	# Rewind time to the time it was when the checkpoint was passed.
+	else:
+		printerr ("You shouldn't see this - did you forget to set start_point?")
+		position = Vector2.ZERO
 	setCollisionLayer (false)
 	game_space.change_boost_value (-60)
 	game_space.change_boost_value (20)
+	invincible = 0
 	return
 
 ### is_player_attacking
