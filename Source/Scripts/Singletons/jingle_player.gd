@@ -27,7 +27,7 @@ func _ready () -> void:
 	helper_functions._whocares = self.connect ("finished", self, "stop_jingle")
 	return
 
-### play_jingle
+## play_jingle
 # jingle_player.play_jingle (path_to_jingle, music_unmute)
 # Plays a specified music file as a jingle (path_to_jingle), muting the Music bus beforehand.
 # After the jingle is finished, music_unmute can be set false to leave the music bus muted.
@@ -48,7 +48,7 @@ func play_jingle (path_to_jingle = "", music_unmute = true) -> bool:
 	play ()														# ...play the jingle...
 	return (true)												# ...and return true.
 
-### stop_jingle
+## stop_jingle
 # jingle_player.stop_jingle (abort_jingle)
 # Stops the currently playing jingle and unmutes Music if told to.
 # If abort_jingle is true, then it'll emit "jingle_aborted", otherwise "jingle_finished".
@@ -65,6 +65,7 @@ func stop_jingle (abort_jingle = false) -> void:
 		emit_signal ("jingle_finished")
 	return
 
+## set_bus_volume
 # Adjusts the bus volume.
 func set_bus_volume (value:float) -> void:
 	value = clamp (value, 0.0, 1.0)	# Ensure sanity prevails.

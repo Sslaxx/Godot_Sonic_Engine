@@ -10,10 +10,10 @@ func _ready() -> void:
 	helper_functions._whocares = self.connect ("area_entered", self, "_on_Checkpoint_area_entered")
 	return
 
-### _on_Checkpoint_area_entered
+## _on_Checkpoint_area_entered
 # If something passes the checkpoint by, deal with it.
 func _on_Checkpoint_area_entered (area) -> void:
-	if (not passed_checkpoint && area is game_space.player_class):	# It's the player, tag them.
+	if (not passed_checkpoint and area is game_space.player_class):	# It's the player, tag them.
 		passed_checkpoint = true
 		game_space.last_checkpoint = self	# Mark the last checkpoint crossed as this one!
 		last_time = game_space.timer		# Mark the current time.

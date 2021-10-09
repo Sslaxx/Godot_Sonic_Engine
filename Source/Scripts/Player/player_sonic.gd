@@ -461,7 +461,7 @@ func _physics_process (_delta) -> void:
 
 	return
 
-### _on_Rail_area_entered
+## _on_Rail_area_entered
 # This function is run whenever the player hits a rail. Starts or continues grinding on the rail.
 func _on_Rail_area_entered (area, curve, origin) -> void:
 	if (is_grinding):	# If you're already grinding, continue with that.

@@ -18,7 +18,7 @@ func _process (_delta) -> void:
 		queue_free ()
 	return
 
-### _on_Ring_area_entered
+## _on_Ring_area_entered
 # Deals with things colliding with rings and what to do.
 func _on_Ring_area_entered (area) -> void:
 	if (not ring_collected and area is game_space.player_class):

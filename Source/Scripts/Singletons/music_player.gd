@@ -10,7 +10,7 @@ onready var bus_index := AudioServer.get_bus_index ("Music")
 # Remember to use linear2db/db2linear to convert this as necessary!
 onready var bus_volume := AudioServer.get_bus_volume_db (bus_index) setget set_bus_volume
 
-### play_music
+## play_music
 # music_player.play_music (path_to_music, play_from)
 # Plays a specified music file (path_to_music).
 # Will play from a specific point in the music (in seconds) if told to (play_from).
@@ -30,13 +30,14 @@ func play_music (path_to_music = "", play_from = 0.0) -> void:
 	play (play_from)								# ...and play the music.
 	return
 
-### stop_music
+## stop_music
 # music_player.stop_music ()
 # Just a bit of syntactic sugar. Stops the currently playing music.
 func stop_music () -> void:
 	stop ()
 	return
 
+## set_bus_volume
 # Adjusts the bus volume.
 func set_bus_volume (value:float) -> void:
 	value = clamp (value, 0.0, 1.0)	# Ensure sanity prevails.

@@ -14,7 +14,7 @@ extends Node
 onready var CONFIG_FILENAME := "user://settings.cfg"
 onready var config_file = ConfigFile.new ()	# New instance for a config file if it exists?
 
-### load_config / save_config
+## load_config / save_config
 # helper_functions.load_config ()
 # helper_functions.save_config ()
 # Loads and saves configuration info (fullscreen, volume, etc) for any app.

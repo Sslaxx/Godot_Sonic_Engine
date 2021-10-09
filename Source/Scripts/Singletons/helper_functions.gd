@@ -25,7 +25,7 @@ func _ready () -> void:
 	Engine.target_fps = 60
 	return
 
-### _input
+## _input
 # Don't put too much in here, otherwise performance will suffer. Use this for certain actions that are not
 # dependent upon scenes (e.g., toggling full screen mode).
 # Use "is_action_just_pressed" here to avoid input run-on problems.
@@ -35,7 +35,7 @@ func _input (_event) -> void:
 		OS.window_fullscreen = not OS.window_fullscreen
 	return
 
-### add_child_to_node
+## add_child_to_node
 # helper_functions.add_child_to_node (scene_instance, node_to_add_to)
 # Adds an (instanced!) scene (scene_instance) as a child to the given node (node_to_add_to).
 # This neither creates an instance nor frees it, so you need to do those before/after calling this function.
@@ -45,7 +45,7 @@ func add_child_to_node (scene_instance = null, node_to_add_to = "/root") -> void
 	get_node (node_to_add_to).call_deferred ("add_child", scene_instance)
 	return
 
-### add_path_to_node
+## add_path_to_node
 # helper_functions.add_path_to_node (scene_path, node_to_add_to)
 # Adds an instance of the scene specified by scene_path to the desired node (node_to_add_to).
 # You should specify the path as absolute wherever possible.
@@ -60,7 +60,7 @@ func add_path_to_node (scene_path = "", node_to_add_to = "/root"):
 	call_deferred ("add_child_to_node", scene_to_go_to, node_to_add_to)
 	return (scene_to_go_to)										# Return the instance created.
 
-### change_scene
+## change_scene
 # helper_functions.change_scene (path)
 # Goes to the relevant scene; the scene is a path, so "res://<filename>".
 # You should specify the path as absolute wherever possible.
@@ -73,7 +73,7 @@ func change_scene (scene_path) -> int:
 	get_tree ().current_scene.queue_free ()
 	return (get_tree ().change_scene_to (new_scene))		# ...change to the new scene (or not...).
 
-### do_once_only
+## do_once_only
 # helper_functions.do_once_only (do_me)
 # Does something once only (if do_me given isn't in the dictionary for do_once_only). After that, it gets
 # added so it won't do it again.
@@ -90,7 +90,7 @@ func do_once_only (do_me) -> bool:
 	do_once_dictionary [do_me] = "I_AM_DONE"
 	return (true)
 
-### value_in_range
+## value_in_range
 # helper_functions.value_in_range (check_value, range_start, range_end)
 # Checks to see if <check_value> falls between <range_start> and <range_end>.
 # Returns true (it is) or false (it isn't; either because it is outside the range or function error).
@@ -100,6 +100,7 @@ func value_in_range (check_value, range_start, range_end) -> bool:
 		return (false)
 	return (check_value >= range_start and check_value <= range_end)
 
+## set_master_bus_volume
 # Adjusts the master bus volume.
 func set_master_bus_volume (value) -> void:
 	value = clamp (value, 0.0, 1.0)	# Ensure sanity prevails.

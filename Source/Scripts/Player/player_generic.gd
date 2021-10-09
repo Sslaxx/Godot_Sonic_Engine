@@ -117,7 +117,7 @@ onready var player_sprite = find_node ("PlayerSprites")		# the player's sprite
 onready var boostSprite = find_node ("BoostSprite")			# the sprite that appears over the player while boosting
 onready var boostLine = find_node ("BoostLine")				# the line renderer for boosting and stomping
 
-onready var hud_boost = get_node ("/root/Level/game_hud/hud_boost")		# holds a reference to the boost UI bar
+onready var hud_boost = get_node ("/root/Level/game_hud/hud_boost")	# Holds a reference to the boost UI bar.
 
 onready var boostSound = find_node ("sound_boost")	# the audio stream player with the boost sound
 onready var RailSound = find_node ("sound_rail")	# the audio stream player with the rail grinding sound
@@ -149,14 +149,25 @@ var backLayer := false					# whether or not the player is currently on the "back
 func _ready () -> void:
 	$"/root/game_space/level_timer".start ()
 	game_space.player_node = $"."	# Set the player_node in game_space to the ID of this node.
+	if (has_node ("/root/Level/start_point")):	# We have a starting checkpoint!
+		game_space.last_checkpoint = $"/root/Level/start_point"
+		$"/root/Level/start_point".passed_checkpoint = true	# So it doesn't get triggered by mistake.
+		$"/root/Level/start_point".visible = false			# In case the dev forgets!
+		position = $"/root/Level/start_point".position
+	else:
+		printerr ("You shouldn't see this - did you forget to set start_point?")
+		position = Vector2.ZERO
 	return
 
 # Generic input that all player character will use.
 func _input (_event: InputEvent) -> void:
+	if (not has_node ("/root/Level/game_hud")):
+		return
 	if (is_unmoveable):	# No player input wanted right now...
 		return
 	if (Input.is_action_just_pressed ("toggle_pause")):	# Pause the game?
 		helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/Level/game_hud")
+		yield (get_tree (), "idle_frame")		# And make sure they're added before continuing...
 	# Movement direction can be anywhere between -1 (left) to +1 (right).
 	movement_direction = (Input.get_action_strength ("move_right") - Input.get_action_strength ("move_left"))
 	if (Input.is_action_pressed ("boost") and can_boost):	# So long as boost is held down, increase the counter.
@@ -171,7 +182,7 @@ func _input (_event: InputEvent) -> void:
 			reset_game ()
 	return
 
-### setCollisionLayer
+## setCollisionLayer
 # shortcut to change the collision mask for every raycast node connected to
 # the player at the same time. Value is true for layer 1, false for layer 0
 func setCollisionLayer (value) -> void:
@@ -207,7 +218,7 @@ func _layer1 (area) -> void:
 	setCollisionLayer (true)
 	return
 
-### reset_game
+## reset_game
 # Resets the game, returns to the main menu.
 func reset_game () -> void:
 	reset_character ()
@@ -217,7 +228,7 @@ func reset_game () -> void:
 	music_player.stop_music ()
 	return
 
-### reset_character
+## reset_character
 # Resets your character ready for use. Sets rings to 0, speed to zero etc.
 func reset_character () -> void:
 	game_space.rings_collected = 0
@@ -235,12 +246,12 @@ func reset_character () -> void:
 	invincible = 0
 	return
 
-### is_player_attacking
+## is_player_attacking
 # Is the player attacking something?
 func is_player_attacking () -> bool:
 	return (is_stomping or is_boosting > 0 or is_rolling or (player_sprite.animation == "Roll" and state == -1))
 
-### hurt_player
+## hurt_player
 # The player has been harmed, react accordingly.
 func hurt_player () -> void:
 	if (game_space.invincibility_cheat):	# Invincibility cheat is enabled, no harm no foul.
@@ -283,7 +294,7 @@ func hurt_player () -> void:
 			game_space.lives -= 1
 	return
 
-### change_player_animation
+## change_player_animation
 # Changes the player character's animation.
 func change_player_animation (new_anim) -> void:
 	if (new_anim == player_sprite.animation):	# Don't "switch" to the same animation.
