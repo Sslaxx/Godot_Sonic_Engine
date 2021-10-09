@@ -9,7 +9,7 @@ func _ready () -> void:
 	init_rng ()	# Initialise the random number seed.
 	return
 
-### init_rng
+## init_rng
 # Just a front for the randomize function. This usually is only called by _ready.
 func init_rng () -> void:
 	if (OS.is_debug_build ()):	# FOR DEBUGGING ONLY. Always use a fixed seed for debugging.
@@ -20,7 +20,7 @@ func init_rng () -> void:
 		print_debug ("INFO: RNG initialised; seed is ", RNG.seed, ".")
 		return
 
-### roll_dice
+## roll_dice
 # roll_dice (number_of_dice, dice_sides, add_to, sub_from)
 # Rolls a given number (number_of_dice) of dice with sides (dice_sides).
 # Can add to (add_to) or subtract from (sub_from) the calculated total.
@@ -45,7 +45,7 @@ func roll_dice (number_of_dice:int = 1, dice_sides:int = 6, add_to:int = 0, sub_
 	total_rolled = (total_rolled + add_to) - sub_from
 	return (total_rolled)
 
-### find_random_average
+## find_random_average
 # find_random_average (total_numbers, random_range)
 # Generates <total_numbers> of random numbers (1 up to <random_range>), returning the average of that total.
 # The average returned is a float rounded (down) to an int.

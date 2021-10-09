@@ -18,7 +18,7 @@ onready var sound_library = {
 	"no_sound": preload ("res://Assets/Audio/Sound/no_sound.ogg"),	# Keep this as the first item in the list.
 }
 
-### play_sound
+## play_sound
 # sound_player.play_sound (item)
 # Looks for item in sound_library and if it's there, play it.
 func play_sound (item = "no_sound") -> void:
@@ -35,13 +35,13 @@ func play_sound (item = "no_sound") -> void:
 	printerr ("ERROR: sound_player has no sound to play! \"", item, "\" not found!")
 	return
 
-### stop_sound
+## stop_sound
 # Stops the sound player. Just syntactic sugar.
 func stop_sound () -> void:
 	stop ()
 	return
 
-### add_sound_to_library
+## add_sound_to_library
 # add_sound_to_library (sound_file, sound_name)
 # Adds a sound resource to the library.
 # Just give it a filename, the function will automatically load it with the name you give it.
@@ -55,6 +55,7 @@ func add_sound_to_library (sound_file, sound_name = "") -> void:
 	print_debug ("Current sound_library contents: ", sound_library)
 	return
 
+## set_bus_volume
 # Adjusts the bus volume.
 func set_bus_volume (value:float) -> void:
 	value = clamp (value, 0.0, 1.0)	# Ensure sanity prevails.

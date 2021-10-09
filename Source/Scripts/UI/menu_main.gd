@@ -13,20 +13,21 @@ func _ready () -> void:
 	$"btnNewGame".grab_focus ()
 	return
 
-### btnNewGame_on_press
+## btnNewGame_on_press
 # Starts a new game!
 func btnNewGame_on_press () -> void:
 	helper_functions._whocares = helper_functions.change_scene ("res://Scenes/Levels/ChaosFestival.tscn")
 	return
 
-### btnOptions_on_press
+## btnOptions_on_press
 # Shows the main options.
 func btnOptions_on_press () -> void:
 	helper_functions.add_path_to_node ("res://Scenes/UI/menu_options.tscn", "/root/main_menu")
+	yield (get_tree (), "idle_frame")		# And make sure they're added before continuing...
 	$".".visible = false
 	return
 
-### btnQuit_on_press
+## btnQuit_on_press
 # Quit the game.
 func btnQuit_on_press () -> void:
 	get_tree ().quit ()

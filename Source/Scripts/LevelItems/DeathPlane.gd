@@ -7,7 +7,7 @@ func _ready () -> void:
 	helper_functions._whocares = self.connect ("area_entered", self, "_on_DeathPlane_area_entered")
 	return
 
-### _on_DeathPlane_area_entered
+## _on_DeathPlane_area_entered
 # Something has entered the death plane, deal with it.
 func _on_DeathPlane_area_entered (area) -> void:
 	if (area is game_space.player_class):

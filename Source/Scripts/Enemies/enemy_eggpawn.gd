@@ -1,4 +1,4 @@
-# enemy_eggpawn.gd
+### enemy_eggpawn.gd
 # A generic test enemy.
 
 extends "res://Scripts/Enemies/enemy_generic.gd"
@@ -19,7 +19,7 @@ func _process (_delta) -> void:
 			queue_free ()
 	return
 
-### _on_enemy_area_entered
+## _on_enemy_area_entered
 # Something has collided with this, what is it and what happens next?
 func _on_enemy_area_entered (area) -> void:
 	if (area is game_space.player_class and hits_left > 0):	# The player is hitting the egg pawn...
