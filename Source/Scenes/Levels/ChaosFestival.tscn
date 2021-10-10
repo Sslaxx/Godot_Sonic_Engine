@@ -422,8 +422,7 @@ shadow_color = Color( 0, 0, 0, 1 )
 shadow_gradient_length = 2.5
 
 [node name="start_point" parent="." instance=ExtResource( 1 )]
-visible = false
-position = Vector2( -2600, -9.55455 )
+position = Vector2( -2592, -16 )
 
 [node name="Checkpoint" parent="." instance=ExtResource( 1 )]
-position = Vector2( 4736, -14.5665 )
+position = Vector2( 4736, -16 )
