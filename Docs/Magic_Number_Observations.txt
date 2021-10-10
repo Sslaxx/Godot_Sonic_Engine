@@ -1,0 +1,11 @@
+Sonic collision shape (CapsuleShape2D)
+radius = 10
+height = 20
+
+if (abs (avgGPoint.y-position.y) < 21): - this *appears* to be "collison shape height + 1"?
+
+position = Vector2 (avgGPoint.x + 20 * sin (rotation), avgGPoint.y - 20 * cos (rotation)) - avgGPoint.x might be "collision shape radius * 2"?
+
+LeftCast.get_collision_point ().x + cos (rotation) * 8, - this appears to be unconnected to the collision shape values.
+
+Highest degree of confidence with "21", as it seems to be only y-component related.

@@ -3,8 +3,6 @@
 
 # FIXME: 8 appears to be a "magic number", find out what it's referring to, turn it into a variable.
 # FIXME: 21 is a "magic number", change to a variable once its purpose has been determined.
-# FIXME: Replace variables defined in _ready with onready var.
-# FIXME: What functions could be taken out and placed in a more general "helper" class or singleton?
 # FIXME: Gravity, acceleration etc. are a bunch of "magic numbers" that need more explanation.
 
 extends "res://Scripts/Player/player_generic.gd"
