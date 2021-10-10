@@ -2,7 +2,6 @@
 # Coderman64 2021.
 
 # FIXME: 8 appears to be a "magic number", find out what it's referring to, turn it into a variable.
-# FIXME: 21 is a "magic number", change to a variable once its purpose has been determined.
 # FIXME: Gravity, acceleration etc. are a bunch of "magic numbers" that need more explanation.
 
 extends "res://Scripts/Player/player_generic.gd"
@@ -19,7 +18,7 @@ func _ready () -> void:
 	setCollisionLayer (false)
 
 	# set the trail length to whatever the boostLine's size is.
-	TRAIL_LENGTH = boostLine.points.size ()
+	TRAIL_LENGTH = boost_line.points.size ()
 
 	# reset all game values
 	reset_character ()
@@ -35,7 +34,7 @@ func process_boost () -> void:
 
 		# reset the boost line points
 		for i in range (0, TRAIL_LENGTH):
-			boostLine.points[i] = Vector2.ZERO
+			boost_line.points[i] = Vector2.ZERO
 
 		# play the boost sfx
 		boostSound.stream = boost_sfx
@@ -70,10 +69,10 @@ func process_boost () -> void:
 			is_boosting = 0
 
 		# set the visibility and rotation of the boost line and sprite
-		boostSprite.visible = true
-		boostSprite.rotation = player_velocity.angle () - rotation
-		boostLine.visible = true
-		boostLine.rotation = -rotation
+		boost_sprite.visible = true
+		boost_sprite.rotation = player_velocity.angle () - rotation
+		boost_line.visible = true
+		boost_line.rotation = -rotation
 
 		# decrease boost value while boosting
 		game_space.change_boost_value (-0.06)
@@ -86,8 +85,8 @@ func process_boost () -> void:
 			boostSound.stop ()
 
 		# disable all visual boost indicators
-		boostSprite.visible = false
-		boostLine.visible = false
+		boost_sprite.visible = false
+		boost_line.visible = false
 
 		# We're not boosting, so set boosting counter to zero.
 		is_boosting = 0
@@ -136,7 +135,7 @@ func process_air () -> void:
 		avgTPoint = Vector2 (RightCastTop.get_collision_point ().x-cos (rotation)*8, RightCastTop.get_collision_point ().y-sin (rotation)*8)
 
 	# handle collision with the ground
-	if (abs (avgGPoint.y-position.y) < 21):
+	if (abs (avgGPoint.y-position.y) <= collider_height):
 		print_debug ("Ground hit at ", position)
 		state = 0
 		rotation = avgGRot
@@ -165,7 +164,7 @@ func process_air () -> void:
 
 		# clear all points in the boostLine rendered line
 		for i in range (0, TRAIL_LENGTH):
-			boostLine.points[i] = Vector2.ZERO
+			boost_line.points[i] = Vector2.ZERO
 
 		# play sound
 		boostSound.stream = stomp_sfx
@@ -176,11 +175,11 @@ func process_air () -> void:
 		player_velocity = Vector2 (max (-MAX_STOMP_XVEL, min (MAX_STOMP_XVEL, player_velocity.x)), STOMP_SPEED)
 
 		# make sure that the boost sprite is not visible
-		boostSprite.visible = false
+		boost_sprite.visible = false
 
 		# manage the boost line
-		boostLine.visible = true
-		boostLine.rotation = -rotation
+		boost_line.visible = true
+		boost_line.rotation = -rotation
 	else:
 		process_boost ()	# Boost is only processed when not stomping.
 
@@ -198,7 +197,7 @@ func process_air () -> void:
 		is_boosting = 0
 
 	# top collision
-	if avgTPoint.distance_to (position+player_velocity) < 21:
+	if (avgTPoint.distance_to (position+player_velocity) <= collider_height):
 		player_velocity = Vector2 (player_velocity.x, 0)
 
 	# Allow the player to change the duration of the jump by releasing the jump
@@ -268,28 +267,28 @@ func process_ground () -> void:
 			ground_velocity = 0
 
 	# left and right wall collision, respectively
-	if LSideCast.is_colliding () and LSideCast.get_collision_point ().distance_to (position) < 21 and ground_velocity < 0:
+	if (LSideCast.is_colliding () and LSideCast.get_collision_point ().distance_to (position) < (collider_height+1) and ground_velocity < 0):
 		ground_velocity = 0
-		position = LSideCast.get_collision_point () + Vector2 (position.x-LSideCast.get_collision_point ().x, position.y-LSideCast.get_collision_point ().y).normalized ()*21
+		position = LSideCast.get_collision_point () + Vector2 (position.x-LSideCast.get_collision_point ().x, position.y-LSideCast.get_collision_point ().y).normalized () * (collider_height + 1)
 		is_boosting = 0
-	if RSideCast.is_colliding () and RSideCast.get_collision_point ().distance_to (position) < 21 and ground_velocity > 0:
+	if (RSideCast.is_colliding () and RSideCast.get_collision_point ().distance_to (position) < (collider_height+1) and ground_velocity > 0):
 		ground_velocity = 0
-		position = RSideCast.get_collision_point () + Vector2 (position.x-RSideCast.get_collision_point ().x, position.y-RSideCast.get_collision_point ().y).normalized ()*21
+		position = RSideCast.get_collision_point () + Vector2 (position.x-RSideCast.get_collision_point ().x, position.y-RSideCast.get_collision_point ().y).normalized () * (collider_height + 1)
 		is_boosting = 0
 
 	# apply gravity if you are on a slope, and apply the ground velocity
-	ground_velocity += sin (rotation)*GRAVITY
-	player_velocity = Vector2 (cos (rotation)*ground_velocity, sin (rotation)*ground_velocity)
+	ground_velocity += sin (rotation) * GRAVITY
+	player_velocity = Vector2 (cos (rotation) * ground_velocity, sin (rotation) * ground_velocity)
 
 	# enter the air state if you run off a ramp, or walk off a cliff, or something
-	if not avgGPoint.distance_to (position) < 21 or not (LeftCast.is_colliding () and RightCast.is_colliding ()):
+	if (not avgGPoint.distance_to (position) < (collider_height+1) or not (LeftCast.is_colliding () and RightCast.is_colliding ())):
 		state = -1
 		player_sprite.rotation = rotation
 		rotation = 0
 		is_rolling = false
 
 	# If your speed isn't high enough you'll fall off walls.
-	if abs (rotation) >= PI/3 and (abs (ground_velocity) < 0.2 or (not ground_velocity == 0 and not previous_ground_velocity == 0 and not ground_velocity/abs (ground_velocity) == previous_ground_velocity/abs (previous_ground_velocity))):
+	if (abs (rotation) >= PI/3 and (abs (ground_velocity) < 0.2 or (not ground_velocity == 0 and not previous_ground_velocity == 0 and not ground_velocity/abs (ground_velocity) == previous_ground_velocity/abs (previous_ground_velocity)))):
 		state = -1
 		player_sprite.rotation = rotation
 		rotation = 0
@@ -311,7 +310,7 @@ func process_ground () -> void:
 	else:
 		change_player_animation ("Roll")
 
-	if abs (ground_velocity) > threshold_walk:
+	if (abs (ground_velocity) > threshold_walk):
 		is_crouching = false
 		player_sprite.speed_scale = 1
 	else:
@@ -439,10 +438,10 @@ func _physics_process (_delta) -> void:
 
 	# update the boost line
 	for i in range (0, TRAIL_LENGTH-1):
-		boostLine.points[i] = (boostLine.points[i+1]-player_velocity+ (last_position-position))
-	boostLine.points[TRAIL_LENGTH-1] = Vector2.ZERO
+		boost_line.points [i] = (boost_line.points [i + 1] - player_velocity + (last_position-position))
+	boost_line.points[TRAIL_LENGTH-1] = Vector2.ZERO
 	if (is_stomping):
-		boostLine.points[TRAIL_LENGTH-1] = Vector2 (0, 8)
+		boost_line.points[TRAIL_LENGTH-1] = Vector2 (0, 8)
 
 	# apply the character's velocity, no matter what state the player is in.
 	position = Vector2 (position.x+player_velocity.x, position.y+player_velocity.y)

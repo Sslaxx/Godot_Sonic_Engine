@@ -109,13 +109,15 @@ onready var RSideCast = find_node ("RSideCast")
 onready var LeftCastTop = find_node ("LeftCastTop")
 onready var RightCastTop = find_node ("RightCastTop")
 
-# a reference to the player's physics collider
+# References to the player's physics collider. Its node, and height and radius.
 onready var collider = find_node ("playerCollider")
+onready var collider_radius = collider.shape.radius
+onready var collider_height = collider.shape.height
 
 # the player's sprites/renderers
 onready var player_sprite = find_node ("PlayerSprites")		# the player's sprite
-onready var boostSprite = find_node ("BoostSprite")			# the sprite that appears over the player while boosting
-onready var boostLine = find_node ("BoostLine")				# the line renderer for boosting and stomping
+onready var boost_sprite = find_node ("BoostSprite")		# the sprite that appears over the player while boosting
+onready var boost_line = find_node ("BoostLine")				# the line renderer for boosting and stomping
 
 onready var hud_boost = get_node ("/root/Level/game_hud/hud_boost")	# Holds a reference to the boost UI bar.
 

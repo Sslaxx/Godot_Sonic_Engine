@@ -1,10 +1,7 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=27 format=2]
 
-[ext_resource path="res://Scenes/Player/player_sonic_sprites.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Assets/Graphics/Effects/Boost/sonic_boost_2.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Graphics/Effects/Boost/sonic_boost_1.png" type="Texture" id=8]
-[ext_resource path="res://Assets/Graphics/Effects/Boost/sonic_boost_0.png" type="Texture" id=13]
-[ext_resource path="res://Assets/Graphics/Effects/Boost/sonic_boost_3.png" type="Texture" id=15]
+[ext_resource path="res://Scenes/Player/sprite_player_sonic.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Player/sprite_boost.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Audio/Sound/Player/stomping.ogg" type="AudioStream" id=16]
 [ext_resource path="res://Assets/Audio/Sound/Player/Boost.ogg" type="AudioStream" id=17]
 [ext_resource path="res://Assets/Audio/Sound/Player/stomping_land.ogg" type="AudioStream" id=18]
@@ -28,14 +25,6 @@
 [sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0.0927152, 0.390728 )
 colors = PoolColorArray( 0.00990295, 0.0960615, 0.230469, 0, 0, 0.320313, 1, 1 )
-
-[sub_resource type="SpriteFrames" id=3]
-animations = [ {
-"frames": [ ExtResource( 13 ), ExtResource( 8 ), ExtResource( 2 ), ExtResource( 15 ) ],
-"loop": true,
-"name": "default",
-"speed": 25.0
-} ]
 
 [sub_resource type="Gradient" id=4]
 offsets = PoolRealArray( 0, 0.0180723, 0.46988 )
@@ -110,7 +99,7 @@ __meta__ = {
 }
 
 [node name="PlayerSprites" parent="." instance=ExtResource( 1 )]
-frame = 7
+frame = 1
 
 [node name="LeftCast" type="RayCast2D" parent="."]
 position = Vector2( -6, -10 )
@@ -151,13 +140,9 @@ gradient = SubResource( 2 )
 texture_mode = 4124
 joint_mode = 2
 
-[node name="BoostSprite" type="AnimatedSprite" parent="."]
+[node name="BoostSprite" parent="." instance=ExtResource( 2 )]
 visible = false
-modulate = Color( 1, 1, 1, 0.78451 )
-light_mask = 0
-frames = SubResource( 3 )
-frame = 3
-playing = true
+frame = 1
 
 [node name="sound_boost" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 17 )
