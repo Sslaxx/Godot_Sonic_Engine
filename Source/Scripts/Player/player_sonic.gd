@@ -187,13 +187,13 @@ func process_air () -> void:
 	player_sprite.rotation = lerp (player_sprite.rotation, 0, 0.1)
 
 	# handle left and right sideways collision (respectively)
-	if (LSideCast.is_colliding () and LSideCast.get_collision_point ().distance_to (position+player_velocity) < (collider_radius * 1.4) and player_velocity.x < 0):
+	if (LSideCast.is_colliding () and LSideCast.get_collision_point ().distance_to (position+player_velocity) < (collider_radius + 4) and player_velocity.x < 0):
 		player_velocity = Vector2 (0, player_velocity.y)
-		position = LSideCast.get_collision_point () + Vector2 ((collider_radius * 1.4), 0)
+		position = LSideCast.get_collision_point () + Vector2 ((collider_radius + 4), 0)
 		is_boosting = 0
-	if (RSideCast.is_colliding () and RSideCast.get_collision_point ().distance_to (position+player_velocity) < (collider_radius * 1.4) and player_velocity.x > 0):
+	if (RSideCast.is_colliding () and RSideCast.get_collision_point ().distance_to (position+player_velocity) < (collider_radius + 4) and player_velocity.x > 0):
 		player_velocity = Vector2 (0, player_velocity.y)
-		position = RSideCast.get_collision_point () - Vector2 ((collider_radius * 1.4), 0)
+		position = RSideCast.get_collision_point () - Vector2 ((collider_radius + 4), 0)
 		is_boosting = 0
 
 	# top collision
