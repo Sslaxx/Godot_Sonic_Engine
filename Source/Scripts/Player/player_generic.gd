@@ -109,19 +109,21 @@ onready var RSideCast = find_node ("RSideCast")
 onready var LeftCastTop = find_node ("LeftCastTop")
 onready var RightCastTop = find_node ("RightCastTop")
 
-# a reference to the player's physics collider
+# References to the player's physics collider. Its node, and height and radius.
 onready var collider = find_node ("playerCollider")
+onready var collider_radius = collider.shape.radius
+onready var collider_height = collider.shape.height
 
 # the player's sprites/renderers
 onready var player_sprite = find_node ("PlayerSprites")		# the player's sprite
-onready var boostSprite = find_node ("BoostSprite")			# the sprite that appears over the player while boosting
-onready var boostLine = find_node ("BoostLine")				# the line renderer for boosting and stomping
+onready var boost_sprite = find_node ("BoostSprite")		# the sprite that appears over the player while boosting
+onready var boost_line = find_node ("BoostLine")				# the line renderer for boosting and stomping
 
 onready var hud_boost = get_node ("/root/Level/game_hud/hud_boost")	# Holds a reference to the boost UI bar.
 
-onready var boostSound = find_node ("sound_boost")	# the audio stream player with the boost sound
-onready var RailSound = find_node ("sound_rail")	# the audio stream player with the rail grinding sound
-onready var voiceSound = find_node ("sound_voice")	# the audio stream player with the character's voices
+onready var boost_sound = find_node ("sound_boost")	# the audio stream player with the boost sound
+onready var rail_sound = find_node ("sound_rail")	# the audio stream player with the rail grinding sound
+onready var voice_sound = find_node ("sound_voice")	# the audio stream player with the character's voices
 
 # the minimum and maximum speed/pitch changes on the grinding sound
 var RAILSOUND_MINPITCH = 0.5
@@ -130,8 +132,8 @@ var RAILSOUND_MAXPITCH = 2.0
 onready var cam = find_node ("Camera2D")
 onready var grindParticles = find_node ("GrindParticles")	# a reference to the particle node for griding
 
-var avgGPoint := Vector2.ZERO			#average Ground position between the two foot raycasts
-var avgTPoint := Vector2.ZERO			#average top position between the two head raycasts
+var avgGPoint := Vector2.ZERO			# average Ground position between the two foot raycasts
+var avgTPoint := Vector2.ZERO			# average top position between the two head raycasts
 var avgGRot := 0.0						# average ground rotation between the two foot raycasts
 var langle := 0.0						# the angle of the left foot raycast
 var rangle := 0.0						# the angle of the right foot raycast
@@ -151,8 +153,8 @@ func _ready () -> void:
 	game_space.player_node = $"."	# Set the player_node in game_space to the ID of this node.
 	if (has_node ("/root/Level/start_point")):	# We have a starting checkpoint!
 		game_space.last_checkpoint = $"/root/Level/start_point"
-		$"/root/Level/start_point".passed_checkpoint = true	# So it doesn't get triggered by mistake.
-		$"/root/Level/start_point".visible = false			# In case the dev forgets!
+		game_space.last_checkpoint.passed_checkpoint = true	# So it doesn't get triggered by mistake.
+		game_space.last_checkpoint.visible = false			# In case the dev forgets!
 		position = $"/root/Level/start_point".position
 	else:
 		printerr ("You shouldn't see this - did you forget to set start_point?")
@@ -266,7 +268,7 @@ func hurt_player () -> void:
 
 		# Make the hurt state obvious.
 		change_player_animation ("hurt")
-		voiceSound.play_hurt ()
+		voice_sound.play_hurt ()
 
 		# If the player has any rings, bounce up to 32 of them.
 		var t := 0
