@@ -72,28 +72,48 @@
            sodipodi:nodetypes="ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
            inkscape:connector-curvature="0" />
       </g>
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:39.6507px;line-height:200%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffff00;fill-opacity:1;stroke:#ff0000;stroke-width:2.32328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="157.64809"
-         y="71.486382"
-         id="text1761"><tspan
-           sodipodi:role="line"
-           id="tspan1759"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:39.6507px;font-family:'Blue Highway';-inkscape-font-specification:'Blue Highway Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#ffff00;fill-opacity:1;stroke:#ff0000;stroke-width:2.32328;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           x="157.64809"
-           y="71.486382">TEST</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-size:40.9928px;line-height:200%;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffff00;fill-opacity:1;stroke:#ff0000;stroke-width:2.40193;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         x="193.76591"
-         y="99.427437"
-         id="text1761-6"><tspan
-           sodipodi:role="line"
-           id="tspan1759-7"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40.9928px;font-family:'Blue Highway';-inkscape-font-specification:'Blue Highway';text-align:center;text-anchor:middle;fill:#ffff00;fill-opacity:1;stroke:#ff0000;stroke-width:2.40193;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           x="193.76591"
-           y="99.427437">ZONE</tspan></text>
+      <g
+         aria-label="TEST"
+         id="text1761"
+         style="font-size:39.6507px;line-height:200%;-inkscape-font-specification:'sans-serif, Normal';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffff00;stroke:#ff0000;stroke-width:2.32328">
+        <path
+           d="m 134.15514,53.167758 v 18.715131 h -4.40123 V 53.167758 h -5.789 v -4.044371 h 15.89993 v 4.044371 z"
+           style="font-weight:bold;font-family:'Blue Highway';-inkscape-font-specification:'Blue Highway Bold'"
+           id="path14" />
+        <path
+           d="m 142.8386,49.123387 h 12.48997 v 4.044371 h -8.4456 v 5.035639 h 5.27354 v 4.044372 h -5.27354 v 5.590748 h 8.4456 v 4.044372 H 142.8386 Z"
+           style="font-weight:bold;font-family:'Blue Highway';-inkscape-font-specification:'Blue Highway Bold'"
+           id="path16" />
+        <path
+           d="m 165.43945,72.041491 q -1.90324,0 -3.56856,-0.436157 -1.66533,-0.436158 -3.37031,-1.467076 l 1.38777,-4.123673 q 1.18952,0.872315 2.5773,1.427425 1.38777,0.515459 2.8945,0.515459 1.66533,0 2.53764,-0.674062 0.87232,-0.674062 0.87232,-2.141137 0,-1.030919 -1.03092,-1.70498 -0.99127,-0.713713 -2.53765,-1.586028 -0.95161,-0.51546 -2.14113,-1.030919 -1.14987,-0.555109 -2.14114,-1.308473 -0.99127,-0.753363 -1.66533,-1.823932 -0.67406,-1.11022 -0.67406,-2.775549 0,-2.735898 1.94288,-4.321926 1.98254,-1.625679 5.23389,-1.625679 1.74463,0 3.33066,0.396507 1.58603,0.396507 2.85485,1.348124 l -1.14987,4.163323 q -1.14987,-0.911966 -2.29974,-1.308473 -1.14987,-0.436157 -2.77555,-0.436157 -1.26882,0 -2.18079,0.356856 -0.91196,0.356856 -0.91196,1.268822 0,0.475809 0.3172,0.911966 0.31721,0.396507 0.83267,0.832665 0.51546,0.396507 1.18952,0.793014 0.71371,0.396507 1.46708,0.793014 1.30847,0.713713 2.45834,1.506727 1.18952,0.753363 2.06184,1.625678 0.87231,0.832665 1.34812,1.823933 0.51546,0.991267 0.51546,2.141137 0,3.687515 -2.02219,5.273543 -1.98253,1.586028 -5.35284,1.586028 z"
+           style="font-weight:bold;font-family:'Blue Highway';-inkscape-font-specification:'Blue Highway Bold'"
+           id="path18" />
+        <path
+           d="m 185.62161,53.167758 v 18.715131 h -4.40123 V 53.167758 h -5.789 v -4.044371 h 15.89993 v 4.044371 z"
+           style="font-weight:bold;font-family:'Blue Highway';-inkscape-font-specification:'Blue Highway Bold'"
+           id="path20" />
+      </g>
+      <g
+         aria-label="ZONE"
+         id="text1761-6"
+         style="font-size:40.9928px;line-height:200%;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#ffff00;stroke:#ff0000;stroke-width:2.40193">
+        <path
+           d="M 158.3482,95.779077 168.76037,80.078834 H 158.3482 v -3.361409 h 14.2245 v 3.730345 l -10.45317,15.618257 h 10.49416 v 3.36141 H 158.3482 Z"
+           style="font-family:'Blue Highway';-inkscape-font-specification:'Blue Highway'"
+           id="path41" />
+        <path
+           d="m 185.15748,79.914863 q -2.54156,0 -4.18127,2.04964 -1.59872,2.008648 -1.59872,6.107928 0,4.140273 1.68071,6.14892 1.6807,1.967654 4.09928,1.967654 2.45957,0 4.09928,-1.967654 1.6807,-2.008647 1.6807,-6.14892 0,-4.09928 -1.55772,-6.107928 -1.51674,-2.04964 -4.22226,-2.04964 z m 0,19.676545 q -3.89432,0 -6.51786,-3.033467 -2.58254,-3.033468 -2.62354,-8.48551 0,-5.452043 2.58255,-8.48551 2.58255,-3.033468 6.55885,-2.992475 4.05828,0 6.55885,3.033468 2.54155,3.033467 2.54155,8.444517 0,5.452042 -2.54155,8.526503 -2.50057,3.033467 -6.55885,2.992474 z"
+           style="font-family:'Blue Highway';-inkscape-font-specification:'Blue Highway'"
+           id="path43" />
+        <path
+           d="m 200.98069,82.538403 v 16.889034 h -3.36141 V 76.717425 h 4.18127 l 8.23955,16.192156 V 76.717425 h 3.36141 v 22.710012 h -3.85332 z"
+           style="font-family:'Blue Highway';-inkscape-font-specification:'Blue Highway'"
+           id="path45" />
+        <path
+           d="m 217.17281,76.717425 h 12.09288 v 3.361409 h -8.73147 v 6.025942 h 5.45204 v 3.36141 h -5.45204 v 6.599841 h 8.73147 v 3.36141 h -12.09288 z"
+           style="font-family:'Blue Highway';-inkscape-font-specification:'Blue Highway'"
+           id="path47" />
+      </g>
     </g>
   </g>
 </svg>
