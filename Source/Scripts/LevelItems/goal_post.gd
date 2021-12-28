@@ -28,4 +28,5 @@ func hit_goalpost (body) -> void:
 func goalpost_raised (_xxx) -> void:
 	printerr ("TODO: End of level stuff here!")
 	game_space.player_node.is_unmoveable = true
+	jingle_player.play_jingle ("res://Assets/Audio/Jingles/Mission_Complete.ogg", false)
 	return
