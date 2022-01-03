@@ -12,10 +12,11 @@ func _ready () -> void:
 func _process (_delta) -> void:
 	$"Position".text = "POSITION: " + var2str (int (game_space.player_node.position.x)) + ", " + \
 		var2str (int (game_space.player_node.position.y))
-	$"Velocity".text = "VELOCITY: " + var2str (int (game_space.player_node.player_velocity.x)) + ", " + \
-		var2str (int (game_space.player_node.player_velocity.y))
+	$"Velocity".text = "VELOCITY: " + var2str (game_space.player_node.player_velocity.x).pad_decimals (1) + ", " + \
+		var2str (game_space.player_node.player_velocity.y).pad_decimals (1)
 	$"FPS".text = "FPS: " + var2str (Engine.get_frames_per_second ())
-	$"Boosting".text = "BOOSTING: " + ("YES" if not game_space.player_node.is_boosting == 0 else "NO")
+	$"Rotation".text = "ROTATION: " + var2str (rad2deg (game_space.player_node.rotation)).pad_decimals (2) + "°"
+	$"Boosting".text = "BOOSTING: " + ("YES" if game_space.player_node.is_boosting > 0 else "NO")
 	$"Crouching".text = "CROUCHING: " + ("YES" if game_space.player_node.is_crouching else "NO")
 	$"Flying".text = "FLYING: " + ("YES" if game_space.player_node.is_flying else "NO")
 	$"Gliding".text = "GLIDING: " + ("YES" if game_space.player_node.is_gliding else "NO")

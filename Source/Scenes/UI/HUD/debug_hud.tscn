@@ -45,11 +45,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Rotation" type="Label" parent="."]
+margin_left = 800.0
+margin_top = 76.0
+margin_right = 1020.0
+margin_bottom = 98.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "FPS: XXXXX"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Boosting" type="Label" parent="."]
 margin_left = 800.0
-margin_top = 71.0
+margin_top = 104.0
 margin_right = 1020.0
-margin_bottom = 93.0
+margin_bottom = 126.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
@@ -60,9 +73,9 @@ __meta__ = {
 
 [node name="Crouching" type="Label" parent="."]
 margin_left = 800.0
-margin_top = 93.0
+margin_top = 126.0
 margin_right = 1020.0
-margin_bottom = 115.0
+margin_bottom = 148.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
@@ -73,9 +86,9 @@ __meta__ = {
 
 [node name="Flying" type="Label" parent="."]
 margin_left = 800.0
-margin_top = 115.0
+margin_top = 148.0
 margin_right = 1020.0
-margin_bottom = 137.0
+margin_bottom = 170.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
@@ -86,9 +99,9 @@ __meta__ = {
 
 [node name="Grinding" type="Label" parent="."]
 margin_left = 800.0
-margin_top = 135.0
+margin_top = 168.0
 margin_right = 1020.0
-margin_bottom = 157.0
+margin_bottom = 190.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
@@ -99,9 +112,9 @@ __meta__ = {
 
 [node name="Gliding" type="Label" parent="."]
 margin_left = 800.0
-margin_top = 155.0
+margin_top = 188.0
 margin_right = 1020.0
-margin_bottom = 177.0
+margin_bottom = 210.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
@@ -112,9 +125,9 @@ __meta__ = {
 
 [node name="Jumping" type="Label" parent="."]
 margin_left = 800.0
-margin_top = 177.0
+margin_top = 210.0
 margin_right = 1020.0
-margin_bottom = 199.0
+margin_bottom = 232.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
@@ -125,9 +138,9 @@ __meta__ = {
 
 [node name="Rolling" type="Label" parent="."]
 margin_left = 800.0
-margin_top = 199.0
+margin_top = 232.0
 margin_right = 1020.0
-margin_bottom = 221.0
+margin_bottom = 254.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
@@ -138,9 +151,9 @@ __meta__ = {
 
 [node name="Spindashing" type="Label" parent="."]
 margin_left = 800.0
-margin_top = 221.0
+margin_top = 254.0
 margin_right = 1020.0
-margin_bottom = 243.0
+margin_bottom = 276.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
@@ -151,9 +164,9 @@ __meta__ = {
 
 [node name="Stomping" type="Label" parent="."]
 margin_left = 800.0
-margin_top = 243.0
+margin_top = 276.0
 margin_right = 1020.0
-margin_bottom = 265.0
+margin_bottom = 298.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
@@ -164,9 +177,9 @@ __meta__ = {
 
 [node name="Tricking" type="Label" parent="."]
 margin_left = 800.0
-margin_top = 267.0
+margin_top = 300.0
 margin_right = 1020.0
-margin_bottom = 289.0
+margin_bottom = 322.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
@@ -177,9 +190,9 @@ __meta__ = {
 
 [node name="Unmoveable" type="Label" parent="."]
 margin_left = 800.0
-margin_top = 289.0
+margin_top = 322.0
 margin_right = 1020.0
-margin_bottom = 311.0
+margin_bottom = 344.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 1 )
