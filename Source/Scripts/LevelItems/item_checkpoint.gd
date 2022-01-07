@@ -3,7 +3,7 @@
 
 extends Area2D
 
-export(Vector2) var last_time = Vector2.ZERO		# Time when the player passes the checkpoint.
+var last_time:Vector2 = Vector2.ZERO		# Time when the player passes the checkpoint.
 var passed_checkpoint:bool = false					# Passed the checkpoint yet?
 
 func _ready() -> void:
