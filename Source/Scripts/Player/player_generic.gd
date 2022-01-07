@@ -155,6 +155,7 @@ func _ready () -> void:
 		game_space.last_checkpoint = $"/root/Level/start_point"
 		game_space.last_checkpoint.passed_checkpoint = true	# So it doesn't get triggered by mistake.
 		game_space.last_checkpoint.visible = false			# In case the dev forgets!
+		game_space.last_checkpoint.last_time = Vector2.ZERO
 		position = $"/root/Level/start_point".position
 	else:
 		printerr ("You shouldn't see this - did you forget to set start_point?")
